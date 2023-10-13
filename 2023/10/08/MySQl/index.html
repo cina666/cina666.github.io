@@ -219,6 +219,51 @@
 <p>唯一索引</p>
 <p>![](&#x2F;imgs&#x2F;${fiilname}&#x2F;屏幕截图 2023-10-10 203546-1697017709524-12.png)</p>
 <p><img src="/imgs/$%7Bfiilname%7D/ef46-46d976e8b18d004f37e98b3bf4a61835-1697019826003-2.jpg"></p>
+<h2 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h2><h3 id="基本查询"><a href="#基本查询" class="headerlink" title="基本查询"></a>基本查询</h3><p>查询数据库表的数据：SELECT * FROM 表名；</p>
+<p>SELECT 也可以用于计算（例如：SELECT 100 + 200；）</p>
+<h3 id="条件查询"><a href="#条件查询" class="headerlink" title="条件查询"></a>条件查询</h3><p>SELECT语句通过WHERE条件来设定查询条件:SELECT * FROM &lt;表名&gt; WHERE &lt;条件表达式&gt;</p>
+<p>（例如：SELECT * FROM students WHERE score&gt;&#x3D;80;)</p>
+<p>条件表达式:1.**&lt;条件1&gt; AND &lt;条件2&gt;**表达满足条件1并且满足条件2</p>
+<p>​                    2.**&lt;条件1&gt; OR &lt;条件2&gt;**表示满足条件1或者满足条件2</p>
+<p>​                    3**. NOT &lt;条件&gt;**，表示“不符合该条件”的记录(例如：写一个“不是2班的学生”这个条件：NOT class_id &#x3D; 2：)</p>
+<p>​                         要组合三个或者更多的条件，就需要用小括号()表示如何进行条件运算</p>
+<p>​                      （例：SELECT * FROM students WHERE (score &lt; 80 OR score &gt; 90) AND gender &#x3D; ‘M’;）</p>
+<p><em><strong>如果不加括号，条件运算按照NOT、AND、OR的优先级进行，即NOT优先级最高，其次是AND，最后是OR</strong></em></p>
+<p>![](&#x2F;imgs&#x2F;${fiilname}&#x2F;屏幕截图 2023-10-13 193853-1697197172610-2.png)</p>
+<h3 id="投影查询"><a href="#投影查询" class="headerlink" title="投影查询"></a>投影查询</h3><p>如果我们只希望返回某些列的数据，而不是所有列的数据，我们可以用SELECT 列1, 列2, 列3 FROM …，让结果集仅包含指定列。这种操作称为投影查询。（例<code>：SELECT id，name,score FROM students;</code>)</p>
+<p>使用SELECT 列1, 列2, 列3 FROM …时，还可以给每一列起个别名，这样，结果集的列名就可以与原表的列名不同。它的语法是<strong>SELECT 列1 别名1, 列2 别名2, 列3 别名3 FROM …</strong></p>
+<p>投影查询同样可以接WHERE条件，实现复杂的查询</p>
+<p><strong>总的应用一下</strong>：<code>SELECT id, score points, name FROM students WHERE gender = &#39;M&#39;</code>;</p>
+<h3 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h3><p>如果要按我们自己的排序而不是按主键排序则加上ORDER语句</p>
+<p><code>SELECT id, name, gender, score FROM students ORDER BY score;</code></p>
+<p>如果要反过来，按照成绩从高到底排序，我们可以加上DESC表示“倒序”（DESC加在score后面），如果score列有相同的数据那么可以继续添加列名</p>
+<p>如果有WHERE子句，那么ORDER BY子句要放到WHERE子句后面</p>
+<p><code>SELECT id, name, gender, score FROM students WHERE class_id = 1 ORDER BY score DESC;</code></p>
+<h3 id="分页查询"><a href="#分页查询" class="headerlink" title="分页查询"></a>分页查询</h3><p>使用SELECT查询时，如果结果集数据量很大，比如几万行数据，放在一个页面显示的话数据量太大，不如分页显示，每次显示100条。</p>
+<p>要实现分页功能，实际上就是从结果集中显示第1<del>100条记录作为第1页，显示第101</del>200条记录作为第2页，以此类推。</p>
+<p>语句：<code>LIMIT &lt;N-M&gt; OFFSET &lt;M&gt;</code>（<N-M>表示为每页最多显示几个数据）</p>
+<p>例子：<code>SELECT id, name, gender, score</code><br>           <code>FROM students</code><br>           <code>ORDER BY score DESC</code><br>           <code>LIMIT 3 OFFSET 0;</code></p>
+<p>LIMIT 3 OFFSET 0表示，对结果集从0号记录开始，最多取3条。注意SQL记录集的索引从0开始。</p>
+<p>如果要查询第2页，那么我们只需要“跳过”头3条记录，也就是对结果集从3号记录开始查询，把OFFSET设定为3。</p>
+<p><em><strong>注意</strong></em>：OFFSET是可选的，如果只写LIMIT 15，那么相当于LIMIT 15 OFFSET 0；</p>
+<p>​            在MySQL中，LIMIT 15 OFFSET 30还可以简写成LIMIT 30, 15；</p>
+<p>​           OFFSET超过了查询的最大数量并不会报错，而是得到一个空的结果集。</p>
+<h3 id="聚合查询"><a href="#聚合查询" class="headerlink" title="聚合查询"></a>聚合查询</h3><p>对于统计总数、平均数这类计算，SQL提供了专门的聚合函数，使用聚合函数进行查询，就是聚合查询</p>
+<p>查询一个表中一共有多少条记录可以用COUNT()函数（<code>SELECT COUNT(*) FROM students;</code>）</p>
+<p>使用聚合查询时，我们应该给列名设置一个别名，便于处理结果（<code>SELECT COUNT(*) num FROM students;</code>）</p>
+<p><strong>聚合查询同样可以使用WHERE条件</strong></p>
+<img src="/imgs/${fiilname}/屏幕截图 2023-10-13 204438.png" style="zoom: 80%;" />
+
+
+
+<p>其他聚合函数</p>
+<p>![](&#x2F;imgs&#x2F;${fiilname}&#x2F;屏幕截图 2023-10-13 204630-1697201211173-6.png)</p>
+<p>AVG：<code>SELECT AVG(score) average FROM students WHERE gender = &#39;M&#39;;</code></p>
+<p><strong>如果聚合查询的WHERE条件没有匹配到任何行，COUNT()会返回0，而SUM()、AVG()、MAX()和MIN()会返回NULL</strong></p>
+<p><strong>每页3条记录，如何通过聚合查询获得总页数：SELECT CEILING(COUNT(*) &#x2F; 3) FROM students;</strong></p>
+<p><em><strong>分组语句</strong></em>：GROUP BY(例<code>：SELECT COUNT(*) num FROM students GROUP BY class_id;</code>)</p>
+<p>​                   也可以使用多个列进行分组</p>
+<p>​                  （<code>SELECT class_id, gender, COUNT(*) num FROM students GROUP BY class_id, gender;</code>）</p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
