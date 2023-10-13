@@ -229,7 +229,7 @@
 <p>​                         要组合三个或者更多的条件，就需要用小括号()表示如何进行条件运算</p>
 <p>​                      （例：SELECT * FROM students WHERE (score &lt; 80 OR score &gt; 90) AND gender &#x3D; ‘M’;）</p>
 <p><em><strong>如果不加括号，条件运算按照NOT、AND、OR的优先级进行，即NOT优先级最高，其次是AND，最后是OR</strong></em></p>
-<p>![](&#x2F;imgs&#x2F;${fiilname}&#x2F;屏幕截图 2023-10-13 193853-1697197172610-2.png)</p>
+<p>![](&#x2F;imgs&#x2F;${fiilname}&#x2F;屏幕截图 2023-10-13 193853-1697204571691-1.png)</p>
 <h3 id="投影查询"><a href="#投影查询" class="headerlink" title="投影查询"></a>投影查询</h3><p>如果我们只希望返回某些列的数据，而不是所有列的数据，我们可以用SELECT 列1, 列2, 列3 FROM …，让结果集仅包含指定列。这种操作称为投影查询。（例<code>：SELECT id，name,score FROM students;</code>)</p>
 <p>使用SELECT 列1, 列2, 列3 FROM …时，还可以给每一列起个别名，这样，结果集的列名就可以与原表的列名不同。它的语法是<strong>SELECT 列1 别名1, 列2 别名2, 列3 别名3 FROM …</strong></p>
 <p>投影查询同样可以接WHERE条件，实现复杂的查询</p>
@@ -257,7 +257,7 @@
 
 
 <p>其他聚合函数</p>
-<p>![](&#x2F;imgs&#x2F;${fiilname}&#x2F;屏幕截图 2023-10-13 204630-1697201211173-6.png)</p>
+<p>![](&#x2F;imgs&#x2F;${fiilname}&#x2F;屏幕截图 2023-10-13 204630.png)</p>
 <p>AVG：<code>SELECT AVG(score) average FROM students WHERE gender = &#39;M&#39;;</code></p>
 <p><strong>如果聚合查询的WHERE条件没有匹配到任何行，COUNT()会返回0，而SUM()、AVG()、MAX()和MIN()会返回NULL</strong></p>
 <p><strong>每页3条记录，如何通过聚合查询获得总页数：SELECT CEILING(COUNT(*) &#x2F; 3) FROM students;</strong></p>
