@@ -187,7 +187,7 @@
       		<p>[TOC]</p>
 <p>数据库的三种类型：层次模型，网状模型，关系模型。</p>
 <h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><p>关系数据库支持的标准数据类型包括数值、字符串、时间等</p>
-<p>![](&#x2F;屏幕截图 2023-10-08 191329.png)</p>
+<p><img src="/../../source/imgs/$%7Bfiilname%7D/first.png"></p>
 <h3 id="操作数据库的能力"><a href="#操作数据库的能力" class="headerlink" title="操作数据库的能力"></a>操作数据库的能力</h3><p>DDL：Data Definition Language</p>
 <p>DDL允许用户定义数据，也就是创建表、删除表、修改表结构这些操作。通常，DDL由数据库管理员执行。</p>
 <p>DML：Data Manipulation Language</p>
@@ -208,16 +208,16 @@
 <p>2.全局唯一GUID类型：使用一种全局唯一的字符串作为主键。</p>
 <p><strong>联合主键</strong>：关系数据库实际上还允许通过多个字段唯一标识记录，即两个或更多的字段都设置为主键</p>
 <p>对于联合主键，允许一列有重复，只要不是所有主键列都重复即可。<strong>（一般不使用联合主键，避免更加复杂）</strong></p>
-<h3 id="外键"><a href="#外键" class="headerlink" title="外键"></a>外键</h3><p>![](&#x2F;屏幕截图 2023-10-10 201632.png)</p>
+<h3 id="外键"><a href="#外键" class="headerlink" title="外键"></a>外键</h3><p><img src="/../../source/imgs/$%7Bfiilname%7D/second.png"></p>
 <h4 id="多对多"><a href="#多对多" class="headerlink" title="多对多"></a>多对多</h4><p>通过一个表的外键关联到另一个表，我们可以定义出一对多关系。有些时候，还需要定义“多对多”关系。例如，一个老师可以对应多个班级，一个班级也可以对应多个老师，因此，班级表和老师表存在多对多关系。</p>
 <p>多对多关系实际上是通过两个一对多关系实现的，即通过一个中间表，关联两个一对多关系，就形成了多对多关系：</p>
-<p>![](&#x2F;屏幕截图 2023-10-10 202248.png)</p>
+<p><img src="/../../source/imgs/$%7Bfiilname%7D/third.png"></p>
 <h4 id="一对一"><a href="#一对一" class="headerlink" title="一对一"></a>一对一</h4><p>一对一关系是指，一个表的记录对应到另一个表的唯一一个记录。</p>
 <p><em><strong>总的：关系数据库通过外键可以实现一对多、多对多和一对一的关系。外键既可以通过数据库来约束，也可以不设置约束，仅依靠应用程序的逻辑来保证。</strong></em></p>
 <h3 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h3><p>索引是关系数据库中对某一列或多个列的值进行预排序的数据结构。</p>
-<p>![](&#x2F;屏幕截图 2023-10-10 202955.png)</p>
+<p><img src="/../../source/imgs/$%7Bfiilname%7D/fourth.png"></p>
 <p>唯一索引</p>
-<p>![](&#x2F;屏幕截图 2023-10-10 203546.png)</p>
+<p><img src="/../../source/imgs/$%7Bfiilname%7D/fifth.png"></p>
 <h2 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h2><h3 id="基本查询"><a href="#基本查询" class="headerlink" title="基本查询"></a>基本查询</h3><p>查询数据库表的数据：SELECT * FROM 表名；</p>
 <p>SELECT 也可以用于计算（例如：SELECT 100 + 200；）</p>
 <h3 id="条件查询"><a href="#条件查询" class="headerlink" title="条件查询"></a>条件查询</h3><p>SELECT语句通过WHERE条件来设定查询条件:SELECT * FROM &lt;表名&gt; WHERE &lt;条件表达式&gt;</p>
@@ -228,7 +228,7 @@
 <p>​                         要组合三个或者更多的条件，就需要用小括号()表示如何进行条件运算</p>
 <p>​                      （例：SELECT * FROM students WHERE (score &lt; 80 OR score &gt; 90) AND gender &#x3D; ‘M’;）</p>
 <p><em><strong>如果不加括号，条件运算按照NOT、AND、OR的优先级进行，即NOT优先级最高，其次是AND，最后是OR</strong></em></p>
-<p>![](&#x2F;屏幕截图 2023-10-13 193853.png)</p>
+<p><img src="/../../source/imgs/$%7Bfiilname%7D/sixth.png"></p>
 <h3 id="投影查询"><a href="#投影查询" class="headerlink" title="投影查询"></a>投影查询</h3><p>如果我们只希望返回某些列的数据，而不是所有列的数据，我们可以用SELECT 列1, 列2, 列3 FROM …，让结果集仅包含指定列。这种操作称为投影查询。（例<code>：SELECT id，name,score FROM students;</code>)</p>
 <p>使用SELECT 列1, 列2, 列3 FROM …时，还可以给每一列起个别名，这样，结果集的列名就可以与原表的列名不同。它的语法是<strong>SELECT 列1 别名1, 列2 别名2, 列3 别名3 FROM …</strong></p>
 <p>投影查询同样可以接WHERE条件，实现复杂的查询</p>
@@ -251,9 +251,9 @@
 <p>查询一个表中一共有多少条记录可以用COUNT()函数（<code>SELECT COUNT(*) FROM students;</code>）</p>
 <p>使用聚合查询时，我们应该给列名设置一个别名，便于处理结果（<code>SELECT COUNT(*) num FROM students;</code>）</p>
 <p><strong>聚合查询同样可以使用WHERE条件</strong></p>
-<p>![](&#x2F;屏幕截图 2023-10-13 204438.png)</p>
+<p><img src="/../../source/imgs/$%7Bfiilname%7D/seventh.png"></p>
 <p>其他聚合函数</p>
-<p>![](&#x2F;屏幕截图 2023-10-13 204630.png)</p>
+<p><img src="/../../source/imgs/$%7Bfiilname%7D/eighth.png"></p>
 <p>AVG：<code>SELECT AVG(score) average FROM students WHERE gender = &#39;M&#39;;</code></p>
 <p><strong>如果聚合查询的WHERE条件没有匹配到任何行，COUNT()会返回0，而SUM()、AVG()、MAX()和MIN()会返回NULL</strong></p>
 <p><strong>每页3条记录，如何通过聚合查询获得总页数：SELECT CEILING(COUNT(*) &#x2F; 3) FROM students;</strong></p>
