@@ -274,7 +274,7 @@
 <p>LEFT OUTER JOIN则返回左表都存在的行。</p>
 <p>FULL OUTER JOIN，它会把两张表的所有记录全部选择出来，并且，自动把对方不存在的列填充为NULL。</p>
 <p>例子：<code>SELECT s.id, s.name, s.class_id, c.name class_name, s.gender, s.score</code><br><code>FROM students s</code><br><code>RIGHT OUTER JOIN classes c</code><br><code>ON s.class_id = c.id;</code></p>
-<p><img src="/../../source/imgs/$%7Bfiilname%7D/ninth.png"></p>
+<p><img src="/ninth.png"></p>
 <h2 id="修改数据"><a href="#修改数据" class="headerlink" title="修改数据"></a>修改数据</h2><h3 id="INSERT"><a href="#INSERT" class="headerlink" title="INSERT"></a>INSERT</h3><p>当我们需要向数据库表中插入一条新记录时，就必须使用INSERT语句。</p>
 <p>语法：INSERT INTO &lt;表名&gt; (字段1, 字段2, …) VALUES (值1, 值2, …);</p>
 <p>例子：我们向students表插入一条新记录，先列举出需要插入的字段名称，然后在VALUES子句中依次写出对应字段的值</p>
