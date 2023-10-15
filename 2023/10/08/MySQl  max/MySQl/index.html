@@ -185,6 +185,7 @@
         </div>
         <div class="col-md-8 col-md-offset-2">
       		<p>[TOC]</p>
+<p><em><strong>在MySQL中最好所有数据都用英文表示，中文实在搞不成功！！！</strong></em></p>
 <p>数据库的三种类型：层次模型，网状模型，关系模型。</p>
 <h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><p>关系数据库支持的标准数据类型包括数值、字符串、时间等</p>
 <p><img src="/../../source/imgs/$%7Bfiilname%7D/first.png"></p>
@@ -221,7 +222,7 @@
 <h2 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h2><h3 id="基本查询"><a href="#基本查询" class="headerlink" title="基本查询"></a>基本查询</h3><p>查询数据库表的数据：SELECT * FROM 表名；</p>
 <p>SELECT 也可以用于计算（例如：SELECT 100 + 200；）</p>
 <h3 id="条件查询"><a href="#条件查询" class="headerlink" title="条件查询"></a>条件查询</h3><p>SELECT语句通过WHERE条件来设定查询条件:SELECT * FROM &lt;表名&gt; WHERE &lt;条件表达式&gt;</p>
-<p>（例如：SELECT * FROM students WHERE score&gt;&#x3D;80;)</p>
+<p>（例如：<code>SELECT * FROM students WHERE score&gt;=80</code>;)</p>
 <p>条件表达式:1.**&lt;条件1&gt; AND &lt;条件2&gt;**表达满足条件1并且满足条件2</p>
 <p>​                    2.**&lt;条件1&gt; OR &lt;条件2&gt;**表示满足条件1或者满足条件2</p>
 <p>​                    3**. NOT &lt;条件&gt;**，表示“不符合该条件”的记录(例如：写一个“不是2班的学生”这个条件：NOT class_id &#x3D; 2：)</p>
@@ -260,6 +261,26 @@
 <p><em><strong>分组语句</strong></em>：GROUP BY(例<code>：SELECT COUNT(*) num FROM students GROUP BY class_id;</code>)</p>
 <p>​                   也可以使用多个列进行分组</p>
 <p>​                  （<code>SELECT class_id, gender, COUNT(*) num FROM students GROUP BY class_id, gender;</code>）</p>
+<h3 id="多表查询"><a href="#多表查询" class="headerlink" title="多表查询"></a>多表查询</h3><p>语法：：SELECT * FROM &lt;表1&gt;， &lt;表2&gt;</p>
+<p>这种一次查询两个表的数据，查询的结果也是一个二维表，它是students表和classes表的“乘积”，即students表的每一行与classes表的每一行都两两拼在一起返回。结果集的列数是students表和classes表的列数之和，行数是students表和classes表的行数之积</p>
+<p>上述查询的结果集有两列id和两列name，两列id是因为其中一列是students表的id，而另一列是classes表的id，但是在结果集中，不好区分。两列name同理；要解决这个问题，我们仍然可以利用投影查询的<em><strong>“设置列的别名</strong></em>”来给两个表各自的id和name列起别名</p>
+<p>例子：<code>SELECT</code><br>    <code>students.id sid,</code>            多表查询时，要使用<strong>表名.列名</strong>这样的方式来引用列和设置别名，这样就避免了结果集的列名重复问题            <code>students.name,</code><br>    <code>students.gender,</code><br>    <code>students.score,</code><br>    <code>classes.id cid,</code><br>    <code>classes.name cname</code><br><code>FROM students, classes;</code></p>
+<p>FROM子句给表设置别名的语法是FROM &lt;表名1&gt;  &lt;别名1&gt;, &lt;表名2&gt;  &lt;别名2&gt;（使得投影查询更加的简洁）</p>
+<h3 id="连接查询"><a href="#连接查询" class="headerlink" title="连接查询"></a>连接查询</h3><p><strong>连接查询</strong>是另一种类型的多表查询。连接查询对多个表进行JOIN运算，简单地说，就是先确定一个主表作为结果集，然后，把其他表的行有选择性地“连接”在主表结果集上</p>
+<h4 id="内连接——INNER-JOIN"><a href="#内连接——INNER-JOIN" class="headerlink" title="内连接——INNER JOIN"></a>内连接——INNER JOIN</h4><p>查询写法：1、先确定主表，仍然使用FROM &lt;表1&gt;的语法；<br>                   2、再确定需要连接的表，使用INNER JOIN &lt;表2&gt;的语法；<br>                   3、 然后确定连接条件，使用ON &lt;条件…&gt;，这里的条件是<code>s.class_id = c.id</code>，表示students表的class_id列                                      与classes表的id列相同的行需要连接；<br>                   4、可选：加上WHERE子句、ORDER BY等子句。</p>
+<p>例子：<code>SELECT s.id, s.name, s.class_id, c.name class_name, s.gender, s.score FROM students s INNER JOIN classes c ON s.class_id = c.id;</code></p>
+<p>INNER JOIN只返回同时存在于两张表的行数据，由于students表的class_id包含1，2，3，classes表的id包含1，2，3，4，所以，INNER JOIN根据条件s.class_id &#x3D; c.id返回的结果集仅包含1，2，3。</p>
+<h4 id="外连接–OUTER-JOIN"><a href="#外连接–OUTER-JOIN" class="headerlink" title="外连接–OUTER JOIN"></a>外连接–OUTER JOIN</h4><p>RIGHT OUTER JOIN返回右表都存在的行。如果某一行仅在右表存在，那么结果集就会以NULL填充剩下的字段。</p>
+<p>LEFT OUTER JOIN则返回左表都存在的行。</p>
+<p>FULL OUTER JOIN，它会把两张表的所有记录全部选择出来，并且，自动把对方不存在的列填充为NULL。</p>
+<p>例子：<code>SELECT s.id, s.name, s.class_id, c.name class_name, s.gender, s.score</code><br><code>FROM students s</code><br><code>RIGHT OUTER JOIN classes c</code><br><code>ON s.class_id = c.id;</code></p>
+<img src="/ninth.png" style="zoom: 80%;" />
+
+<h2 id="修改数据"><a href="#修改数据" class="headerlink" title="修改数据"></a>修改数据</h2><h3 id="INSERT"><a href="#INSERT" class="headerlink" title="INSERT"></a>INSERT</h3><p>当我们需要向数据库表中插入一条新记录时，就必须使用INSERT语句。</p>
+<p>语法：INSERT INTO &lt;表名&gt; (字段1, 字段2, …) VALUES (值1, 值2, …);</p>
+<p>例子：我们向students表插入一条新记录，先列举出需要插入的字段名称，然后在VALUES子句中依次写出对应字段的值</p>
+<p>​          <code>INSERT INTO students (class_id, name, gender, score) VALUES (2, &#39;大牛&#39;, &#39;M&#39;, 80);</code></p>
+<p>可以一次性添加多条记录，只需要在<strong>VALUES子句</strong>中指定多个记录值，每个记录是由**(…)**包含的一组值，中间用 ， 隔开</p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
