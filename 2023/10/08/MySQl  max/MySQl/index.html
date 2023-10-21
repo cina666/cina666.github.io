@@ -231,7 +231,7 @@
 <p><em><strong>如果不加括号，条件运算按照NOT、AND、OR的优先级进行，即NOT优先级最高，其次是AND，最后是OR</strong></em></p>
 <p><img src="/../../source/imgs/$%7Bfiilname%7D/sixth.png"></p>
 <h3 id="投影查询"><a href="#投影查询" class="headerlink" title="投影查询"></a>投影查询</h3><p>如果我们只希望返回某些列的数据，而不是所有列的数据，我们可以用SELECT 列1, 列2, 列3 FROM …，让结果集仅包含指定列。这种操作称为投影查询。（例<code>：SELECT id，name,score FROM students;</code>)</p>
-<p>使用SELECT 列1, 列2, 列3 FROM …时，还可以给每一列起个别名，这样，结果集的列名就可以与原表的列名不同。它的语法是<strong>SELECT 列1 别名1, 列2 别名2, 列3 别名3 FROM …</strong></p>
+<p>使用SELECT 列1, 列2, 列3 FROM …时，还可以给每一列起个<strong>别名</strong>，这样，结果集的列名就可以与原表的列名不同。它的语法是<strong>SELECT 列1 别名1, 列2 别名2, 列3 别名3 FROM …</strong></p>
 <p>投影查询同样可以接WHERE条件，实现复杂的查询</p>
 <p><strong>总的应用一下</strong>：<code>SELECT id, score points, name FROM students WHERE gender = &#39;M&#39;</code>;</p>
 <h3 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h3><p>如果要按我们自己的排序而不是按主键排序则加上ORDER语句</p>
@@ -275,6 +275,10 @@
 <p>FULL OUTER JOIN，它会把两张表的所有记录全部选择出来，并且，自动把对方不存在的列填充为NULL。</p>
 <p>例子：<code>SELECT s.id, s.name, s.class_id, c.name class_name, s.gender, s.score</code><br><code>FROM students s</code><br><code>RIGHT OUTER JOIN classes c</code><br><code>ON s.class_id = c.id;</code></p>
 <p><img src="/../../source/imgs/$%7Bfiilname%7D/tenth.png"></p>
+<h3 id="DISTINCT"><a href="#DISTINCT" class="headerlink" title="DISTINCT"></a>DISTINCT</h3><p>作用：查询结果去除重复记录，但原表记录不会被修改</p>
+<p>基础语法：<code>SELECT DISTINCT 字段 FROM &lt;表名&gt;;</code></p>
+<p>DINSTINCT只能出现在所有字段的最前方</p>
+<p>例子：<code>SELECT DISTINCT job,number FROM &lt;表名&gt;;</code>表示job,number两个同时去重</p>
 <h2 id="修改数据"><a href="#修改数据" class="headerlink" title="修改数据"></a>修改数据</h2><h3 id="INSERT"><a href="#INSERT" class="headerlink" title="INSERT"></a>INSERT</h3><p>当我们需要向数据库表中插入一条新记录时，就必须使用INSERT语句。</p>
 <p>语法：INSERT INTO &lt;表名&gt; (字段1, 字段2, …) VALUES (值1, 值2, …);</p>
 <p>例子：我们向students表插入一条新记录，先列举出需要插入的字段名称，然后在VALUES子句中依次写出对应字段的值</p>
@@ -292,6 +296,31 @@
 <p>与UPDATE语句类似WHERE条件没有匹配到任何记录，DELETE语句不会报错，也不会有任何记录被删除</p>
 <p>和UPDATE类似，不带WHERE条件的DELETE语句会删除整个表的数据</p>
 <p>在执行<code>DELETE</code>语句时也要非常小心，最好先用<code>SELECT</code>语句来测试<code>WHERE</code>条件是否筛选出了期望的记录集，然后再用<code>DELETE</code>删除。</p>
+<h2 id="数据处理函数"><a href="#数据处理函数" class="headerlink" title="数据处理函数"></a>数据处理函数</h2><p>又被称为单行处理函数，特点是一个输入对应一个输出</p>
+<h3 id="LOWER（转换成小写）"><a href="#LOWER（转换成小写）" class="headerlink" title="LOWER（转换成小写）"></a>LOWER（转换成小写）</h3><p>语法：<code>SELECT LOWER(字段) FROM &lt;表名&gt;;</code></p>
+<h3 id="UPPER"><a href="#UPPER" class="headerlink" title="UPPER"></a>UPPER</h3><p>转化成大写；语法：<code>SELECT UPPER(字段) FROM &lt;表名&gt;;</code></p>
+<h3 id="SUBSTR"><a href="#SUBSTR" class="headerlink" title="SUBSTR"></a>SUBSTR</h3><p>取字符串;基本语法：<code>SUBSTR(截取的字符串,起始下标,截取的长度)</code>（注意：起始下标从1开始）</p>
+<p>例子：<code>SELECT SUBSTR(name,1,1) ename from students;</code></p>
+<h3 id="LENGTH"><a href="#LENGTH" class="headerlink" title="LENGTH"></a>LENGTH</h3><p>取长度；语法：<code>SELECT LENGTH(字段) FROM &lt;表名&gt;;</code></p>
+<p>例子：<code>SELECT LENGTH(name) namelength FROM students</code>;</p>
+<h2 id="表格相关内容"><a href="#表格相关内容" class="headerlink" title="表格相关内容"></a>表格相关内容</h2><h3 id="创建表格"><a href="#创建表格" class="headerlink" title="创建表格"></a>创建表格</h3><p>的通用语法：<code>CREATE TABLE &lt;表名&gt;(</code></p>
+<p>列名1 数据类型2，</p>
+<p>列名2 数据类型2，</p>
+<p>……</p>
+<p>列名n 数据类型n</p>
+<p><code>);</code></p>
+<p>数据库类型：<br>                    1. int：整数类型<br>                           age int,<br>                                        2. double:小数类型<br>                           score double(5,2)<br>                                                            3. date:日期，只包含年月日，yyyy-MM-dd<br>                                                                                4. datetime:日期，包含年月日时分秒     yyyy-MM-dd HH:mm:ss<br>                                                                                5. timestamp:时间错类型    包含年月日时分秒     yyyy-MM-dd HH:mm:ss<br>                         如果将来不给这个字段赋值，或赋值为null，则默认使用当前的系统时间，来自动赋值</p>
+<pre><code>                6. varchar：字符串
+                       name varchar(20):姓名最大20个字符
+                       zhangsan 8个字符  张三 2个字符
+</code></pre>
+<p>例子：<code>create table student(           id int,           name varchar(32),           age int ,           score double(4,1),           birthday date,           insert_time timestamp           );</code></p>
+<p>复制表：<code>CREATE table 表名 like 被复制的表名；</code></p>
+<p>查询某个数据库中所有的表名称： show tables;    查询表结构：desc 表名;</p>
+<h3 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h3><ol>
+<li>修改表名<br>         alter table 表名 rename to 新的表名;<br>     2. 修改表的字符集<br>         alter table 表名 character set 字符集名称;<br>     3. 添加一列<br>         alter table 表名 add 列名 数据类型;<br>     4. 修改列名称 类型<br>         alter table 表名 change 列名 新列别 新数据类型;<br>         alter table 表名 modify 列名 新数据类型;<br>     5. 删除列<br>         alter table 表名 drop 列名;</li>
+</ol>
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><p>语法：<code>drop table 表名；</code></p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
