@@ -219,6 +219,9 @@
 <p><img src="/../../source/imgs/$%7Bfiilname%7D/fourth.png"></p>
 <p>唯一索引</p>
 <p><img src="/../../source/imgs/$%7Bfiilname%7D/fifth.png"></p>
+<h3 id="导入数据"><a href="#导入数据" class="headerlink" title="导入数据"></a>导入数据</h3><p>先创建database(例子：<code>create database 文件名;</code>)</p>
+<p>然后 <code>sorce 文件路径；</code>例子：<code>source C:\Users\BD\MySQLwenjian\bilibili.sql;</code><strong>注意路径中不要有中文</strong></p>
+<h4 id="只看表的结构"><a href="#只看表的结构" class="headerlink" title="只看表的结构"></a>只看表的结构</h4><p><code>desc &lt;表名&gt;;</code></p>
 <h2 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h2><h3 id="基本查询"><a href="#基本查询" class="headerlink" title="基本查询"></a>基本查询</h3><p>查询数据库表的数据：SELECT * FROM 表名；</p>
 <p>SELECT 也可以用于计算（例如：SELECT 100 + 200；）</p>
 <h3 id="条件查询"><a href="#条件查询" class="headerlink" title="条件查询"></a>条件查询</h3><p>SELECT语句通过WHERE条件来设定查询条件:SELECT * FROM &lt;表名&gt; WHERE &lt;条件表达式&gt;</p>
@@ -230,6 +233,11 @@
 <p>​                      （例：SELECT * FROM students WHERE (score &lt; 80 OR score &gt; 90) AND gender &#x3D; ‘M’;）</p>
 <p><em><strong>如果不加括号，条件运算按照NOT、AND、OR的优先级进行，即NOT优先级最高，其次是AND，最后是OR</strong></em></p>
 <p><img src="/../../source/imgs/$%7Bfiilname%7D/sixth.png"></p>
+<p><strong>模糊查询</strong>：like;支持%或下划线匹配</p>
+<p>%匹配任意多个字符；下划线是任意一个字符</p>
+<p>例子：<code>SELECT ename from emp where ename like&#39;%o%&#39;;</code>（表示名字中间含’O’的）</p>
+<p>​           <code>SELECT ename from emp where ename like&#39;%T&#39;;</code>（表示名字以’T’结尾）</p>
+<p>​          <code>SELECT ename from emp where ename like&#39;_A%&#39;;</code>（表示第二个字母是’A’）</p>
 <h3 id="投影查询"><a href="#投影查询" class="headerlink" title="投影查询"></a>投影查询</h3><p>如果我们只希望返回某些列的数据，而不是所有列的数据，我们可以用SELECT 列1, 列2, 列3 FROM …，让结果集仅包含指定列。这种操作称为投影查询。（例<code>：SELECT id，name,score FROM students;</code>)</p>
 <p>使用SELECT 列1, 列2, 列3 FROM …时，还可以给每一列起个<strong>别名</strong>，这样，结果集的列名就可以与原表的列名不同。它的语法是<strong>SELECT 列1 别名1, 列2 别名2, 列3 别名3 FROM …</strong></p>
 <p>投影查询同样可以接WHERE条件，实现复杂的查询</p>
@@ -238,7 +246,7 @@
 <p><code>SELECT id, name, gender, score FROM students ORDER BY score;</code></p>
 <p>如果要反过来，按照成绩从高到底排序，我们可以加上DESC表示“倒序”（DESC加在score后面），如果score列有相同的数据那么可以继续添加列名</p>
 <p>如果有WHERE子句，那么ORDER BY子句要放到WHERE子句后面</p>
-<p><code>SELECT id, name, gender, score FROM students WHERE class_id = 1 ORDER BY score DESC;</code></p>
+<p><code>SELECT id, name, gender, score FROM students WHERE class_id = 1 ORDER BY score DESC;</code><strong>（多个字段排序字段之间加’,’  ，前面起主导作用）</strong></p>
 <h3 id="分页查询"><a href="#分页查询" class="headerlink" title="分页查询"></a>分页查询</h3><p>使用SELECT查询时，如果结果集数据量很大，比如几万行数据，放在一个页面显示的话数据量太大，不如分页显示，每次显示100条。</p>
 <p>要实现分页功能，实际上就是从结果集中显示第1<del>100条记录作为第1页，显示第101</del>200条记录作为第2页，以此类推。</p>
 <p>语句：<code>LIMIT &lt;N-M&gt; OFFSET &lt;M&gt;</code>（<N-M>表示为每页最多显示几个数据）</p>
@@ -251,11 +259,14 @@
 <h3 id="聚合查询"><a href="#聚合查询" class="headerlink" title="聚合查询"></a>聚合查询</h3><p>对于统计总数、平均数这类计算，SQL提供了专门的聚合函数，使用聚合函数进行查询，就是聚合查询</p>
 <p>查询一个表中一共有多少条记录可以用COUNT()函数（<code>SELECT COUNT(*) FROM students;</code>）</p>
 <p>使用聚合查询时，我们应该给列名设置一个别名，便于处理结果（<code>SELECT COUNT(*) num FROM students;</code>）</p>
+<p>count(*)与count(具体字段)的区别：前一个统计总行数，后一个统计该字段下所有不为NULL的元素总和</p>
 <p><strong>聚合查询同样可以使用WHERE条件</strong></p>
 <p><img src="/../../source/imgs/$%7Bfiilname%7D/seventh.png"></p>
 <p>其他聚合函数</p>
 <p><img src="/../../source/imgs/$%7Bfiilname%7D/eighth.png"></p>
 <p>AVG：<code>SELECT AVG(score) average FROM students WHERE gender = &#39;M&#39;;</code></p>
+<p><strong>注意：聚合函数自动忽略NULL</strong></p>
+<p>​			<strong>聚合函数不能直接用在WHERE子句中，因为聚合函数在使用时必须先分组才能使用</strong></p>
 <p><strong>如果聚合查询的WHERE条件没有匹配到任何行，COUNT()会返回0，而SUM()、AVG()、MAX()和MIN()会返回NULL</strong></p>
 <p><strong>每页3条记录，如何通过聚合查询获得总页数：SELECT CEILING(COUNT(*) &#x2F; 3) FROM students;</strong></p>
 <p><em><strong>分组语句</strong></em>：GROUP BY(例<code>：SELECT COUNT(*) num FROM students GROUP BY class_id;</code>)</p>
@@ -279,6 +290,7 @@
 <p>基础语法：<code>SELECT DISTINCT 字段 FROM &lt;表名&gt;;</code></p>
 <p>DINSTINCT只能出现在所有字段的最前方</p>
 <p>例子：<code>SELECT DISTINCT job,number FROM &lt;表名&gt;;</code>表示job,number两个同时去重</p>
+<h3 id="分组查询"><a href="#分组查询" class="headerlink" title="分组查询"></a>分组查询</h3><p>select…from…where…group by…order by…执行顺序是from,where,group by,select,order by</p>
 <h2 id="修改数据"><a href="#修改数据" class="headerlink" title="修改数据"></a>修改数据</h2><h3 id="INSERT"><a href="#INSERT" class="headerlink" title="INSERT"></a>INSERT</h3><p>当我们需要向数据库表中插入一条新记录时，就必须使用INSERT语句。</p>
 <p>语法：INSERT INTO &lt;表名&gt; (字段1, 字段2, …) VALUES (值1, 值2, …);</p>
 <p>例子：我们向students表插入一条新记录，先列举出需要插入的字段名称，然后在VALUES子句中依次写出对应字段的值</p>
@@ -301,8 +313,20 @@
 <h3 id="UPPER"><a href="#UPPER" class="headerlink" title="UPPER"></a>UPPER</h3><p>转化成大写；语法：<code>SELECT UPPER(字段) FROM &lt;表名&gt;;</code></p>
 <h3 id="SUBSTR"><a href="#SUBSTR" class="headerlink" title="SUBSTR"></a>SUBSTR</h3><p>取字符串;基本语法：<code>SUBSTR(截取的字符串,起始下标,截取的长度)</code>（注意：起始下标从1开始）</p>
 <p>例子：<code>SELECT SUBSTR(name,1,1) ename from students;</code></p>
+<p>例子：<code>SELECT  ename from emp where SUBSTR(ename,1,1)=&#39;A&#39;;</code>(找出第一个字母是A的人)</p>
 <h3 id="LENGTH"><a href="#LENGTH" class="headerlink" title="LENGTH"></a>LENGTH</h3><p>取长度；语法：<code>SELECT LENGTH(字段) FROM &lt;表名&gt;;</code></p>
 <p>例子：<code>SELECT LENGTH(name) namelength FROM students</code>;</p>
+<h3 id="TRIM"><a href="#TRIM" class="headerlink" title="TRIM"></a>TRIM</h3><p>去除前后空白</p>
+<p>例子：<code>SELECT * FROM emp WHERE ename=TRIM(&#39; King&#39;);</code>（可以试试去除这个函数会发生什么）</p>
+<h3 id="ROUND"><a href="#ROUND" class="headerlink" title="ROUND"></a>ROUND</h3><p>四舍五入；例子：<code>SELECT round(1234.567,0) result FROM emp;</code>(0表示保留到整数位；-1表示保留到十位数)</p>
+<h3 id="RAND"><a href="#RAND" class="headerlink" title="RAND"></a>RAND</h3><p>表示生成随机数：<code>SELECT RAND() FROM emp;</code>  例子：<code> SELECT ROUND(RAND()*100,0) FROM emp;</code>（100以内随机数）</p>
+<h3 id="IFNULL"><a href="#IFNULL" class="headerlink" title="IFNULL"></a>IFNULL</h3><p>可以将NULL转换成一个具体值；基础语法：<code>INFULL(数据,被当作哪个值);</code></p>
+<p>所有数据库中有NULL参与的数学运算最后结果都为NULL，为避免这个现象需要使用IFNULL函数</p>
+<p>例子：计算每个员工的年薪：<code> SELECT ename,(sal+IFNULL(comm,0))*12 as yearsal from emp;</code></p>
+<p>​            (试试去掉IFNULL函数会发生什么)</p>
+<h3 id="CASE-WHEN-THEN-WHEN-THEN-ELSE-END"><a href="#CASE-WHEN-THEN-WHEN-THEN-ELSE-END" class="headerlink" title="CASE..WHEN..THEN..WHEN..THEN..ELSE..END"></a>CASE..WHEN..THEN..WHEN..THEN..ELSE..END</h3><p><strong>不会修改数据库</strong></p>
+<p>例子：当员工为MANAGER的时候工资上调10%，当员工为SALESMAN的时候工资上调50%</p>
+<p><code> SELECT     -&gt; ename,     -&gt; job,     -&gt; (case job when&#39;MANAGER&#39; then sal*1.1 when &#39;SALESMAN&#39; then sal*1.5 else sal end) newsal     -&gt; from emp;</code>  </p>
 <h2 id="表格相关内容"><a href="#表格相关内容" class="headerlink" title="表格相关内容"></a>表格相关内容</h2><h3 id="创建表格"><a href="#创建表格" class="headerlink" title="创建表格"></a>创建表格</h3><p>的通用语法：<code>CREATE TABLE &lt;表名&gt;(</code></p>
 <p>列名1 数据类型2，</p>
 <p>列名2 数据类型2，</p>
