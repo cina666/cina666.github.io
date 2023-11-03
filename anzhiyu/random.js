@@ -1,1 +1,1 @@
-var posts=["2023/10/05/第一篇博客/","2023/10/24/http协议，GET以及POST/http协议，GET以及POST/","2023/10/08/MySQl  max/MySQl/","2023/10/05/hello-world/"];function toRandomPost(){pjax.loadUrl('/'+posts[Math.floor(Math.random() * posts.length)]);};
+var posts=["2023/10/05/hello-world/","2023/10/05/第一篇博客/","2023/10/08/MySQl  max/MySQl/","2023/10/24/http协议，GET以及POST/http协议，GET以及POST/","2023/10/28/php/php/"];function toRandomPost(){pjax.loadUrl('/'+posts[Math.floor(Math.random() * posts.length)]);};
