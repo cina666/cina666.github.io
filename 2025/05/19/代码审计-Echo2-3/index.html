@@ -1,0 +1,508 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>代码审计-Echo2.3 | Sherlock</title><meta name="keywords" content="智商不够,勤勉来凑;眼神不太好"><meta name="author" content="Sherlock"><meta name="copyright" content="Sherlock"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="代码审计-Echo2.3"><meta name="application-name" content="代码审计-Echo2.3"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="代码审计-Echo2.3"><meta property="og:url" content="http://example.com/2025/05/19/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-Echo2-3/index.html"><meta property="og:site_name" content="Sherlock"><meta property="og:description" content="项目介绍开源社区系统：基于 SpringBoot + MyBatis + MySQL + Redis + Kafka + Elasticsearch + Spring Security + … 并提供详细的开发文档和配套教程。包含帖子、评论、私信、系统通知、点赞、关注、搜索、用户设置、数据统计等模块"><meta property="og:locale" content="en"><meta property="og:image" content="http://example.com/img/Sherlock.jpg"><meta property="article:author" content="Sherlock"><meta property="article:tag" content="智商不够,勤勉来凑;眼神不太好"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="http://example.com/img/Sherlock.jpg"><meta name="description" content="项目介绍开源社区系统：基于 SpringBoot + MyBatis + MySQL + Redis + Kafka + Elasticsearch + Spring Security + … 并提供详细的开发文档和配套教程。包含帖子、评论、私信、系统通知、点赞、关注、搜索、用户设置、数据统计等模块"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="http://example.com/2025/05/19/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-Echo2-3/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@5.0.20/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: {"enable":true,"img":"https://upload-bbs.miyoushe.com/upload/2023/09/03/125766904/ee23df8517f3c3e3efc4145658269c06_5714860933110284659.png"},
+  postHeadAiDescription: {"enable":true,"gptName":"AnZhiYu","mode":"local","switchBtn":false,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"xxxx","Referer":"https://xx.xx/"},
+  diytitle: {"enable":true,"leaveTitle":"w(ﾟДﾟ)w 不要走！再看看嘛！","backTitle":"♪(^∇^*)欢迎肥来！"},
+  LA51: undefined,
+  greetingBox: undefined,
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: true,
+  mainTone: undefined,
+  authorStatus: {"skills":["🔍 分享与热心帮助","🤝 喜欢团结协作","🏃 脚踏实地行动派","💢 壮汉人狠话不多"]},
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: {"limitDay":365,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: true,
+    simplehomepage: false,
+    post: true
+  },
+  runtime: 'days',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"Author: Sherlock","link":"Link: ","source":"Source: Sherlock","info":"Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.","copySuccess":"Copy success, copy and reprint please mark the address of this article"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"Traditional Chinese Activated Manually","cht_to_chs":"Simplified Chinese Activated Manually","day_to_night":"Dark Mode Activated Manually","night_to_day":"Light Mode Activated Manually","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'Sherlock',
+  title: '代码审计-Echo2.3',
+  postAI: '',
+  pageFillDescription: '项目介绍, 环境搭建, 审计, 碰壁1, 绕过鉴权, 未授权上传任意文件, 未授权各种遍历, 碰壁2, 总结, 参考项目介绍开源社区系统基于并提供详细的开发文档和配套教程包含帖子评论私信系统通知点赞关注搜索用户设置数据统计等模块的项目还是比较不错的项目地址环境搭建的安装较为简单这里就不介绍了对于和来说两个是配套使用的并且就已经内置了适配的了不需要我们自己再去单独下载安装要不然你还要考虑两个版本适不适配吃了大亏这里直接贴链接对于的安装可参考但是有点不同的是对于我自己来说我在文件中还要多添加一点如下如上配置之后就可以正常使用了就是多关闭了机器学习的功能注启动项目之前上面这些基础配置都要开启来接下来我们需要先把该项目的源码下下来然后对文件进行一部分的修改数据库名自己的账号名自己的密码该字段见安装包中的的其他配置要是你的那些配置都保持默认的话那么也不需要进行更改然后我们还需要创建数据库并将提供的文件全部导入进去最后导入完后的结果如下最后就是启动访问我们设定的对应端口审计由于第一次审计项目木有经验再加上这是个小项目代码量也不能算很多所以我是全部的文件都看了一遍首先该项目里面是不存在注入漏洞的这是因为所有的输入点都进行了预编译处理都用进行了处理碰壁无妨继续审计看到了一个有趣的地方位于文件中更新图像路径将本地的图像路径更新为云服务器上的图像路径文件名不能为空文件在云服务器上的的访问路径方法是直接读取了云服务器上面的图像文件当作了头像虽然说对最后的文件路径进行了处理无法控制这时我就想着上传图片的方法有没有设置检验图片内容啥的该方法如下生成上传文件的名称设置响应信息的规定写法生成上传到的凭证的规定写法没有对上传的文件进行任何检验也就是说我们可以上传任意文件所以我尝试上传一个文件但很遗憾的是无法触发查了一下才发现该链接是通过标签进行的加载浏览器会将文件当作图片解析显示破损图标所以无法触发成功忘了这茬绕过鉴权继续审计在中有一个方法存在漏洞从中获取凭证查询凭证检查凭证状态是否有效以及是否过期根据凭证查询用户在本次请求中持有用户信息构建用户认证的结果并存入以便于进行授权对于框架熟悉都知道该类实现了接口其方法在每一次请求的过程中都会执行一遍而该方法只对有值的时候进行鉴权对于值为的时候没有进行任何处理直接返回所以我们便可以轻松绕过鉴权了具体如何使用会配合下面的漏洞进行未授权上传任意文件位于文件中的方法这是一个通过方法访问的接口注释说的是拿来上传图片用的但是看具体代码实现我们发现还是没有对上传的文件内容后缀名进行任何的检验也就是说我们可以上传任意文件当然这功能是得在登录后才能使用的但我们前面不是发现了一个鉴权绕过嘛可以直接打配合实现未授权任意文件上传让帮忙生成一个表单上传文件的报文然后进行利用上传成功访问该链接却报了打开查了一下问题如下将该报错拿去问了按其提供的方法进行尝试依旧无果不知道是哪里配置出的问题但文件是确确实实上传成功了我们通过中的配置可以知道上传的文件存储位置直接点该文件确认了文件是没有问题的那就很奇怪了未授权各种遍历文件中有好几个方法存在可以说是一模一样的漏洞第一个是方法该函数的内容不重要重点是看上面的链接代码是根据的值来决定要访问的是哪一个用户但是依然需要我们绕过鉴权然后我们就可以对该的值进行爆破获取大量信息来一个例子如下第二个方法是方法依旧是通过来访问每个人发布的帖子进行利用如下最后一个方法是方法还是通过来访问每个人自己的评论回复进行利用如下碰壁是位于文件中的方法触发删帖事件通过消息队列更新服务器看着似乎是直接传参的值然后便可以进行一个删除帖子的操作尝试一手结果是直接跳转到了页面哦吼进到具体的帖子里面进行查看发现没有看到有删帖这个按钮感觉这个操作是管理员才能做的全局搜索一下果然是有不同权限的查看其用法在文件中的方法中定义了每个不同的权限可以访问的路由而上面的删帖路由便要求必须是才可以再查一下权限是在哪里确定的位于文件中的方法继续查看该方法的调用熟悉吧我们绕过鉴权的方法就注定了我们连普通用户的权限都没有那为什么上面的漏洞我们可以直接配合绕过鉴权来利用呢这是因为在文件中的方法中定义的所有需要权限的路由上面那几个正好都不包括在其中又是一个人工失误的地方总结第一次进行代码审计采用了最笨的方法把全部代码都看了一遍虽然耗的时间长了些但是从结果来看还是值得的当然也有了一些思路了重点关注目录下面的代码当然还有目录下面的毕竟该目录下面的文件作用主要用于拦截用户的请求并做相应的处理通常应用在权限验证记录请求信息的日志判断用户是否登录等功能上可能存在绕过鉴权等漏洞参考代码审计',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2025-05-19 22:05:21',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="/img/Sherlock.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><a id="site-name" href="/" accesskey="h"><div class="title">Sherlock</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/link/"><span> 友人帐</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/essay/"><span> 闲言碎语</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索🔍" accesskey="s"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span> Search</span></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> Newest Comments</span></div><div class="aside-list"><span>loading...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/cors/" style="font-size: 1.05rem;">cors<sup>1</sup></a><a href="/tags/csrf/" style="font-size: 1.05rem;">csrf<sup>1</sup></a><a href="/tags/php/" style="font-size: 1.05rem;">php<sup>5</sup></a><a href="/tags/python/" style="font-size: 1.05rem;">python<sup>3</sup></a><a href="/tags/sql/" style="font-size: 1.05rem;">sql<sup>3</sup></a><a href="/tags/ssrf/" style="font-size: 1.05rem;">ssrf<sup>1</sup></a><a href="/tags/ssti/" style="font-size: 1.05rem;">ssti<sup>2</sup></a><a href="/tags/web/" style="font-size: 1.05rem;">web<sup>3</sup></a><a href="/tags/xss/" style="font-size: 1.05rem;">xss<sup>1</sup></a><a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 1.05rem;">前端<sup>2</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>Archives</span><a class="card-more-btn" href="/archives/" title="More">
+    <i class="anzhiyufont anzhiyu-icon-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/05/"><span class="card-archive-list-date">May 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">3</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/04/"><span class="card-archive-list-date">April 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/03/"><span class="card-archive-list-date">March 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">6</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/02/"><span class="card-archive-list-date">February 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/01/"><span class="card-archive-list-date">January 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/12/"><span class="card-archive-list-date">December 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/11/"><span class="card-archive-list-date">November 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/10/"><span class="card-archive-list-date">October 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">5</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item on" id="consoleCommentBarrage" onclick="anzhiyu.switchCommentBarrage()" title="热评开关"><a class="commentBarrage"><i class="anzhiyufont anzhiyu-icon-message"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" itemprop="url">代码审计</a></span><span class="article-meta tags"></span></div></div><h1 class="post-title" itemprop="name headline">代码审计-Echo2.3</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2025-05-19T11:44:30.000Z" title="Created 2025-05-19 19:44:30">2025-05-19</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2025-05-19T14:05:21.496Z" title="Updated 2025-05-19 22:05:21">2025-05-19</time></span></div><div class="meta-secondline"><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为福建"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>福建</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src=""></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="http://example.com/2025/05/19/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-Echo2-3/"><header><a class="post-meta-categories" href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" itemprop="url">代码审计</a><h1 id="CrawlerTitle" itemprop="name headline">代码审计-Echo2.3</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">Sherlock</span><time itemprop="dateCreated datePublished" datetime="2025-05-19T11:44:30.000Z" title="Created 2025-05-19 19:44:30">2025-05-19</time><time itemprop="dateCreated datePublished" datetime="2025-05-19T14:05:21.496Z" title="Updated 2025-05-19 22:05:21">2025-05-19</time></header><h1 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h1><p>开源社区系统：基于 SpringBoot + MyBatis + MySQL + Redis + Kafka + Elasticsearch + Spring Security + … 并提供详细的开发文档和配套教程。包含帖子、评论、私信、系统通知、点赞、关注、搜索、用户设置、数据统计等模块。3000+Star的项目还是比较不错的</p>
+<p>项目地址：<a target="_blank" rel="noopener" href="https://gitee.com/veal98/Echo">https://gitee.com/veal98/Echo</a></p>
+<h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">JDK 1.8.0_65</span><br><span class="line">Maven 3.9.9</span><br><span class="line">redis 3.0.504</span><br><span class="line">zookeeper 3.6.4</span><br><span class="line">kafka 2.12-3.5.1</span><br><span class="line">Elasticsearch 6.4.3</span><br></pre></td></tr></table></figure>
+
+<p>redis的安装较为简单，这里就不介绍了</p>
+<p>对于zookeeper和kafka来说，两个是配套使用的，并且kafka就已经内置了适配的zookeeper了，不需要我们自己再去单独下载安装，要不然你还要考虑两个版本适不适配（吃了大亏。。。）</p>
+<p>这里直接贴链接：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/Marydon20170307/p/17933358.html">https://www.cnblogs.com/Marydon20170307/p/17933358.html</a></p>
+<p>对于Elasticsearch的安装可参考：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/451571598">https://zhuanlan.zhihu.com/p/451571598</a></p>
+<p>但是有点不同的是，对于我自己来说，我在conf\elasticsearch.yml文件中还要多添加一点，如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">http.cors.enabled: true</span><br><span class="line">http.cors.allow-origin: &quot;*&quot;</span><br><span class="line">network.host: 127.0.0.1</span><br><span class="line">xpack.ml.enabled: false</span><br></pre></td></tr></table></figure>
+
+<p>如上配置之后就可以正常使用了，就是多关闭了机器学习的功能</p>
+<p><strong>注：启动项目之前上面这些基础配置都要开启来</strong></p>
+<p>接下来我们需要先把该项目的源码下下来，然后对src&#x2F;main&#x2F;resources&#x2F;application-develop.properties文件进行一部分的修改</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.datasource.url</span> = <span class="string">jdbc:mysql://127.0.0.1:3306/数据库名?characterEncoding=utf-8&amp;useSSL=false&amp;serverTimezone=Hongkong</span></span><br><span class="line"><span class="attr">spring.datasource.username</span> = <span class="string">自己的账号名</span></span><br><span class="line"><span class="attr">spring.datasource.password</span> = <span class="string">自己的密码</span></span><br><span class="line"><span class="attr">......</span></span><br><span class="line"><span class="comment"># Elasticsearch</span></span><br><span class="line"><span class="attr">spring.data.elasticsearch.cluster-name</span> = <span class="string">该字段见 Elasticsearch 安装包中的 elasticsearch.yml的cluster-name</span></span><br><span class="line"><span class="attr">spring.data.elasticsearch.cluster-nodes</span> = <span class="string">127.0.0.1:9300</span></span><br></pre></td></tr></table></figure>
+
+<p>其他配置要是你的redis那些配置都保持默认的话那么也不需要进行更改</p>
+<p>然后我们还需要创建数据库并将提供的sql文件全部导入进去，最后导入完后的结果如下：<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250519200735352.png" alt="image-20250519200735352"></p>
+<p>最后就是启动springboot，访问我们设定的对应端口</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250519200846676.png" alt="image-20250519200846676"></p>
+<h1 id="审计"><a href="#审计" class="headerlink" title="审计"></a>审计</h1><p>由于第一次审计java项目木有经验，再加上这是个小项目，代码量也不能算很多，所以我是全部的文件都看了一遍</p>
+<p>首先该项目里面是不存在sql注入漏洞的，这是因为所有的输入点都进行了预编译处理，都用<code>#&#123;&#125;</code>进行了处理</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250519201336939.png" alt="image-20250519201336939"></p>
+<h2 id="碰壁1"><a href="#碰壁1" class="headerlink" title="碰壁1"></a>碰壁1</h2><p>无妨，继续审计，看到了一个有趣的地方，位于UserController.java文件中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 更新图像路径（将本地的图像路径更新为云服务器上的图像路径）</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> fileName</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@PostMapping(&quot;/header/url&quot;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">updateHeaderUrl</span><span class="params">(String fileName)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (StringUtils.isBlank(fileName)) &#123;</span><br><span class="line">        <span class="keyword">return</span> CommunityUtil.getJSONString(<span class="number">1</span>, <span class="string">&quot;文件名不能为空&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 文件在云服务器上的的访问路径</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">url</span> <span class="operator">=</span> headerBucketUrl + <span class="string">&quot;/&quot;</span> + fileName;</span><br><span class="line">    userService.updateHeader(hostHolder.getUser().getId(), url);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> CommunityUtil.getJSONString(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>方法是直接读取了云服务器上面的图像文件当作了头像，虽然说对最后的文件路径进行了处理，无法控制</p>
+<p>这时我就想着上传图片的方法有没有设置检验图片内容啥的，该方法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/setting&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">getSettingPage</span><span class="params">(Model model)</span> &#123;</span><br><span class="line">    <span class="comment">// 生成上传文件的名称</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">fileName</span> <span class="operator">=</span> CommunityUtil.generateUUID();</span><br><span class="line">    model.addAttribute(<span class="string">&quot;fileName&quot;</span>, fileName);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 设置响应信息(qiniu 的规定写法)</span></span><br><span class="line">    <span class="type">StringMap</span> <span class="variable">policy</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringMap</span>();</span><br><span class="line">    policy.put(<span class="string">&quot;returnBody&quot;</span>, CommunityUtil.getJSONString(<span class="number">0</span>));</span><br><span class="line">    <span class="comment">// 生成上传到 qiniu 的凭证(qiniu 的规定写法)</span></span><br><span class="line">    <span class="type">Auth</span> <span class="variable">auth</span> <span class="operator">=</span> Auth.create(accessKey, secretKey);</span><br><span class="line">    <span class="type">String</span> <span class="variable">uploadToken</span> <span class="operator">=</span> auth.uploadToken(headerBucketName, fileName, <span class="number">3600</span>, policy);</span><br><span class="line">    model.addAttribute(<span class="string">&quot;uploadToken&quot;</span>, uploadToken);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;/site/setting&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>没有对上传的文件进行任何检验，也就是说我们可以上传任意文件，所以我尝试上传一个xss文件，但很遗憾的是无法触发，查了一下才发现该链接是通过<code>&lt;img&gt;</code>标签进行的加载，浏览器会将 HTML 文件当作图片解析（显示破损图标），所以无法触发成功（忘了这茬。。。）</p>
+<h2 id="绕过鉴权"><a href="#绕过鉴权" class="headerlink" title="绕过鉴权"></a>绕过鉴权</h2><p>继续审计，在LoginTicketInterceptor.java中有一个preHandle方法存在漏洞</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    <span class="comment">// 从 cookie 中获取凭证</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">ticket</span> <span class="operator">=</span> CookieUtil.getValue(request, <span class="string">&quot;ticket&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (ticket != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="comment">// 查询凭证</span></span><br><span class="line">        <span class="type">LoginTicket</span> <span class="variable">loginTicket</span> <span class="operator">=</span> userService.findLoginTicket(ticket);</span><br><span class="line">        <span class="comment">// 检查凭证状态（是否有效）以及是否过期</span></span><br><span class="line">        <span class="keyword">if</span> (loginTicket != <span class="literal">null</span> &amp;&amp; loginTicket.getStatus() == <span class="number">0</span> &amp;&amp; loginTicket.getExpired().after(<span class="keyword">new</span> <span class="title class_">Date</span>())) &#123;</span><br><span class="line">            <span class="comment">// 根据凭证查询用户</span></span><br><span class="line">            <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> userService.findUserById(loginTicket.getUserId());</span><br><span class="line">            <span class="comment">// 在本次请求中持有用户信息</span></span><br><span class="line">            hostHolder.setUser(user);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 构建用户认证的结果，并存入 SecurityContext, 以便于 Spring Security 进行授权</span></span><br><span class="line">            <span class="type">Authentication</span> <span class="variable">authentication</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UsernamePasswordAuthenticationToken</span>(</span><br><span class="line">                    user, user.getPassword(), userService.getAuthorities(user.getId())</span><br><span class="line">            );</span><br><span class="line">            SecurityContextHolder.setContext(<span class="keyword">new</span> <span class="title class_">SecurityContextImpl</span>(authentication));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于spring框架熟悉都知道，该类实现了HandlerInterceptor接口，其preHandle方法在每一次请求的过程中都会执行一遍</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HttpRequest --&gt; Filter --&gt; DispactherServlet --&gt; Interceptor --&gt; Controller</span><br></pre></td></tr></table></figure>
+
+<p>而该方法只对ticket有值的时候进行鉴权，对于ticket值为null的时候没有进行任何处理，直接返回true，所以我们便可以轻松绕过鉴权了，具体如何使用会配合下面的漏洞进行</p>
+<h2 id="未授权上传任意文件"><a href="#未授权上传任意文件" class="headerlink" title="未授权上传任意文件"></a>未授权上传任意文件</h2><p>位于DiscussPostController.java文件中的uploadMdPic方法</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250519205256223.png" alt="image-20250519205256223"></p>
+<p>这是一个通过post方法访问的接口，注释说的是拿来上传图片用的，但是看具体代码实现我们发现还是没有对上传的文件内容，后缀名进行任何的检验，也就是说我们可以上传任意文件，当然这功能是得在登录后才能使用的，但我们前面不是发现了一个鉴权绕过嘛，可以直接打配合实现未授权任意文件上传</p>
+<p>让ai帮忙生成一个html表单上传文件的报文，然后进行利用</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250519210352250.png" alt="image-20250519210352250"></p>
+<p>上传成功，访问该链接却报了404，打开hackbar查了一下问题如下：<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250519210536310.png" alt="image-20250519210536310"></p>
+<p>将该报错拿去问了ai，按其提供的方法进行尝试依旧无果，不知道是哪里配置出的问题，但文件是确确实实上传成功了</p>
+<p>我们通过application-develop.properties中的配置可以知道上传的文件存储位置</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250519210808812.png" alt="image-20250519210808812"></p>
+<p>直接点该文件，确认了文件是没有问题的</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250519210906201.png" alt="image-20250519210906201"></p>
+<p>那就很奇怪了。。。</p>
+<h2 id="未授权各种遍历"><a href="#未授权各种遍历" class="headerlink" title="未授权各种遍历"></a>未授权各种遍历</h2><p>UserController.java文件中有好几个方法存在可以说是一模一样的漏洞，第一个是getProfilePage方法</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250519212343138.png" alt="image-20250519212343138"></p>
+<p>该函数的内容不重要，重点是看上面的链接代码<code>@GetMapping(&quot;/profile/&#123;userId&#125;&quot;)</code>，是根据userId的值来决定要访问的是哪一个用户，但是依然需要我们绕过鉴权，然后我们就可以对该userId的值进行爆破，获取大量信息</p>
+<p>来一个例子如下：<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250519212659324.png" alt="image-20250519212659324"></p>
+<p>第二个方法是getMyDiscussPosts方法</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250519212817627.png" alt="image-20250519212817627"></p>
+<p>依旧是通过userId来访问每个人发布的帖子，进行利用如下：<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250519212933347.png" alt="image-20250519212933347"></p>
+<p>最后一个方法是getMyComments方法</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250519213026114.png" alt="image-20250519213026114"></p>
+<p>还是通过userId来访问每个人自己的评论&#x2F;回复，进行利用如下：</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250519213154100.png" alt="image-20250519213154100"></p>
+<h2 id="碰壁2"><a href="#碰壁2" class="headerlink" title="碰壁2"></a>碰壁2</h2><p>是位于DiscussPostController.java文件中的setDelete方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping(&quot;/delete&quot;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">setDelete</span><span class="params">(<span class="type">int</span> id)</span> &#123;</span><br><span class="line">    discussPostService.updateStatus(id, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 触发删帖事件，通过消息队列更新 Elasticsearch 服务器</span></span><br><span class="line">    <span class="type">Event</span> <span class="variable">event</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Event</span>()</span><br><span class="line">            .setTopic(TOPIC_DELETE)</span><br><span class="line">            .setUserId(hostHolder.getUser().getId())</span><br><span class="line">            .setEntityType(ENTITY_TYPE_POST)</span><br><span class="line">            .setEntityId(id);</span><br><span class="line">    eventProducer.fireEvent(event);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> CommunityUtil.getJSONString(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看着似乎是直接post传参id的值然后便可以进行一个删除帖子的操作，尝试一手</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="../source/imgs/${fiilname}/image-20250519214435796.png" alt="image-20250519214435796" style="zoom:50%;" />
+
+
+
+<p>结果是直接跳转到了&#x2F;denied页面，哦吼？进到具体的帖子里面进行查看，发现没有看到有删帖这个按钮</p>
+<p>感觉这个操作是管理员才能做的，全局搜索一下admin</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250519214723437.png" alt="image-20250519214723437"></p>
+<p>果然是有不同权限的，查看其用法</p>
+<p>在SecurityConfig.java文件中的configure方法中定义了每个不同的权限可以访问的路由，而上面的删帖路由便要求必须是admin才可以</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250519214957001.png" alt="image-20250519214957001"></p>
+<p>再查一下权限是在哪里确定的，位于UserService.java文件中的getAuthorities方法</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250519215243803.png" alt="image-20250519215243803"></p>
+<p>继续查看该方法的调用</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20250519215418172.png" alt="image-20250519215418172"></p>
+<p>熟悉吧，我们绕过鉴权的方法就注定了我们连普通用户的权限都没有</p>
+<p>那为什么上面的漏洞我们可以直接配合绕过鉴权来利用呢，这是因为在SecurityConfig.java文件中的configure方法中定义的所有需要权限的路由上面那几个正好都不包括在其中，又是一个人工失误的地方</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>第一次进行java代码审计，采用了最笨的方法，把全部代码都看了一遍，虽然耗的时间长了些，但是从结果来看还是值得的</p>
+<p>当然也有了一些思路了，重点关注controller目录下面的代码，当然还有interceptor目录下面的，毕竟该目录下面的文件作用主要用于拦截用户的请求并做相应的处理，通常应用在权限验证、记录请求信息的日志、判断用户是否登录等功能上，可能存在绕过鉴权等漏洞</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="%5BJAVA%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E2%80%94%E2%80%94Echo4.2-%E5%85%88%E7%9F%A5%E7%A4%BE%E5%8C%BA%5D(https://xz.aliyun.com/news/17648)">JAVA代码审计——Echo4.2</a></p>
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/Sherlock.jpg" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/Sherlock.jpg" title="头像" alt="头像"></a><div class="post-copyright__author_name">Sherlock</div><div class="post-copyright__author_desc">言念君子，温其如玉</div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="http://example.com/2025/05/19/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-Echo2-3/">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('http://example.com/2025/05/19/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-Echo2-3/')">代码审计-Echo2.3</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="http://example.com/2025/05/19/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-Echo2-3/"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=代码审计-Echo2.3&amp;url=http://example.com/2025/05/19/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-Echo2-3/&amp;pic=" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="rm.copyPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__tag-list"></div></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2025/05/06/java%E5%86%85%E5%AD%98%E9%A9%AC%E5%AD%A6%E4%B9%A0/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">java内存马学习</div></div></a></div><div class="next-post pull-right"><a href="/2025/05/21/java%E5%86%85%E5%AD%98%E9%A9%AC%E4%B9%8Bjava-agent/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">java内存马之java-agent</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()"></div><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/Sherlock.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-status"><img class="g-status" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/08/24/64e6ce9c507bb.png" ait="status"/></div></div><div class="author-info__description"><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">这里是我<b style="color:#fff">记录学习</b>收获的个人博客，<b style="color:#fff">也希望</b>能和大家一起<b style="color:#fff">进步</b>。</div><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">愿你可以在这里找到对你有<b style="color:#fff">帮助</b>的<b style="color:#fff">文章</b>。</div></div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">Sherlock</h1><div class="author-info__desc">言念君子，温其如玉</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/cina666" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a></div></div></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bullhorn anzhiyu-shake"></i><span>Announcement</span></div><div class="announcement_content">欢迎来看我的博客鸭~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">项目介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-number">2.</span> <span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%A1%E8%AE%A1"><span class="toc-number">3.</span> <span class="toc-text">审计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A2%B0%E5%A3%811"><span class="toc-number">3.1.</span> <span class="toc-text">碰壁1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%95%E8%BF%87%E9%89%B4%E6%9D%83"><span class="toc-number">3.2.</span> <span class="toc-text">绕过鉴权</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AA%E6%8E%88%E6%9D%83%E4%B8%8A%E4%BC%A0%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6"><span class="toc-number">3.3.</span> <span class="toc-text">未授权上传任意文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AA%E6%8E%88%E6%9D%83%E5%90%84%E7%A7%8D%E9%81%8D%E5%8E%86"><span class="toc-number">3.4.</span> <span class="toc-text">未授权各种遍历</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A2%B0%E5%A3%812"><span class="toc-number">3.5.</span> <span class="toc-text">碰壁2</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">5.</span> <span class="toc-text">参考</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/21/java%E5%86%85%E5%AD%98%E9%A9%AC%E4%B9%8Bjava-agent/" title="java内存马之java-agent">java内存马之java-agent</a><time datetime="2025-05-21T14:07:39.000Z" title="Created 2025-05-21 22:07:39">2025-05-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/19/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-Echo2-3/" title="代码审计-Echo2.3">代码审计-Echo2.3</a><time datetime="2025-05-19T11:44:30.000Z" title="Created 2025-05-19 19:44:30">2025-05-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/06/java%E5%86%85%E5%AD%98%E9%A9%AC%E5%AD%A6%E4%B9%A0/" title="java内存马学习">java内存马学习</a><time datetime="2025-05-06T10:58:43.000Z" title="Created 2025-05-06 18:58:43">2025-05-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/28/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Byso%E4%B8%AD%E7%9A%84spring%E9%93%BE%E5%AD%90%E5%88%86%E6%9E%90/" title="java反序列化之yso中的spring链子分析">java反序列化之yso中的spring链子分析</a><time datetime="2025-04-28T12:11:42.000Z" title="Created 2025-04-28 20:11:42">2025-04-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/20/ZeroDaysCTF-web%E9%A2%98%E8%A7%A3/" title="ZeroDaysCTF-web题解">ZeroDaysCTF-web题解</a><time datetime="2025-04-20T08:53:51.000Z" title="Created 2025-04-20 16:53:51">2025-04-20</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="workboard"><img class="workSituationImg boardsign" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.0.4/img/badge/安知鱼-上班摸鱼中.svg" alt="距离月入25k也就还差一个大佬带我~" title="距离月入25k也就还差一个大佬带我~"/><div id="runtimeTextTip"></div></div></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2023 - 2025 By <a class="footer-bar-link" href="/" title="Sherlock" target="_blank">Sherlock</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">Articles</div><div class="length-num">66</div></a><a href="/tags/" title="tag"><div class="headline">Tags</div><div class="length-num">10</div></a><a href="/categories/" title="category"><div class="headline">Categories</div><div class="length-num">9</div></a></div><span class="sidebar-menu-item-title">Function</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="Display Mode"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>Display Mode</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blog.anheyu.com/" title="博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://image.anheyu.com/" title="安知鱼图床"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://image.anheyu.com/favicon.ico" alt="安知鱼图床"/><span class="back-menu-item-text">安知鱼图床</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/link/"><span> 友人帐</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/essay/"><span> 闲言碎语</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/cors/" style="font-size: 0.88rem;">cors<sup>1</sup></a><a href="/tags/csrf/" style="font-size: 0.88rem;">csrf<sup>1</sup></a><a href="/tags/php/" style="font-size: 0.88rem;">php<sup>5</sup></a><a href="/tags/python/" style="font-size: 0.88rem;">python<sup>3</sup></a><a href="/tags/sql/" style="font-size: 0.88rem;">sql<sup>3</sup></a><a href="/tags/ssrf/" style="font-size: 0.88rem;">ssrf<sup>1</sup></a><a href="/tags/ssti/" style="font-size: 0.88rem;">ssti<sup>2</sup></a><a href="/tags/web/" style="font-size: 0.88rem;">web<sup>3</sup></a><a href="/tags/xss/" style="font-size: 0.88rem;">xss<sup>1</sup></a><a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 0.88rem;">前端<sup>2</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="Switch Between Traditional Chinese And Simplified Chinese">繁</button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="8152976493" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random"></meting-js></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="anzhiyufont anzhiyu-icon-xmark"></i></button></nav><div class="is-center" id="loading-database"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-pulse-icon"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div id="he-plugin-simple"></div><script>var WIDGET = {
+  "CONFIG": {
+    "modules": "0124",
+    "background": "2",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "16",
+    "cityColor": "FFFFFF",
+    "citySize": "16",
+    "aqiColor": "E8D87B",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "borderRadius": "20",
+    "fixed": "true",
+    "vertical": "top",
+    "horizontal": "left",
+    "left": "20",
+    "top": "7.1",
+    "key": "df245676fb434a0691ead1c63341cd94"
+  }
+}
+</script><link rel="stylesheet" href="https://widget.qweather.net/simple/static/css/he-simple.css?v=1.4.0"/><script src="https://widget.qweather.net/simple/static/js/he-simple.js?v=1.4.0"></script><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@5.0.20/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@17.8.4/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("10/04/2023 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2023 By 安知鱼 V1.6.8",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 Sherlock 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><script async="async">(function () {
+  var grt = new Date("10/04/2023 00:00:00"); //设置网站上线时间
+  var now = new Date();
+  var dnum;
+  var hnum;
+  var mnum;
+  var snum;
+  var nowHour;
+
+  // 计算并更新天数、小时数、分钟数和秒数
+  function updateTime() {
+    now = new Date(); // 更新 now 的值
+    nowHour = now.getHours(); // 更新 nowHour 的值
+    var days = (now - grt) / 1000 / 60 / 60 / 24;
+    dnum = Math.floor(days);
+    var hours = (now - grt) / 1000 / 60 / 60 - 24 * dnum;
+    hnum = Math.floor(hours);
+    if (String(hnum).length == 1) {
+      hnum = "0" + hnum;
+    }
+    var minutes = (now - grt) / 1000 / 60 - 24 * 60 * dnum - 60 * hnum;
+    mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) {
+      mnum = "0" + mnum;
+    }
+    var seconds = (now - grt) / 1000 - 24 * 60 * 60 * dnum - 60 * 60 * hnum - 60 * mnum;
+    snum = Math.round(seconds);
+    if (String(snum).length == 1) {
+      snum = "0" + snum;
+    }
+  }
+
+  // 更新网页中显示的网站运行时间
+  function updateHtml() {
+    const footer = document.getElementById("footer");
+    if (!footer) return
+    let currentTimeHtml = "";
+    if (nowHour < 18 && nowHour >= 9) {
+      // 如果是上班时间，默认就是"安知鱼-上班摸鱼中.svg"图片，不需要更改
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    } else {
+      // 如果是下班时间，插入"安知鱼-下班啦.svg"图片
+      let img = document.querySelector("#workboard .workSituationImg");
+      img.src = "https://npm.elemecdn.com/anzhiyu-blog@2.0.4/img/badge/安知鱼-下班啦.svg";
+      img.title = "下班了就该开开心心的玩耍，嘿嘿~";
+      img.alt = "下班了就该开开心心的玩耍，嘿嘿~";
+
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    }
+
+    if (document.getElementById("runtimeTextTip")) {
+      document.getElementById("runtimeTextTip").innerHTML = currentTimeHtml;
+    }
+  }
+
+  setInterval(() => {
+    updateTime();
+    updateHtml();
+  }, 1000);
+})();</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "visitor@anheyu.com";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>
