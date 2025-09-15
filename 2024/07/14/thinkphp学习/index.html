@@ -1,209 +1,101 @@
-<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>thinkphp学习 | Sherlock</title><meta name="keywords" content="php"><meta name="author" content="Sherlock"><meta name="copyright" content="Sherlock"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="thinkphp学习"><meta name="application-name" content="thinkphp学习"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="thinkphp学习"><meta property="og:url" content="http://example.com/2024/07/14/thinkphp%E5%AD%A6%E4%B9%A0/index.html"><meta property="og:site_name" content="Sherlock"><meta property="og:description" content="引用thinkPHP8.0安装与避坑 ThinPHP官方手册 安装thinphp8.012345678910111213&amp;lt;!--1、访问网址下载安装composer--&amp;gt;https:&amp;#x2F;&amp;#x2F;getcomposer.org&amp;#x2F;Composer-Setup.exe&amp;lt;!--2、配置镜像源防止乱"><meta property="og:locale" content="en"><meta property="og:image" content="http://example.com/img/Sherlock.jpg"><meta property="article:author" content="Sherlock"><meta property="article:tag" content="智商不够,勤勉来凑;眼神不太好"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="http://example.com/img/Sherlock.jpg"><meta name="description" content="引用thinkPHP8.0安装与避坑 ThinPHP官方手册 安装thinphp8.012345678910111213&amp;lt;!--1、访问网址下载安装composer--&amp;gt;https:&amp;#x2F;&amp;#x2F;getcomposer.org&amp;#x2F;Composer-Setup.exe&amp;lt;!--2、配置镜像源防止乱"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="http://example.com/2024/07/14/thinkphp%E5%AD%A6%E4%B9%A0/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@5.0.20/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
-  linkPageTop: undefined,
-  peoplecanvas: {"enable":true,"img":"https://upload-bbs.miyoushe.com/upload/2023/09/03/125766904/ee23df8517f3c3e3efc4145658269c06_5714860933110284659.png"},
-  postHeadAiDescription: {"enable":true,"gptName":"AnZhiYu","mode":"local","switchBtn":false,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"xxxx","Referer":"https://xx.xx/"},
-  diytitle: {"enable":true,"leaveTitle":"w(ﾟДﾟ)w 不要走！再看看嘛！","backTitle":"♪(^∇^*)欢迎肥来！"},
-  LA51: undefined,
-  greetingBox: undefined,
-  twikooEnvId: '',
-  commentBarrageConfig:undefined,
-  root: '/',
-  preloader: {"source":3},
-  friends_vue_info: undefined,
-  navMusic: true,
-  mainTone: undefined,
-  authorStatus: {"skills":["🔍 分享与热心帮助","🤝 喜欢团结协作","🏃 脚踏实地行动派","💢 壮汉人狠话不多"]},
-  algolia: undefined,
-  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
-  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
-  noticeOutdate: {"limitDay":365,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
-  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
-  copy: {
-    success: 'Copy successfully',
-    error: 'Copy error',
-    noSupport: 'The browser does not support'
-  },
-  relativeDate: {
-    homepage: true,
-    simplehomepage: false,
-    post: true
-  },
-  runtime: 'days',
-  date_suffix: {
-    just: 'Just',
-    min: 'minutes ago',
-    hour: 'hours ago',
-    day: 'days ago',
-    month: 'months ago'
-  },
-  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"Author: Sherlock","link":"Link: ","source":"Source: Sherlock","info":"Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.","copySuccess":"Copy success, copy and reprint please mark the address of this article"}},
-  lightbox: 'fancybox',
-  Snackbar: {"chs_to_cht":"Traditional Chinese Activated Manually","cht_to_chs":"Simplified Chinese Activated Manually","day_to_night":"Dark Mode Activated Manually","night_to_day":"Light Mode Activated Manually","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
-  source: {
-    justifiedGallery: {
-      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.min.js',
-      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.css'
-    }
-  },
-  isPhotoFigcaption: false,
-  islazyload: true,
-  isAnchor: false,
-  shortcutKey: undefined,
-  autoDarkmode: true
-}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
-  configTitle: 'Sherlock',
-  title: 'thinkphp学习',
-  postAI: '',
-  pageFillDescription: '引用, 安装thinphp8.0, 基础, 目录结构, 单应用模式, 多应用模式, 默认应用文件, 配置, 架构, HTTP请求流程, 入口文件, 应用入口文件, 控制台入口文件, 多应用模式, URL访问, 单应用URL, URL重写, [ Apache ], [ Nginx ], 控制器, 定义, 基础和空控制器, 基础控制器, 空控制器, 数据库, 创建数据库及表, 连接数据库和查询, 连接数据库, PHP获取数据, 数据查询, table方法, 链式查询, 表达式查询, 查询示例, 表前缀之扩展查询, 表前缀, 扩展查询, 添加数据, 单条新增, 多条新增, 更新删除以及save方法, 数据修改, 数据删除, 其他各种查询方式, 字符串条件, field()字段筛选, 常用链式方法, 时间查询, 聚合查询, 子查询, 原生查询, 列字段快捷查询, 条件查询, 事务, 获取器, 高级查询, 索引关联, 拼装查询, 模型, 定义, 定义模型, 模型设置, 新增和删除, 新增操作, 删除操作, 更新, 数据更新, 查询, 模型的查询, 模型的字段设置, 字段设置, 废弃字段, 只读字段, 获取器和修改器, 获取器, 修改器, 搜索器和自动时间戳, 搜索器, 自动时间戳, 软删除和事件, 软删除, 事件, 模型事件定义, 写入事件, 关联模型, 入门, 关联表, 关联查询, 一对一关联查询, hasOne 模式, belongsTo 模式, 一对多关联查询, hasMany 模式, 模型预载入和统计, 预载入, 关联统计, 多对多关联查询, 建立三张表, 权限控制, 路由, 定义, 路由入门, 强制路由, 完全匹配, 路由闭包和变量规则, 闭包, 变量规则, 路由参数.域名.MISS, 参数, 域名, MISS, 路由分组.URL生成, 分组, URL生成, 资源路由, 创建资源, 地址URL, 视图.变量渲染, 视图操作, 表单提交, 请求对象.变量.信息, 请求对象, 请求信息, 请求变量, 请求类型.输出.重定向, 请求类型, 响应输出, 重定向, 中间件, 定义, 定义中间件, 前后置中间件, 中间件操作, 路由中间件, 2. 控制器中间件引用安装与避坑官方手册安装访问网址下载安装配置镜像源防止乱七八糟的网络和仓库拉取无权限问题在网站根目录下进入创建项目解决依赖项报错运行命令查看效果访问查看结果这里有坑不能直接访问这个地址在第三步创建项目时候有报错是正常的因为有依赖项无法安装的问题我安装时候的解释器版本是所以需要切换到项目目录下执行命令解决依赖项无法安装的问题基础目录结构单应用模式默认安装后的目录结构就是单应用目录结构部署目录或者子目录应用目录控制器目录模型目录更多类库目录公共函数文件事件定义文件配置目录应用配置缓存配置控制台配置配置数据库配置文件磁盘配置多语言配置日志配置中间件配置和路由配置配置配置视图配置视图目录路由定义目录路由定义文件目录对外访问目录入口文件快速测试文件用于的重写扩展类库目录应用的运行时目录可写可定制类库目录环境变量示例文件定义文件授权说明文件文件命令行入口文件多应用模式详见官方手册默认应用文件默认安装后目录下会包含下面的文件应用目录默认基础控制器类应用异常定义文件全局公共函数文件全局中间件定义文件服务提供定义文件应用请求对象全局事件定义文件和三个文件是系统默认提供的基础文件位置你可以随意移动但注意要同步调整类的命名空间如果你不需要使用和文件或者要调整类名记得必须同步调整文件中的容器对象绑定配置默认情况下程序出错会显示页面出错请稍候再试这种情况一般是应用部署好后万一出错给用户看的如果我们自己在开发阶段需要开启调试模式来提示具体的错误信息在根目录有一个文件改成也就是去掉点前面环境变量文件然后在配置信息的第一行即可则不开启开启后会如下所示调试模式开启后可以发现右下角会出现调试工具小图标包含了丰富的调试内容具体自点查看架构请求流程对于一个应用来说从用户发起请求到响应输出结束大致的标准请求流程如下载入的自动加载文件实例化系统应用基础类获取应用目录等相关路径信息加载全局的服务提供文件设置容器实例及应用对象实例确保当前容器对象唯一从容器中获取应用类执行应用类的方法启动一个应用获取当前请求对象实例默认为继承保存到容器执行类的初始化方法加载环境变量文件和全局初始化文件加载全局公共文件系统助手函数全局配置文件全局事件定义和全局服务定义判断应用模式调试或者部署模式监听事件注册异常处理服务注册启动注册的服务加载全局中间件定义监听事件执行全局中间件执行路由调度类方法如果开启路由则检查路由缓存加载路由定义监听事件如果开启注解路由则检测注解路由路由检测中间流程很复杂略路由调度对象初始化设置当前请求的控制器和操作名注册路由中间件绑定数据模型设置路由额外参数执行数据自动验证执行路由调度子类的方法返回响应对象获取当前请求的控制器对象实例利用反射机制注册控制器中间件执行控制器方法以及前后置中间件执行当前响应对象的方法输出执行应用对象的方法善后监听事件执行中间件的回调写入当前请求的日志信息入口文件采用单一入口模式进行项目部署和访问一个应用都有一个统一但不一定是唯一的入口如果采用自动多应用部署的话一个入口文件还可以自动对应多个应用应用入口文件默认的应用入口文件位于如果你没有特殊的自定义需求无需对入口文件做任何的更改入口文件位置的设计是为了让应用部署更安全请尽量遵循目录为唯一的可访问目录其他的文件都可以放到非访问目录下面控制台入口文件除了应用入口文件外系统还提供了一个控制台入口文件即位于项目根目录的文件控制台入口文件用于执行控制台指令例如系统内置了一些常用的控制台指令如果你安装了额外的扩展也会增加相应的控制台指令都是通过该入口文件执行的多应用模式详见官方手册访问单应用控制器操作参数值注意这里服务器启动是的内置服务器下节课会探讨外置服务器结构分析就是我们的是入口文件带上控制器是中的这个名称也就是类名操作是类里面的方法名比如默认方法普通方法默认方法可以省略会直接方法其他普通方法需要键入方法名默认执行操作完整路径普通方法必须完整路径系统默认自带的方法是针对后续路由的在路由文件设置过导致无效我们在中将路由关闭执行默认参数值修改参数值参数不够直观尤其多参数的时候也是支持传统方案的问号键值对重写可以通过重写隐藏应用的入口文件也可以是其它的入口文件但重写通常只能设置一个入口文件下面是相关服务器的配置参考配置文件中加载了模块将改为把下面的内容保存为文件放到应用入口文件的同级目录下在低版本中是不支持的但是可以通过在中配置转发规则实现省略部分代码其实内部是转发到了提供的兼容利用这种方式可以解决其他不支持的服务器环境外置服务器比如省略了入口文件则出现如下问题查看手册根据它重写的修改方案需要修改最后一行替换成下面一行控制器定义控制器顾名思义中的即逻辑控制定义默认在下编写对应的控制器类文件如果想改默认目录在中进行修改访问控制器层名称类名和文件名大小写保持一致并采用驼峰式首字母大写用户登陆成功类创建两个方法默认和访问如下那么如果创建的是双字母组合比如访问如下基础和空控制器基础控制器一般来说创建控制器后推荐继承基础控制器来获得更多的功能方法基础控制器仅仅提供了控制器验证功能并注入了和返回实际路径返回当前方法名空控制器空控制器一般用于载入不存在的控制器时进行错误提示当前控制器不存在数据库创建数据库及表我这边使用软件配合进行创建的这边我就不详细说明了连接数据库和查询连接数据库我们可以在配置文件中设置与数据库的连接信息如果是一般性数据库连接在配置区设置即可如果是本地测试它会优先读取配置然后再读取的配置文件部署服务器请禁用我如果禁用了配置则会读取数据库连接的默认配置数据库连接配置信息数据库类型服务器地址数据库名用户名密码端口获取数据我们暂时没有详细学习此类语法可以简单用一些了解一下即可引入数据库类连接表查询输出数据数据查询方法类旗下有一个静态调用的方法参数为完整的表名前缀都不能省略如果希望只查询一条数据可以使用方法需指定条件通过查询指定的数据方法查询结果不存在返回否则返回结果数组想要了解执行的原生是什么可以注释掉直接通过查看使用方法也可以查询一条数据但在没有数据时返回一个空数组没有数据返回空数组使用方法同样可以查询一条数据在没有数据时抛出一个异常没有数据抛出异常想要获取多列数据可以使用方法查询所有数据方法默认返回对象的数据集可以通过方法转换成数组用中断函数来检测返回值转换成数组多列数据也可以参与方法的筛选多列筛选链式查询我们发现通过指向符号多次连续调用方法称为链式查询当时返回查询对象即可连缀数据库对应的方法当返回查询对象时就可以继续调用链式方法也是链式方法而被调用后依旧返回可以再次链式调用在手册数据库查询构造器链式操作可以了解所有可链式的方法等直到遇到或返回数组或数据集时结束查询表达式查询查询表达式支持大部分常用的语句语法格式如下字段名查询表达式查询条件所有的表达式查阅手册查询表达式中的表格即可这里列出几个意思一下表达式含义快捷方式等于小于等于某个时间表达式查询模糊查询非查询查询示例条件判断类的大于的查询大于的数据模糊查询姓王的查询姓王的用户王快捷方式王区间查询根据区间查询支持语义更好一点快捷查询两种均可支持和一样支持快捷方式和一样和查询或快捷方式和查询自定义片段查询自定义快捷查询表前缀之扩展查询表前缀一般来说为了保持表名统一性和防止冲突都会给表加上一个前缀以下划线结束比如这里的就是表前缀所有我们修改中表名然后刷新程序报错当然你可以传递但没必要首先我们可以来配置统一前缀在文件中添加如果部署环境中设置然后使用方法即可此时表名的前缀可以省略扩展查询通过方法可以查询指定字段的值单个没有数据返回方法查询单个列值通过方法可以查询指定列的值多个没有数据返回空数组方法查询多个列值通过作为索引当大量数据需要批处理时比如给所有用户更新数据就不能一次性全取出来一批一批的来批量处理通过获取最后的语句发现用的是另一种处理大量数据游标查询为了解决内存开销每次读取一行并返回到下一行再读取批量处理生成器添加数据单条新增使用方法可以向数据表添加一条数据更多的字段采用默认数据张麻子男单条新增成功返回如果想强行新增抛弃不存在的字段数据则使用方法忽略异常数据马邦德男我脸上没有麻子单条新增成功返回如果我们采用的数据库是可以支持写入和写入的区别前者表示表中存在主键相同则报错后者则修改新增数据时主键冲突时直接修改这条记录使用方法可以在新增成功后返回当前数据返回自增多条新增使用方法可以批量新增数据但要保持数组结构一致数据林克男先收集个呀哈哈普尔亚女我先来个返老还童再快速长大方法也支持写入如果添加数据量大可以通过方法限制添加数量更新删除以及方法数据修改使用方法来修改数据修改成功返回影响行数没有修改返回修改的数据王三狗执行修改并返回如果修改数据包含了主键信息比如那么可以省略掉条件修改的数据王三狗执行修改并返回如果想让一些字段修改时执行函数操作可以使用方法实现让字段内的英文大写如果要自增自减某个字段可以使用方法并支持自定义步长修改时让自增和自减默认要去掉里面字段的修改不然冲突派生自字段延迟执行毫秒使用来设置每个字段的特殊需求灵活且清晰使用更加清晰灵活方法是一个通用方法可以自行判断是新增还是修改更新数据包含主键即修改否则新增数据删除极简删除可以根据主键直接删除删除成功返回影响行数否则根据主键删除根据主键还可以删除多条记录根据主键删除多条正常情况下通过方法来删除条件删除其他各种查询方式字符串条件可以直接写入多条件多条件字符串女包含变量的多条件查询变量女预处理机制字段筛选使用方法可以指定要查询的字段字段筛选使用方法给指定的字段设置别名字段别名在方法里可以直接给字段设置函数直接函数推荐使用方法中字段排除可以屏蔽掉想要不显示的字段排除字段使用方法在新增时验证字段的合法性排除新增字段常用链式方法使用方法给数据库起一个别名给数据库起个别名起别名最主要是和另一张表进行关联这里看手册好了没表测试使用方法限制获取输出数据的个数显示前条分页模式即传递两个参数比如从第条开始显示条从第个位置也就是第条开始显示条查询第一页数据至条使用方法可以指定排序方式没有指定第二参数默认按倒序排列支持数组的方式对多个字段进行排序按多个字段规则排序支持方法可以传入函数和前面各类一样不再赘述使用方法给性别不同的人进行字段的总和统计统计性别的年龄总和使用分组之后再使用进行筛选统计性别的年龄总和筛选大于的时间查询可以使用来筛选匹配时间的数据传统时间筛选快捷方式使用快捷方式查询默认是可以省略区间查询快捷方式区间查询包含使用查询今年的数据去年的数据和某一年的数据查询今年查询去年查询某一年使用查询当月的数据上月的数据和某一个月的数据使用查询今天的数据昨天的数据和某一个天的数据查询指定时间的数据比如两小时内的两小时内的查询两个时间字段时间有效期的数据比如活动开始到结束的期间比如创建两个字段注册后分别写入对应时间表明它的有效期直接这么写不太好理解看手册的另一种普通写法很容易理解实战中字段丰富的时候再演示聚合查询使用方法可以求出所查询数据的数量获取记录数可设置指定比如有空值的不会计算数量值不计数使用方法求出所查询数据字段的最大值求最大年龄如果方法求出的值不是数值则通过第二参数强制转换如果最大值不是数值关闭强制转换使用方法求出所查询数据字段的最小值也可以强制转换求最小值使用方法求出所查询数据字段的平均值求平均值使用方法求出所查询数据字段的总和求总和子查询使用方法传递参数时可以设置不执行直接返回语句子查询语句使用方法也是返回语句不需要再执行且有括号第二种子查询结合以上方法我们实现一个子查询子查询样式使用闭包的方式执行子查询采用闭包构建子查询原生查询使用方法进行原生查询适用于读取操作错误返回原生使用方法进行原生更新写入等错误返回原生更新写入快快快来救我列字段快捷查询之前用过诸如等等快捷查询所有快捷查询列表的手册位置数据库查询构造器高级查询中找到快捷查询表格方法比较两个字段的值符合的就筛选出来字段比较大于如果是等于判断可以简化方法查询某个字段的值注意是字段名获取所有性别为男男获取名字叫王二狗的信息王二狗方法查询某个字段的值注意只能查询一条不需要单条数据王二狗方法通过查询得到某个指定字段的单一值查询单条并返回单列找出王二狗的年龄王二狗条件查询可以通过条件判断执行闭包里的分支查询条件判断满足条件执行这段不满足条件执行这段第一个参数是条件如果该条件为则执行第一个匿名函数否则执行第二个匿名函数事务数据库的表引擎需要是才可以使用如果不是调整即可事务处理需要执行多个查询数据是关联恒定的如果成功一条查询改变了数据而后一条失败则前面的数据回滚比如银行取钱银行扣了但入口被卡住你没拿到这时需要事务处理系统提供了两种事务处理的方式第一种是自动处理出错自动回滚出现异常回滚手动处理基本和原生处理类似可以自行输出错误信息启动事务提交事务执行失败回滚获取器获取器的意思就是将数据的字段进行转换处理再进行操作比如在获取数据列表的时候将获取到的详情字段全部大写获取器改变字段值不处理也是支持字段的具体参考手册查询构造器获取器高级查询索引关联方法的数组查询性别男年龄大于岁常规做法男索引数组方式二维数组返回的是一条并列关系男如果是等于可以直接用关联数组一维男两种模式结合起来男搜索条件独立管理这里号写全男拼装查询使用或来实现条件的高级查询支持多个连缀和拼装查询王拼装返回的王王索引数组方式可以在进行多个字段进行查询索引数组拼装女我拼装返回的女我条件字符串复杂组装比如使用了就使用方法拼装男拼装返回的男如果有多个并需要控制优先级那么可以在需要的部分加上中括号下面的代码无法控制优先级男我外加一个中括号拼装返回的男我推荐用变量代替男如果条件中有多次出现一个字段并且需要来左右筛选可以用多条件重复字段选项王女拼装返回的王女模型定义定义模型为了避免被前面课程中控制器的类名干扰删除或改名都行目前不存在任何地方的了定义一个和数据库表相匹配的模型可在应用目录下创建文件夹模型会自动对应数据表并且有一套自己的命名规则模型类需要去除表前缀采用驼峰式命名并且首字母大写表名表名在控制器段创建一个任意名称的类当然有语义更好但为了教学理解起名为注意类名不限制模型设置系统会自动识别模型类名对应表名对应表不含前缀但如果你的模型类名不是按照规则对应表名则需要通过成员字段去设置设置表名使用时指定表时需要完整的表名系统也会默认为你的主键名如果不是则需要设置设置主键模型支持初始化功能需要设置静态方法并只在第一次实例化的时候执行且只执行一次初始化新增和删除新增操作用模型新增数据首先要实例化模型开发工具会补全非集成工具别忘了手册这里括号是工具补全的都可以使用实例化的方式添加一条数据并使用方法进行保存注意使用模型时会自动给时间字段要有该字段写入当前时间李白男床前明月光好诗成功返回失败抛异常其它看手册也可以通过传递数据数组的方式来新增数据杜甫男一行白鹭上青天好诗使用方法允许要写入的字段其它字段就无法写入了蒲松龄男十里平湖霜满天好诗模型新增也提供了方法来实现新增蒲松龄男十里平湖霜满天好诗当新增成功后使用可以获得自增主键需是使用方法可以批量新增数据返回批量新增的数组赵六男钱七男我很有钱排行老七使用静态方法来创建要新增的数据李逍遥男我是一代主角参数是新增数据数组必选参数是允许写入的字段可选参数为是否写入可选默认为写入删除操作使用方法通过主键查询到想要删除的数据然后再通过方法将数据删除返回布尔值根据主键值删除数据也可以使用静态方法调用方法通过主键删除数据单条删除批量删除条件删除返回删除的条目数方法使用闭包的方式进行删除闭包模式更新数据更新使用方法获取数据然后通过方法保存修改返回布尔值我是一代主角通过方法结合方法的查询条件获取的数据进行修改李逍遥我想做二代主角方法只会更新变化的数据如果提交的修改数据没有变化则不更新但如果你想强制更新数据即使数据一样那么可以使用方法如何验证被强制了查看字段是否更新了执行函数的方式同样在这里有效关于验证过滤后续学习再说手册中模型更新里也有说明通过方法可以批量修改数据返回被修改的数据集合女女女使用静态方法更新返回的是对象实例男放在后面返回数据不含男限制更新的内容只允许被修改男可笑的人查询其实和数据库的查询大差不差模型的查询模型的绝大部分语法基本都来自于的查询在手册模型查询中可以查阅这里就演示几个常用的意思一下单个和多个也可以使用方法进行条件筛选查询数据模型方法也可以使用等连缀查询和数据库查询方式一样模型支持聚合查询等模型也支持大量的快捷方式这里演示一个王模型的字段设置字段设置模型的数据字段和表字段是对应关系默认会自动获取包括字段的类型自动获取会导致增加一次查询如果在模型中配置字段信息会减少内存开销可以在模型设置字段明确定义字段信息字段需要对应表写完整字段类型的定义可以使用类型或者数据库的字段类型都可以以便自动绑定类型设置字段信息需要写完整的数据表字段设置模型字段只能对模型有效对于查询无法作用要让模型和查询都支持字段类型设置分三步把上面的先注释掉在开启缓存字段开启字段缓存在根目录命令行执行命令废弃字段由于历史遗留问题我们不再想使用某些字段可以在模型里设置设置后我们在查询和写入时将忽略这些字段设置废弃字段只读字段只读字段用来保护某些特殊的字段值不被更改这个字段的值一旦写入就无法更改设置只读字段然后在控制器端进行修改测试修改查看只读字段李逍遥可笑获取器和修改器获取器获取器的作用是对模型实例的数据做出自动处理一个获取器对应模型的一个特殊方法该方法为方法名的命名规范为举个例子数据库表示状态字段采用的是数值而页面上我们需要输出字段希望是中文就可以使用获取器在模型端我创建一个对外的方法如下获取器改变字段的值删除冻结正常待审核控制器端正常输出数据如果你定义了获取器并且想获取原始值可以使用方法使用在控制器端实现动态获取器比如让年龄岁可以传入参数二获得所有数据方便数据获取和判断修改器模型修改器的作用就是对模型设置对象的值进行处理比如我们要新增数据的时候对数据就行格式化过滤转换等处理模型修改器的命名规则为我们要设置一个新增规定输入的年龄都自动岁修改器如下修改器写入时改变字段的值酒剑仙男我是隐藏主角除了新增会调用修改器修改更新也会触发修改器模型修改器只对模型方法有效调用数据库的方法是无效的比如搜索器和自动时间戳搜索器搜索器是用于封装字段或搜索标识的查询表达式类似查询范围一个搜索器对应模型的一个特殊方法该方法为方法名的命名规范为举个例子我们要封装一个字段的模糊查询然后封装一个时间限定查询在模型端我创建两个对外的方法如下搜索器模糊查找姓名搜索器限定时间在控制器端通过方法实现模型搜索器的调用李中第一个数组参数限定搜索器的字段第二个则是表达式值如果想在搜索器查询的基础上再增加查询条件直接使用链式查询即可女在获取器和修改器都有一个参数它的作用是什么搜索器模糊查找姓名按年龄排序自动时间戳如果你想全局开启在中设置为此时写入操作时会自动对和进行写入如果你只想设置某一个模型开启需要设置特有字段自动时间戳只能在模型下有效数据库方法不可以使用如果创建和修改时间戳不是默认定义的也可以自定义如果业务中只需要而不需要可以关闭它也可以动态实现不修改具体如下软删除和事件软删除软删除也称为逻辑删除只是给数据标记已删除的状态不是真实的物理删除为何要对数据进行软删除因为真实的物理删除删了就没了呀在模型端设置软删除的功能引入它是会自动引入开启软删除创建字段并设置默认为默认设置的是如果你想更改这个默认值可以设置由于我们之前演示过字段缓存会导致无法软删除你可以删除字段缓存或者重新更新下删除分为两种和具体如下软删除真实删除软删除真实删除软删除后数据库内的数据只是被标记了删除时间而搜索数据时会自动屏蔽这些数据在开启软删除功能的前提下使用方法取消屏蔽软删除的数据如果只想查询被软删除的数据使用方法即可如果想让某一条被软删除的数据恢复到正常数据可以使用方法如果要将软删除后的数据库真实的物理删除需要先将它恢复再真实删除事件模型事件是指在进行模型的查询和写入操作的时候触发的操作行为模型事件只在调用模型的方法生效使用查询构造器操作是无效的模型支持如下事件事件描述事件方法名查询后新增前新增后更新前更新后写入前写入后删除前删除后恢复前恢复后注册的回调方法支持传入一个参数当前的模型对象实例但支持依赖注入的方式增加额外参数如果事件方法中返回或者抛出异常的话则不会继续执行后续的操作模型事件定义最简单的方式是在模型类里面定义静态方法来定义模型的相关事件响应参数是当前的模型对象实例支持使用依赖注入传入更多的参数写入事件和事件会在新增操作和更新操作都会触发具体的触发顺序执行如果事件没有返回那么继续执行执行新增或更新操作或新增或更新执行成功执行注意模型的新增或更新是自动判断的关联模型入门关联表我们已经有了一张表主键为我们需要一个附属表来进行关联附属表建立两个字段和外键是关联查询关联模型顾名思义就是将表与表之间进行关联和对象化更高效的操作数据创建模型和模型均为空模型如果已有改名备份起来模型端需要关联具体方式如下一对一关联参数关联的表模型参数默认为外键创建一个控制器用于测试输出主表访问关联从表一对一关联查询模式模式适合主表关联附表具体设置方式如下定义与模型的一对一关系返回模型实例关联模型必须关联的模型名或者类名外键默认的外键规则是当前模型名不含命名空间下同例如主键当前模型主键默认会自动获取也可以指定传入我们了解了表与表关联后实现的查询方案主表访问关联从表使用方法可以设置关联修改通过主表修改附表字段的值和蛇妖玩耍属性方式可以修改数据方法方式可以新增数据新增附表数据先找到主表数据然后通过方法实现新增不喜欢吃青椒模式模式适合附表关联主表具体设置方式如下注意此时绑定需要模型创建方法执行关联模型外键关联主键查询方式和主附查询方式一致附表访问关联主表使用也能模拟来进行查询这样就可以不用在模型进行设置注意参数的是方法名不是模型名闭包方式一对多关联查询模式模式适合主表关联附表实现一对多查询具体设置方式如下由于是一对多需要在附表添加多个相同的数据测试关联模型外键主键查询方案和一对一相同主表一对多使用方法模式可以进一步进行数据的筛选主表一对多进一步筛选数据保留实际顺序的下标进一步筛选数据下标重新从开始需要连缀使用方法查询关联附表的主表内容比如大于等于条的主表记录参数是方法名使用方法查询附表中可见兴趣的主表记录查询附表中为的兴趣关联主表的记录使用和进行关联新增和批量关联新增方法如下主表数据新增附表关联数据测试喜欢批量新增测试喜欢测试喜欢使用方法可以删除主表内容时将附表关联的内容全部删除删除主数据并清空关联附表数据特别注意由于外键约束设置问题默认情况下关联操作可能会导致错误解决方案在表中设置外键删除和修改时为即可详细阅读如下模型预载入和统计预载入在普通的关联查询下我们循环数据列表会执行次查询主表三条记录遍历附表上面继续采用普通关联查询的构建方式打开调试工具会得到四次查询如果采用关联预载入的方式将会减少到两次也就是起步一次循环一次查看显示结构关联预载入减少了查询次数提高了性能但是不支持多次调用如果你有主表关联了多个附表都想要进行预载入可以传入多个模型方法即可上面显示结构中主表和附表的字段已经非常多了需要对两个表字段进行筛略注意对应另一个是注意关联字段一定要包含外键否则空或者简单些直接字段隐藏主表加上隐藏附表除了还有对应的方法还有一些预载入缓存延迟预载入可以参考手册关联统计使用方法可以统计主表关联附表的个数输出用统计这三条数据关联的附表数据的个数关联统计的输出采用关联方法名这种结构输出不单单支持还有如下统计方法均可支持等除了不需要指定字段其它均需要指定统计字段统计附表关联字段的累加和对于输出的属性可以自定义多对多关联查询建立三张表复习一下一对一一个用户对应一个用户档案资料是一对一关联复习一下一对多一篇文章对应多个评论是一对多关联多对多怎么理解分解来看一个用户对应多个角色而一个角色对应多个用户那么这种对应关系就是多对多关系最经典的应用就是权限控制用户表角色表中间表表包含了和表的关联多对多模式关联模型中间表外键关联键这里继承的是它本身也继承了是中间表基类多对多专用模型权限控制在控制器段我们查询一下为的用户并关联查询它的权限获取一个用户张三获取这个用户所有角色当我们要给一个用户创建一个角色时用到多对多关联新增如果这个角色不存在则会给角色表增加一条信息并且会在中间表关联角色和用户测试管理专员也支持批量一般来说上面的这种新增方式用于初始化角色比较合适但是很多情况下角色权限是初始化好的只需要添加中间表而不是角色表那么我们真正需要就是通过用户表新增到中间表关联即可给张三添加一个已经存在的角色直接传角色即可或或如果有其它字段可以通过中括号添加测试详情除了新增还有直接删除中间表数据的方法取消掉张三的所有这里的值是角色的不是中间表路由定义路由入门路由的作用就是让地址更加的规范和优雅或者说更加简洁设置路由对的检测验证等一系列操作提供了极大的便利性路由是默认开启的如果想要关闭路由在配置是否启用路由路由的配置文件在中定义文件在我们还回到最初的控制器创建一个带参数的方法此时我们在根目录下的里配置路由参数参数参数控制器方法访问地址方法是默认请求是即任何请求类型均可第三参数可以限制所有的请求方式均有快捷方式比如等具体查看手册路由路由定义快捷方式无须第三参数了在路由的规则表达式中有多种地址的配置规则静态路由带一个参数带两个参数带可选参数一般在后面全动态地址不限定可以是后面也可以动态正则规则完全匹配强制路由目前来说路由访问模式和访问模式都可以使用但我们强制路由访问开始强制路由需要在里面进行配置是否强制使用路由首页也必须设置路由完全匹配规则匹配检测的时候默认只是对从头开始匹配只要地址开头包含了定义的路由规则就会匹配成功如果希望进行完全匹配可以在路由表达式最后使用符号例如这样定义后会匹配成功而则不会匹配成功如果是采用方式定义的话则两种方式的访问都可以匹配成功如果需要全局进行完全匹配可以在路由配置文件中设置开启路由完全匹配开启全局完全匹配后如果需要对某个路由关闭完全匹配可以使用路由闭包和变量规则闭包闭包支持我们可以通过直接执行而不需要通过控制器和方法闭包闭包支持也可以传递参数和动态规则带参数闭包如果不带那么地址变量规则系统默认的路由变量规则为即字母数字中文和下划线如果你想更改默认的匹配规则可以修改配置默认的路由变量规则如果我们需要对于具体的变量进行单独的规则设置则需要通过方法将方法里的传值严格限制必须只能是数字正则规则限定为数字多个参数如果让指定的参数统一限定为数字比如和也就是全局设置在顶部设置不喜欢斜杠怎么办能换成减号吗可以的支持替换斜杠支持组合变量方式路由参数域名参数设置路由的时候可以设置相关方法进行从而实施匹配检测和行为执行方法作用是检测后缀比如我们强制所有后缀为方法作用是检测是否为请求结合强制如下如果想让全局统一配置后缀的话可以在中设置具体值可以是单个或多个后缀也可以是空字符串任意后缀禁止后缀伪静态后缀方法作用是禁止某些后缀的使用使用后直接报错可以将设置为空测试方法作用是检测当前的域名是否匹配完整域名和子域名均可还有检测额外参数检测追加额外参数统一管理检测可参考手册域名如果想限定的某个域名下生效的路由比如可以通过域名闭包方式或路由域名也支持等路由参数方法的操作全局类似开启强制路由功能匹配不到相应规则时自动跳转到闭包模式路由分组生成分组路由分组即将相同前缀的路由合并分组这样可以简化路由定义提高匹配效率使用方法来进行分组路由的注册也可以省去第一参数让分组路由更灵活一些使用方法可以省略掉分组地址里的控制器生成使用助手函数来生成定义好的路由地址放在在控制器使用静态不带参数的控制器段获取动态带参数的控制器段获取参数一和路由的的参数二是一致的可以通过方法复刻控制器段获取完整带域名的地址在手册路由生成有源方法只不过助手函数更方便资源路由创建资源资源路由采用固定的常用方法来实现简化的功能系统提供了一个命令方便开发者快速生成一个资源控制器以上的两部操作创建了一个控制器类并生成了增删改查操作的方法而且还实现了全部路由标识请求类型路由规则操作方法地址资源路由注册好后所有地址都是全自动生成具体如下访问的是方法用于显示数据访问的是方法新增数据的表单页面访问的是方法读取指定的一条数据访问的是方法读取指定数据并显示修改表单访问的是方法用于接收表单提交的新增数据访问的是方法用于接收表单提交的修改数据访问的是方法用于接收数据删除信息默认的参数采用名称如果你想别的比如相应的也可以通过方法限定系统提供的资源方法只允许指定的这些操作还可以通过方法排除系统提供的资源方法相反操作使用方法更改系统给予的默认方法请求方式地址操作批量支持嵌套资源路由类似于一对多关联的感觉实战中用到再操作详情查看手册视图变量渲染视图操作首先为了方便后续课程学习先把路由给关闭了并创建一个用于测试视图的控制器是否启用路由视图控制器由于我们不用模板引擎直接使用原生就需要使用方法载入模板载入原生模板模板地址为或修改配置文件将改为就可以使用助手函数如果希望模板后缀为方便混编在设置模板后缀在方法的第二参数通过数组方式给模板传递变量或表单提交先载入一个表单页面创建一个表单提交接受数据请求对象变量信息请求对象上一节课中表单提交时我们接受数据使用了方法这哪里来的因为我们的控制器继承了追踪进去可以看到成员字段关于这个知识点的源知识点可以参考手册架构容器和依赖注入讲过不讲了在没有继承时我们需要自己手动注入请求依赖注入上面的请求方式比较原始过于麻烦不推荐了第二种方式门面它相关的知识点在手册架构门面第三种方式继承其实就是第一种只不过被封装到基类中去了第四种方式终极方法助手函数请求信息在手册请求请求信息里有全部的请求方法模块这里列举几个意思一下方法含义当前访问域名或者当前访问的端口当前完整访问根地址当前请求类型我们三种方法演示一遍最终选一种你喜欢的即可当前请求方法更多的对照手册自行测试即可请求变量对象支持全局变量的检测获取和安全过滤支持等使用方法可以检测全局变量是否已经设置判断是否有模式下的值更多方法参看手册请求输入变量这里意思几个方法描述获取当前请求变量获取变量获取变量获取变量获取变量获取变量方法是框架推荐的方法可以自动识别诸如等数据信息可以获取模式的值此时只能是获取默认值实际上页面也转行成空判断也成立空字符串无名氏无名氏可在配置过滤器我你将特殊字符转换实体如果不想要全局过滤器可以直接局部设置了全局过滤器但某个不想用使用变量修饰符可以将参数强制转换成指定的类型字符串整型布尔数组浮点设置允许和排查可接受的变量允许和变量默认值设置默认值参数二可设置还是等以上所有都封装到助手函数里了判断下的是否存在判断下的是否存在获取下的值默认值默认值过滤器设置强制转换请求类型输出重定向请求类型对象提供了一个方法来获取当前请求类型也提供了判断当前的请求类型方法说明获取当前请求类型判断是否请求判断是否请求判断是否请求判断是否请求判断是否请求使用请求类型伪装可以提交类型载入表单模板表单提交判断是否请求直接伪装在后续添加即可结合前段时再研究响应输出响应输出有好几种包括和等等默认输出方式是以格式输出如果你发起请求则输出而背后是对象可以用输出达到相同的效果等同于方法可以设置第二参数状态码或调用方法参数二发送状态码或和均支持状态码重定向使用方法可以实现页面重定向需要执行首页访问路由页面外加状态码访问生成的地址还支持跳转和记住上一次地址的跳转实战时再研究中间件定义定义中间件中间件的主要用于拦截和过滤请求并进行相应处理这些请求的功能可以是重定向权限验证等等为了进一步了解中间件的用法我们首先定义一个基础的中间件可以通过命令行模式在应用目录下生成一个中间件文件和文件夹拦截请求继续往执行然后将这个中间件进行注册在应用目录下的文件中配置注册中间件中间件的入口执行方法必须是方法第一参数请求第二参数是闭包业务代码判断请求的如果等于就拦截住执行中间件跳转到首页但如果请求的是那需要继续往下执行才行不能被拦死那么就需要把这个请求去调用回调函数中间件方法规定需要返回对象才能正常使用而执行后就是返回的对象为了测试拦截后无法继续执行可以助手函数测试前后置中间件将放在方法底部的方式属于前置中间件前置中间件就是请求阶段来进行拦截验证比如登录判断跳转权限等而后置中间件就是请求完毕之后再进行验证比如写入日志等等中间件代码前置中间件代码后置先执行内容再执行中间件拦截请求中间件操作路由中间件创建一个给路由使用的中间件判断路由的值实现相应的验证路由方法提供了一个方法让指定的路由采用指定的中间件限定这个路由采用了中间件导入后可以省略路由采用多个中间件也可以在配置文件加中配置别名支持别名或分组当然路由分组也支持控制器中间件如果不用路由怎么用局部化的中间件呢当然也可以直接在控制器上定义这里是别名方式和路由一样另外两种均支持默认是控制器全体方法有效如果需要限制还是和',
-  isPost: true,
-  isHome: false,
-  isHighlightShrink: true,
-  isToc: true,
-  postUpdate: '2024-07-18 17:14:21',
-  postMainColor: '',
-}</script><noscript><style type="text/css">
-  #nav {
-    opacity: 1
-  }
-  .justified-gallery img {
-    opacity: 1
-  }
 
-  #recent-posts time,
-  #post-meta time {
-    display: inline !important
-  }
-</style></noscript><script>(win=>{
-      win.saveToLocal = {
-        set: (key, value, ttl) => {
-          if (ttl === 0) return
-          const now = Date.now()
-          const expiry = now + ttl * 86400000
-          const item = {
-            value,
-            expiry
-          }
-          localStorage.setItem(key, JSON.stringify(item))
-        },
+<!DOCTYPE html><html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
+  
+  
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>thinkphp学习 - Sherlock</title>
+
+  
+    <meta name="description" content="引用thinkPHP8.0安装与避坑 ThinPHP官方手册 安装thinphp8.012345678910111213&lt;!--1、访问网址下载安装composer--&gt;https:&#x2F;&#x2F;getcomposer.org&#x2F;Composer-Setup.exe&lt;!--2、配置镜像源防止乱七八糟的网络和GitHub仓库拉取无权限问题--&gt;composer config -g rep">
+<meta property="og:type" content="article">
+<meta property="og:title" content="thinkphp学习">
+<meta property="og:url" content="http://example.com/2024/07/14/thinkphp%E5%AD%A6%E4%B9%A0/">
+<meta property="og:site_name" content="Sherlock">
+<meta property="og:description" content="引用thinkPHP8.0安装与避坑 ThinPHP官方手册 安装thinphp8.012345678910111213&lt;!--1、访问网址下载安装composer--&gt;https:&#x2F;&#x2F;getcomposer.org&#x2F;Composer-Setup.exe&lt;!--2、配置镜像源防止乱七八糟的网络和GitHub仓库拉取无权限问题--&gt;composer config -g rep">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/source/imgs/$%7Bfiilname%7D/image-20240714171457372.png">
+<meta property="og:image" content="http://example.com/source/imgs/$%7Bfiilname%7D/image-20240715152316496.png">
+<meta property="og:image" content="http://example.com/source/imgs/$%7Bfiilname%7D/image-20240716111621480.png">
+<meta property="og:image" content="http://example.com/source/imgs/$%7Bfiilname%7D/image-20240716154343740.png">
+<meta property="article:published_time" content="2024-07-14T08:03:16.000Z">
+<meta property="article:modified_time" content="2024-07-18T09:14:21.102Z">
+<meta property="article:author" content="Sherlock">
+<meta property="article:tag" content="php">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/source/imgs/$%7Bfiilname%7D/image-20240714171457372.png">
+  
+  
+  
+  <meta name="keywords" content="php">
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
+
+
+  
+
+  
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sherlock","sameAs":[]},"dateCreated":"2024-07-14T16:03:16+08:00","dateModified":"2024-07-18T17:14:21+08:00","datePublished":"2024-07-14T16:03:16+08:00","description":"","headline":"thinkphp学习","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2024/07/14/thinkphp%E5%AD%A6%E4%B9%A0/"},"publisher":{"@type":"Organization","name":"Sherlock","sameAs":[]},"url":"http://example.com/2024/07/14/thinkphp%E5%AD%A6%E4%B9%A0/","keywords":"php","image":[]}</script>
+  
+</head>
+<body>
+
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="undefined" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">Sherlock</div><div class="sub cap">言念君子，温其如玉</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="Search"></form><div id="search-result"></div><div class="search-no-result">No Results!</div></div>
+
+
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">Recent Update</span></div><div class="widget-body fs14"><a class="item title" href="/2024/10/24/java%E7%B1%BB%E5%8A%A0%E8%BD%BD/"><span class="title">java类加载</span></a><a class="item title" href="/2025/06/30/xss%E5%9C%A8%E4%BC%81%E4%B8%9Asrc%E4%B8%AD%E7%9A%84%E6%8C%96%E6%8E%98%E5%A7%BF%E5%8A%BF/"><span class="title">xss在企业src中的挖掘姿势</span></a><a class="item title" href="/2025/08/23/CodeQl-%E5%85%A5%E9%97%A8/"><span class="title">CodeQl 入门</span></a><a class="item title" href="/2025/08/15/%E5%8F%8D%E5%BC%B9shell%E5%8D%87%E7%BA%A7%E4%B8%BA%E5%AE%8C%E5%85%A8%E4%BA%A4%E4%BA%92%E5%BC%8Fshell/"><span class="title">反弹shell升级为完全交互式shell</span></a><a class="item title" href="/2025/08/15/linux-webshell%E6%8F%90%E6%9D%83/"><span class="title">linux webshell提权</span></a><a class="item title" href="/2025/08/20/Tomcat-URL%E8%A7%A3%E6%9E%90%E5%B7%AE%E5%BC%82%E6%80%A7%E5%AF%BC%E8%87%B4%E7%9A%84%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/"><span class="title">Tomcat URL解析差异性导致的安全问题</span></a><a class="item title" href="/2025/08/20/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/"><span class="title">春秋云镜-initial</span></a><a class="item title" href="/2025/04/28/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Byso%E4%B8%AD%E7%9A%84spring%E9%93%BE%E5%AD%90%E5%88%86%E6%9E%90/"><span class="title">java反序列化之yso中的spring链子分析</span></a><a class="item title" href="/2025/08/01/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-jshERP-3-5/"><span class="title">代码审计-jshERP-3.5</span></a><a class="item title" href="/2025/07/20/CTF-java%E4%B8%93%E9%A2%98/"><span class="title">CTF-java专题</span></a></div></widget>
+</div>
+
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">Home</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">Blog</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">Posted on: <time datetime="2024-07-14T08:03:16.000Z">2024-07-14</time></span><span class="sep updated"></span><span class="text updated">Updated on: <time datetime="2024-07-18T09:14:21.102Z">2024-07-18</time></span></div></div></div>
+    
+    <div class="bottom only-title">
       
-        get: key => {
-          const itemStr = localStorage.getItem(key)
-      
-          if (!itemStr) {
-            return undefined
-          }
-          const item = JSON.parse(itemStr)
-          const now = Date.now()
-      
-          if (now > item.expiry) {
-            localStorage.removeItem(key)
-            return undefined
-          }
-          return item.value
-        }
-      }
-    
-      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
-        const script = document.createElement('script')
-        script.src = url
-        script.async = true
-        script.onerror = reject
-        script.onload = script.onreadystatechange = function() {
-          const loadState = this.readyState
-          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-          script.onload = script.onreadystatechange = null
-          resolve()
-        }
-
-        Object.keys(attr).forEach(key => {
-          script.setAttribute(key, attr[key])
-        })
-
-        document.head.appendChild(script)
-      })
-    
-      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
-        const link = document.createElement('link')
-        link.rel = 'stylesheet'
-        link.href = url
-        if (id) link.id = id
-        link.onerror = reject
-        link.onload = link.onreadystatechange = function() {
-          const loadState = this.readyState
-          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-          link.onload = link.onreadystatechange = null
-          resolve()
-        }
-        document.head.appendChild(link)
-      })
-    
-      win.activateDarkMode = () => {
-        document.documentElement.setAttribute('data-theme', 'dark')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
-        }
-      }
-      win.activateLightMode = () => {
-        document.documentElement.setAttribute('data-theme', 'light')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
-        }
-      }
-      const t = saveToLocal.get('theme')
-    
-          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
-          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
-          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
-          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
-
-          if (t === undefined) {
-            if (isLightMode) activateLightMode()
-            else if (isDarkMode) activateDarkMode()
-            else if (isNotSpecified || hasNoSupport) {
-              const now = new Date()
-              const hour = now.getHours()
-              const isNight = hour <= 6 || hour >= 18
-              isNight ? activateDarkMode() : activateLightMode()
-            }
-            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
-              if (saveToLocal.get('theme') === undefined) {
-                e.matches ? activateDarkMode() : activateLightMode()
-              }
-            })
-          } else if (t === 'light') activateLightMode()
-          else activateDarkMode()
+      <div class="text-area">
+        <h1 class="text title"><span>thinkphp学习</span></h1>
         
-      const asideStatus = saveToLocal.get('aside-status')
-      if (asideStatus !== undefined) {
-        if (asideStatus === 'hide') {
-          document.documentElement.classList.add('hide-aside')
-        } else {
-          document.documentElement.classList.remove('hide-aside')
-        }
-      }
+      </div>
+    </div>
     
-      const detectApple = () => {
-        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
-          document.documentElement.classList.add('apple')
-        }
-      }
-      detectApple()
-    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="/img/Sherlock.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
-  endLoading: () => {
-    document.getElementById('loading-box').classList.add("loaded");
-  },
-  initLoading: () => {
-    document.getElementById('loading-box').classList.remove("loaded")
-  }
-}
-window.addEventListener('load',()=> { preloader.endLoading() })
-setTimeout(function(){preloader.endLoading();},10000)
-
-if (true) {
-  document.addEventListener('pjax:send', () => { preloader.initLoading() })
-  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
-}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><a id="site-name" href="/" accesskey="h"><div class="title">Sherlock</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/link/"><span> 友人帐</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/essay/"><span> 闲言碎语</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索🔍" accesskey="s"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span> Search</span></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> Newest Comments</span></div><div class="aside-list"><span>loading...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/cors/" style="font-size: 1.05rem;">cors<sup>1</sup></a><a href="/tags/csrf/" style="font-size: 1.05rem;">csrf<sup>1</sup></a><a href="/tags/php/" style="font-size: 1.05rem;">php<sup>5</sup></a><a href="/tags/python/" style="font-size: 1.05rem;">python<sup>3</sup></a><a href="/tags/sql/" style="font-size: 1.05rem;">sql<sup>3</sup></a><a href="/tags/ssrf/" style="font-size: 1.05rem;">ssrf<sup>1</sup></a><a href="/tags/ssti/" style="font-size: 1.05rem;">ssti<sup>2</sup></a><a href="/tags/web/" style="font-size: 1.05rem;">web<sup>3</sup></a><a href="/tags/xss/" style="font-size: 1.05rem;">xss<sup>1</sup></a><a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 1.05rem;">前端<sup>2</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>Archives</span><a class="card-more-btn" href="/archives/" title="More">
-    <i class="anzhiyufont anzhiyu-icon-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/08/"><span class="card-archive-list-date">August 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">6</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/07/"><span class="card-archive-list-date">July 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">6</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/06/"><span class="card-archive-list-date">June 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/05/"><span class="card-archive-list-date">May 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/04/"><span class="card-archive-list-date">April 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/03/"><span class="card-archive-list-date">March 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">6</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/02/"><span class="card-archive-list-date">February 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/01/"><span class="card-archive-list-date">January 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item on" id="consoleCommentBarrage" onclick="anzhiyu.switchCommentBarrage()" title="热评开关"><a class="commentBarrage"><i class="anzhiyufont anzhiyu-icon-message"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%BC%80%E5%8F%91/" itemprop="url">开发</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/php/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>php</span></a></span></div></div><h1 class="post-title" itemprop="name headline">thinkphp学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2024-07-14T08:03:16.000Z" title="Created 2024-07-14 16:03:16">2024-07-14</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2024-07-18T09:14:21.102Z" title="Updated 2024-07-18 17:14:21">2024-07-18</time></span></div><div class="meta-secondline"><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为福建"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>福建</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src=""></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="http://example.com/2024/07/14/thinkphp%E5%AD%A6%E4%B9%A0/"><header><a class="post-meta-categories" href="/categories/%E5%BC%80%E5%8F%91/" itemprop="url">开发</a><a href="/tags/php/" tabindex="-1" itemprop="url">php</a><h1 id="CrawlerTitle" itemprop="name headline">thinkphp学习</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">Sherlock</span><time itemprop="dateCreated datePublished" datetime="2024-07-14T08:03:16.000Z" title="Created 2024-07-14 16:03:16">2024-07-14</time><time itemprop="dateCreated datePublished" datetime="2024-07-18T09:14:21.102Z" title="Updated 2024-07-18 17:14:21">2024-07-18</time></header><h1 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_62797596/article/details/134713455">thinkPHP8.0安装与避坑</a></p>
+  </div>
+  </div><article class="md-text content"><h1 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_62797596/article/details/134713455">thinkPHP8.0安装与避坑</a></p>
 <p><a target="_blank" rel="noopener" href="https://doc.thinkphp.cn/v8_0">ThinPHP官方手册</a></p>
 <h1 id="安装thinphp8-0"><a href="#安装thinphp8-0" class="headerlink" title="安装thinphp8.0"></a>安装thinphp8.0</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--1、访问网址下载安装composer--&gt;</span><br><span class="line">https://getcomposer.org/Composer-Setup.exe</span><br><span class="line">&lt;!--2、配置镜像源防止乱七八糟的网络和GitHub仓库拉取无权限问题--&gt;</span><br><span class="line">composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/</span><br><span class="line">&lt;!--3、在网站根目录(www)下进入cmd创建项目--&gt;</span><br><span class="line">composer create-project topthink/think tp</span><br><span class="line">cd tp</span><br><span class="line">&lt;!--4、解决依赖项报错--&gt;</span><br><span class="line">composer up --ignore-platform-reqs</span><br><span class="line">&lt;!--5、运行命令查看效果--&gt;</span><br><span class="line">php think run</span><br><span class="line">&lt;!--6、访问查看结果，这里有坑：不能直接访问0.0.0.0:8000这个地址--&gt;</span><br><span class="line">127.0.0.1:8000</span><br></pre></td></tr></table></figure>
 
@@ -226,7 +118,7 @@ if (true) {
 </li>
 </ul>
 <p>开启后会如下所示：</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20240714171457372.png" alt="image-20240714171457372"></p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20240714171457372.png" alt="image-20240714171457372"></p>
 <ul>
 <li>调试模式开启后，可以发现右下角会出现trace调试工具小图标：<ul>
 <li>包含了丰富的调试内容：具体自点查看。</li>
@@ -335,7 +227,7 @@ if (true) {
 
 <p>其实内部是转发到了ThinkPHP提供的兼容URL，利用这种方式，可以解决其他不支持PATHINFO的WEB服务器环境。</p>
 <p>外置服务器，比如phpEnv，省略了入口文件，则出现如下问题：</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20240715152316496.png" alt="image-20240715152316496"></p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20240715152316496.png" alt="image-20240715152316496"></p>
 <p>查看手册，根据它URL重写的修改方案（Apache），需要修改.htaccess最后一行：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]  Apache替换成下面一行</span></span><br><span class="line">RewriteRule ^(.*)$ index.php [L,E=PATH_INFO:$<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
 
@@ -1098,7 +990,7 @@ if (true) {
 <li><p>附属表：<strong>tp_profile</strong>，建立两个字段：<strong>user_id</strong> 和 <strong>hobby</strong>，外键是 <strong>user_id</strong>；</p>
 </li>
 </ul>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20240716111621480.png" alt="image-20240716111621480"></p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20240716111621480.png" alt="image-20240716111621480"></p>
 <h3 id="关联查询"><a href="#关联查询" class="headerlink" title="关联查询"></a><strong>关联查询</strong></h3><ul>
 <li><p>关联模型，顾名思义，就是将表与表之间进行关联和对象化，更高效的操作数据；</p>
 </li>
@@ -1211,7 +1103,7 @@ if (true) {
 <li><p>那么这种对应关系，就是多对多关系，最经典的应用就是权限控制；</p>
 </li>
 </ul>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../source/imgs/$%7Bfiilname%7D/image-20240716154343740.png" alt="image-20240716154343740"></p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20240716154343740.png" alt="image-20240716154343740"></p>
 <ul>
 <li><p>tp_user：用户表；tp_role：角色表；tp_access：中间表；</p>
 </li>
@@ -1703,222 +1595,742 @@ if (true) {
 <li><p>默认是控制器全体方法有效，如果需要限制，还是 <strong>only</strong> 和 <strong>except</strong>；</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="variable">$middleware</span> = [</span><br><span class="line">    <span class="string">&quot;Auth&quot;</span>  =&gt;  [<span class="string">&quot;only&quot;</span> =&gt;  [<span class="string">&quot;hello&quot;</span>]],</span><br><span class="line">    <span class="string">&quot;Check&quot;</span> =&gt;  [<span class="string">&quot;only&quot;</span> =&gt;  [<span class="string">&quot;index&quot;</span>]]</span><br><span class="line">];</span><br></pre></td></tr></table></figure></li>
 </ul>
-</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/Sherlock.jpg" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/Sherlock.jpg" title="头像" alt="头像"></a><div class="post-copyright__author_name">Sherlock</div><div class="post-copyright__author_desc">言念君子，温其如玉</div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="http://example.com/2024/07/14/thinkphp%E5%AD%A6%E4%B9%A0/">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('http://example.com/2024/07/14/thinkphp%E5%AD%A6%E4%B9%A0/')">thinkphp学习</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="http://example.com/2024/07/14/thinkphp%E5%AD%A6%E4%B9%A0/"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=thinkphp学习&amp;url=http://example.com/2024/07/14/thinkphp%E5%AD%A6%E4%B9%A0/&amp;pic=" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="rm.copyPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/php/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>php<span class="tagsPageCount">5</span></a></div></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/07/10/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%EF%BC%9ACVE-2023-1773/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">代码审计：CVE-2023-1773</div></div></a></div><div class="next-post pull-right"><a href="/2024/07/25/imaginaryctf-writeup/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">imaginaryctf-writeup</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2024/05/25/PHP%E4%B8%AD%E5%87%BA%E7%8E%B0Call-to-undefined-function-mysqli-connect/" title="PHP中出现Call to undefined function mysqli_connect()"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2024-05-25</div><div class="title">PHP中出现Call to undefined function mysqli_connect()</div></div></a></div><div><a href="/2024/02/27/php%E7%89%B9%E6%80%A7/" title="php特性"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2024-02-27</div><div class="title">php特性</div></div></a></div><div><a href="/2024/02/16/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0_max/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/" title="php反序列化学习"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2024-02-16</div><div class="title">php反序列化学习</div></div></a></div><div><a href="/2023/10/28/php/php/" title="php"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2023-10-28</div><div class="title">php</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()"></div><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/Sherlock.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-status"><img class="g-status" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/08/24/64e6ce9c507bb.png" ait="status"/></div></div><div class="author-info__description"><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">这里是我<b style="color:#fff">记录学习</b>收获的个人博客，<b style="color:#fff">也希望</b>能和大家一起<b style="color:#fff">进步</b>。</div><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">愿你可以在这里找到对你有<b style="color:#fff">帮助</b>的<b style="color:#fff">文章</b>。</div></div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">Sherlock</h1><div class="author-info__desc">言念君子，温其如玉</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/cina666" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a></div></div></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bullhorn anzhiyu-shake"></i><span>Announcement</span></div><div class="announcement_content">欢迎来看我的博客鸭~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%95%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">引用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85thinphp8-0"><span class="toc-number">2.</span> <span class="toc-text">安装thinphp8.0</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80"><span class="toc-number">3.</span> <span class="toc-text">基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-number">3.1.</span> <span class="toc-text">目录结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E5%BA%94%E7%94%A8%E6%A8%A1%E5%BC%8F"><span class="toc-number">3.1.1.</span> <span class="toc-text">单应用模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E5%BA%94%E7%94%A8%E6%A8%A1%E5%BC%8F"><span class="toc-number">3.1.2.</span> <span class="toc-text">多应用模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E5%BA%94%E7%94%A8%E6%96%87%E4%BB%B6"><span class="toc-number">3.1.3.</span> <span class="toc-text">默认应用文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE"><span class="toc-number">3.1.4.</span> <span class="toc-text">配置</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84"><span class="toc-number">4.</span> <span class="toc-text">架构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP%E8%AF%B7%E6%B1%82%E6%B5%81%E7%A8%8B"><span class="toc-number">4.1.</span> <span class="toc-text">HTTP请求流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A5%E5%8F%A3%E6%96%87%E4%BB%B6"><span class="toc-number">4.2.</span> <span class="toc-text">入口文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%85%A5%E5%8F%A3%E6%96%87%E4%BB%B6"><span class="toc-number">4.2.1.</span> <span class="toc-text">应用入口文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E5%8F%B0%E5%85%A5%E5%8F%A3%E6%96%87%E4%BB%B6"><span class="toc-number">4.2.2.</span> <span class="toc-text">控制台入口文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E5%BA%94%E7%94%A8%E6%A8%A1%E5%BC%8F-1"><span class="toc-number">4.3.</span> <span class="toc-text">多应用模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#URL%E8%AE%BF%E9%97%AE"><span class="toc-number">4.4.</span> <span class="toc-text">URL访问</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E5%BA%94%E7%94%A8URL"><span class="toc-number">4.4.1.</span> <span class="toc-text">单应用URL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#URL%E9%87%8D%E5%86%99"><span class="toc-number">4.4.2.</span> <span class="toc-text">URL重写</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Apache"><span class="toc-number">4.4.2.1.</span> <span class="toc-text">[ Apache ]</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Nginx"><span class="toc-number">4.4.2.2.</span> <span class="toc-text">[ Nginx ]</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="toc-number">5.</span> <span class="toc-text">控制器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">5.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E5%92%8C%E7%A9%BA%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="toc-number">5.2.</span> <span class="toc-text">基础和空控制器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="toc-number">5.2.1.</span> <span class="toc-text">基础控制器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A9%BA%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="toc-number">5.2.2.</span> <span class="toc-text">空控制器</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">6.</span> <span class="toc-text">数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8A%E8%A1%A8"><span class="toc-number">6.1.</span> <span class="toc-text">创建数据库及表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%E6%9F%A5%E8%AF%A2"><span class="toc-number">6.2.</span> <span class="toc-text">连接数据库和查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">6.2.1.</span> <span class="toc-text">连接数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE"><span class="toc-number">6.2.2.</span> <span class="toc-text">PHP获取数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2"><span class="toc-number">6.3.</span> <span class="toc-text">数据查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#table%E6%96%B9%E6%B3%95"><span class="toc-number">6.3.1.</span> <span class="toc-text">table方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E5%BC%8F%E6%9F%A5%E8%AF%A2"><span class="toc-number">6.3.2.</span> <span class="toc-text">链式查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%9F%A5%E8%AF%A2"><span class="toc-number">6.3.3.</span> <span class="toc-text">表达式查询</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E7%A4%BA%E4%BE%8B"><span class="toc-number">6.3.3.1.</span> <span class="toc-text">查询示例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8%E5%89%8D%E7%BC%80%E4%B9%8B%E6%89%A9%E5%B1%95%E6%9F%A5%E8%AF%A2"><span class="toc-number">6.4.</span> <span class="toc-text">表前缀之扩展查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E5%89%8D%E7%BC%80"><span class="toc-number">6.4.1.</span> <span class="toc-text">表前缀</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E6%9F%A5%E8%AF%A2"><span class="toc-number">6.4.2.</span> <span class="toc-text">扩展查询</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E6%95%B0%E6%8D%AE"><span class="toc-number">6.5.</span> <span class="toc-text">添加数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E6%9D%A1%E6%96%B0%E5%A2%9E"><span class="toc-number">6.5.1.</span> <span class="toc-text">单条新增</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E6%9D%A1%E6%96%B0%E5%A2%9E"><span class="toc-number">6.5.2.</span> <span class="toc-text">多条新增</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%EF%BC%8C%E5%88%A0%E9%99%A4%E4%BB%A5%E5%8F%8Asave%E6%96%B9%E6%B3%95"><span class="toc-number">6.6.</span> <span class="toc-text">更新，删除以及save方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E4%BF%AE%E6%94%B9"><span class="toc-number">6.6.1.</span> <span class="toc-text">数据修改</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%88%A0%E9%99%A4"><span class="toc-number">6.6.2.</span> <span class="toc-text">数据删除</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%90%84%E7%A7%8D%E6%9F%A5%E8%AF%A2%E6%96%B9%E5%BC%8F"><span class="toc-number">6.7.</span> <span class="toc-text">其他各种查询方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9D%A1%E4%BB%B6"><span class="toc-number">6.7.1.</span> <span class="toc-text">字符串条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#field-%E5%AD%97%E6%AE%B5%E7%AD%9B%E9%80%89"><span class="toc-number">6.7.2.</span> <span class="toc-text">field()字段筛选</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E9%93%BE%E5%BC%8F%E6%96%B9%E6%B3%95"><span class="toc-number">6.7.3.</span> <span class="toc-text">常用链式方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E6%9F%A5%E8%AF%A2"><span class="toc-number">6.7.4.</span> <span class="toc-text">时间查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%81%9A%E5%90%88%E6%9F%A5%E8%AF%A2"><span class="toc-number">6.7.5.</span> <span class="toc-text">聚合查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="toc-number">6.7.6.</span> <span class="toc-text">子查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%94%9F%E6%9F%A5%E8%AF%A2"><span class="toc-number">6.7.7.</span> <span class="toc-text">原生查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E5%AD%97%E6%AE%B5%E5%BF%AB%E6%8D%B7%E6%9F%A5%E8%AF%A2"><span class="toc-number">6.7.8.</span> <span class="toc-text">列字段快捷查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2"><span class="toc-number">6.7.9.</span> <span class="toc-text">条件查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1"><span class="toc-number">6.7.10.</span> <span class="toc-text">事务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%99%A8"><span class="toc-number">6.7.11.</span> <span class="toc-text">获取器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E7%BA%A7%E6%9F%A5%E8%AF%A2"><span class="toc-number">6.8.</span> <span class="toc-text">高级查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E5%85%B3%E8%81%94"><span class="toc-number">6.8.1.</span> <span class="toc-text">索引关联</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%BC%E8%A3%85%E6%9F%A5%E8%AF%A2"><span class="toc-number">6.8.2.</span> <span class="toc-text">拼装查询</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B"><span class="toc-number">7.</span> <span class="toc-text">模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89-1"><span class="toc-number">7.1.</span> <span class="toc-text">定义</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9E%8B"><span class="toc-number">7.1.1.</span> <span class="toc-text">定义模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E8%AE%BE%E7%BD%AE"><span class="toc-number">7.1.2.</span> <span class="toc-text">模型设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B0%E5%A2%9E%E5%92%8C%E5%88%A0%E9%99%A4"><span class="toc-number">7.2.</span> <span class="toc-text">新增和删除</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%A2%9E%E6%93%8D%E4%BD%9C"><span class="toc-number">7.2.1.</span> <span class="toc-text">新增操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E6%93%8D%E4%BD%9C"><span class="toc-number">7.2.2.</span> <span class="toc-text">删除操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0"><span class="toc-number">7.3.</span> <span class="toc-text">更新</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0"><span class="toc-number">7.3.1.</span> <span class="toc-text">数据更新</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2"><span class="toc-number">7.4.</span> <span class="toc-text">查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%9F%A5%E8%AF%A2"><span class="toc-number">7.4.1.</span> <span class="toc-text">模型的查询</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AD%97%E6%AE%B5%E8%AE%BE%E7%BD%AE"><span class="toc-number">7.5.</span> <span class="toc-text">模型的字段设置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E6%AE%B5%E8%AE%BE%E7%BD%AE"><span class="toc-number">7.5.1.</span> <span class="toc-text">字段设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%9F%E5%BC%83%E5%AD%97%E6%AE%B5"><span class="toc-number">7.5.2.</span> <span class="toc-text">废弃字段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AA%E8%AF%BB%E5%AD%97%E6%AE%B5"><span class="toc-number">7.5.3.</span> <span class="toc-text">只读字段</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%99%A8%E5%92%8C%E4%BF%AE%E6%94%B9%E5%99%A8"><span class="toc-number">7.6.</span> <span class="toc-text">获取器和修改器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%99%A8-1"><span class="toc-number">7.6.1.</span> <span class="toc-text">获取器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E5%99%A8"><span class="toc-number">7.6.2.</span> <span class="toc-text">修改器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%90%9C%E7%B4%A2%E5%99%A8%E5%92%8C%E8%87%AA%E5%8A%A8%E6%97%B6%E9%97%B4%E6%88%B3"><span class="toc-number">7.7.</span> <span class="toc-text">搜索器和自动时间戳</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%90%9C%E7%B4%A2%E5%99%A8"><span class="toc-number">7.7.1.</span> <span class="toc-text">搜索器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E6%97%B6%E9%97%B4%E6%88%B3"><span class="toc-number">7.7.2.</span> <span class="toc-text">自动时间戳</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AF%E5%88%A0%E9%99%A4%E5%92%8C%E4%BA%8B%E4%BB%B6"><span class="toc-number">7.8.</span> <span class="toc-text">软删除和事件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AF%E5%88%A0%E9%99%A4"><span class="toc-number">7.8.1.</span> <span class="toc-text">软删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6"><span class="toc-number">7.8.2.</span> <span class="toc-text">事件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E4%BA%8B%E4%BB%B6%E5%AE%9A%E4%B9%89"><span class="toc-number">7.8.2.1.</span> <span class="toc-text">模型事件定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E5%85%A5%E4%BA%8B%E4%BB%B6"><span class="toc-number">7.8.2.2.</span> <span class="toc-text">写入事件</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B3%E8%81%94%E6%A8%A1%E5%9E%8B"><span class="toc-number">8.</span> <span class="toc-text">关联模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A5%E9%97%A8"><span class="toc-number">8.1.</span> <span class="toc-text">入门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E8%81%94%E8%A1%A8"><span class="toc-number">8.1.1.</span> <span class="toc-text">关联表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2"><span class="toc-number">8.1.2.</span> <span class="toc-text">关联查询</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%AF%B9%E4%B8%80%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2"><span class="toc-number">8.2.</span> <span class="toc-text">一对一关联查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#hasOne-%E6%A8%A1%E5%BC%8F"><span class="toc-number">8.2.1.</span> <span class="toc-text">hasOne 模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#belongsTo-%E6%A8%A1%E5%BC%8F"><span class="toc-number">8.2.2.</span> <span class="toc-text">belongsTo 模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%AF%B9%E5%A4%9A%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2"><span class="toc-number">8.3.</span> <span class="toc-text">一对多关联查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#hasMany-%E6%A8%A1%E5%BC%8F"><span class="toc-number">8.3.1.</span> <span class="toc-text">hasMany 模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E9%A2%84%E8%BD%BD%E5%85%A5%E5%92%8C%E7%BB%9F%E8%AE%A1"><span class="toc-number">8.4.</span> <span class="toc-text">模型预载入和统计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%84%E8%BD%BD%E5%85%A5"><span class="toc-number">8.4.1.</span> <span class="toc-text">预载入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E8%81%94%E7%BB%9F%E8%AE%A1"><span class="toc-number">8.4.2.</span> <span class="toc-text">关联统计</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E5%AF%B9%E5%A4%9A%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2"><span class="toc-number">8.5.</span> <span class="toc-text">多对多关联查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E4%B8%89%E5%BC%A0%E8%A1%A8"><span class="toc-number">8.5.1.</span> <span class="toc-text">建立三张表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E6%8E%A7%E5%88%B6"><span class="toc-number">8.5.2.</span> <span class="toc-text">权限控制</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1"><span class="toc-number">9.</span> <span class="toc-text">路由</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89-2"><span class="toc-number">9.1.</span> <span class="toc-text">定义</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E5%85%A5%E9%97%A8"><span class="toc-number">9.1.1.</span> <span class="toc-text">路由入门</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%BA%E5%88%B6%E8%B7%AF%E7%94%B1"><span class="toc-number">9.1.2.</span> <span class="toc-text">强制路由</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%8C%E5%85%A8%E5%8C%B9%E9%85%8D"><span class="toc-number">9.1.3.</span> <span class="toc-text">完全匹配</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E9%97%AD%E5%8C%85%E5%92%8C%E5%8F%98%E9%87%8F%E8%A7%84%E5%88%99"><span class="toc-number">9.2.</span> <span class="toc-text">路由闭包和变量规则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AD%E5%8C%85"><span class="toc-number">9.2.1.</span> <span class="toc-text">闭包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E8%A7%84%E5%88%99"><span class="toc-number">9.2.2.</span> <span class="toc-text">变量规则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E5%8F%82%E6%95%B0-%E5%9F%9F%E5%90%8D-MISS"><span class="toc-number">9.3.</span> <span class="toc-text">路由参数.域名.MISS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E6%95%B0"><span class="toc-number">9.3.1.</span> <span class="toc-text">参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%9F%E5%90%8D"><span class="toc-number">9.3.2.</span> <span class="toc-text">域名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MISS"><span class="toc-number">9.3.3.</span> <span class="toc-text">MISS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E5%88%86%E7%BB%84-URL%E7%94%9F%E6%88%90"><span class="toc-number">9.4.</span> <span class="toc-text">路由分组.URL生成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%BB%84"><span class="toc-number">9.4.1.</span> <span class="toc-text">分组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#URL%E7%94%9F%E6%88%90"><span class="toc-number">9.4.2.</span> <span class="toc-text">URL生成</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%84%E6%BA%90%E8%B7%AF%E7%94%B1"><span class="toc-number">9.5.</span> <span class="toc-text">资源路由</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E8%B5%84%E6%BA%90"><span class="toc-number">9.5.1.</span> <span class="toc-text">创建资源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80URL"><span class="toc-number">9.5.2.</span> <span class="toc-text">地址URL</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE-%E5%8F%98%E9%87%8F-%E6%B8%B2%E6%9F%93"><span class="toc-number">10.</span> <span class="toc-text">视图.变量,渲染</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE%E6%93%8D%E4%BD%9C"><span class="toc-number">10.1.</span> <span class="toc-text">视图操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8%E5%8D%95%E6%8F%90%E4%BA%A4"><span class="toc-number">10.2.</span> <span class="toc-text">表单提交</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E5%AF%B9%E8%B1%A1-%E5%8F%98%E9%87%8F-%E4%BF%A1%E6%81%AF"><span class="toc-number">11.</span> <span class="toc-text">请求对象.变量.信息</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E5%AF%B9%E8%B1%A1"><span class="toc-number">11.1.</span> <span class="toc-text">请求对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E4%BF%A1%E6%81%AF"><span class="toc-number">11.2.</span> <span class="toc-text">请求信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E5%8F%98%E9%87%8F"><span class="toc-number">11.3.</span> <span class="toc-text">请求变量</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E7%B1%BB%E5%9E%8B-%E8%BE%93%E5%87%BA-%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-number">12.</span> <span class="toc-text">请求类型.输出.重定向</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E7%B1%BB%E5%9E%8B"><span class="toc-number">12.1.</span> <span class="toc-text">请求类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%8D%E5%BA%94%E8%BE%93%E5%87%BA"><span class="toc-number">12.2.</span> <span class="toc-text">响应输出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-number">12.3.</span> <span class="toc-text">重定向</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="toc-number">13.</span> <span class="toc-text">中间件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89-3"><span class="toc-number">13.1.</span> <span class="toc-text">定义</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="toc-number">13.1.1.</span> <span class="toc-text">定义中间件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E5%90%8E%E7%BD%AE%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="toc-number">13.1.2.</span> <span class="toc-text">前后置中间件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6%E6%93%8D%E4%BD%9C"><span class="toc-number">13.2.</span> <span class="toc-text">中间件操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="toc-number">13.2.1.</span> <span class="toc-text">路由中间件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%8E%A7%E5%88%B6%E5%99%A8%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="toc-number">13.2.2.</span> <span class="toc-text">2. 控制器中间件</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/23/CodeQl-%E5%85%A5%E9%97%A8/" title="CodeQl 入门">CodeQl 入门</a><time datetime="2025-08-23T07:43:42.000Z" title="Created 2025-08-23 15:43:42">2025-08-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/20/Tomcat-URL%E8%A7%A3%E6%9E%90%E5%B7%AE%E5%BC%82%E6%80%A7%E5%AF%BC%E8%87%B4%E7%9A%84%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/" title="Tomcat URL解析差异性导致的安全问题">Tomcat URL解析差异性导致的安全问题</a><time datetime="2025-08-20T12:52:03.000Z" title="Created 2025-08-20 20:52:03">2025-08-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/20/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/" title="春秋云镜-initial">春秋云镜-initial</a><time datetime="2025-08-20T08:11:22.000Z" title="Created 2025-08-20 16:11:22">2025-08-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/15/linux-webshell%E6%8F%90%E6%9D%83/" title="linux webshell提权">linux webshell提权</a><time datetime="2025-08-15T08:12:42.000Z" title="Created 2025-08-15 16:12:42">2025-08-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/15/%E5%8F%8D%E5%BC%B9shell%E5%8D%87%E7%BA%A7%E4%B8%BA%E5%AE%8C%E5%85%A8%E4%BA%A4%E4%BA%92%E5%BC%8Fshell/" title="反弹shell升级为完全交互式shell">反弹shell升级为完全交互式shell</a><time datetime="2025-08-15T02:58:47.000Z" title="Created 2025-08-15 10:58:47">2025-08-15</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="workboard"><img class="workSituationImg boardsign" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.0.4/img/badge/安知鱼-上班摸鱼中.svg" alt="距离月入25k也就还差一个大佬带我~" title="距离月入25k也就还差一个大佬带我~"/><div id="runtimeTextTip"></div></div></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2023 - 2025 By <a class="footer-bar-link" href="/" title="Sherlock" target="_blank">Sherlock</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">Articles</div><div class="length-num">81</div></a><a href="/tags/" title="tag"><div class="headline">Tags</div><div class="length-num">10</div></a><a href="/categories/" title="category"><div class="headline">Categories</div><div class="length-num">10</div></a></div><span class="sidebar-menu-item-title">Function</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="Display Mode"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>Display Mode</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blog.anheyu.com/" title="博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://image.anheyu.com/" title="安知鱼图床"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://image.anheyu.com/favicon.ico" alt="安知鱼图床"/><span class="back-menu-item-text">安知鱼图床</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/link/"><span> 友人帐</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/essay/"><span> 闲言碎语</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/cors/" style="font-size: 0.88rem;">cors<sup>1</sup></a><a href="/tags/csrf/" style="font-size: 0.88rem;">csrf<sup>1</sup></a><a href="/tags/php/" style="font-size: 0.88rem;">php<sup>5</sup></a><a href="/tags/python/" style="font-size: 0.88rem;">python<sup>3</sup></a><a href="/tags/sql/" style="font-size: 0.88rem;">sql<sup>3</sup></a><a href="/tags/ssrf/" style="font-size: 0.88rem;">ssrf<sup>1</sup></a><a href="/tags/ssti/" style="font-size: 0.88rem;">ssti<sup>2</sup></a><a href="/tags/web/" style="font-size: 0.88rem;">web<sup>3</sup></a><a href="/tags/xss/" style="font-size: 0.88rem;">xss<sup>1</sup></a><a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 0.88rem;">前端<sup>2</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="Switch Between Traditional Chinese And Simplified Chinese">繁</button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="8152976493" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random"></meting-js></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="anzhiyufont anzhiyu-icon-xmark"></i></button></nav><div class="is-center" id="loading-database"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-pulse-icon"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div id="he-plugin-simple"></div><script>var WIDGET = {
-  "CONFIG": {
-    "modules": "0124",
-    "background": "2",
-    "tmpColor": "FFFFFF",
-    "tmpSize": "16",
-    "cityColor": "FFFFFF",
-    "citySize": "16",
-    "aqiColor": "E8D87B",
-    "aqiSize": "16",
-    "weatherIconSize": "24",
-    "alertIconSize": "18",
-    "padding": "10px 10px 10px 10px",
-    "shadow": "0",
-    "language": "auto",
-    "borderRadius": "20",
-    "fixed": "true",
-    "vertical": "top",
-    "horizontal": "left",
-    "left": "20",
-    "top": "7.1",
-    "key": "df245676fb434a0691ead1c63341cd94"
-  }
-}
-</script><link rel="stylesheet" href="https://widget.qweather.net/simple/static/css/he-simple.css?v=1.4.0"/><script src="https://widget.qweather.net/simple/static/js/he-simple.js?v=1.4.0"></script><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@5.0.20/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@17.8.4/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
-var HoldLog = console.log;
-console.log = function () {};
-let now1 = new Date();
-queueMicrotask(() => {
-  const Log = function () {
-    HoldLog.apply(console, arguments);
-  }; //在恢复前输出日志
-  const grt = new Date("10/04/2023 00:00:00"); //此处修改你的建站时间或者网站上线时间
-  now1.setTime(now1.getTime() + 250);
-  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
-  const dnum = Math.floor(days);
-  const ascll = [
-    `欢迎使用安知鱼!`,
-    `生活明朗, 万物可爱`,
-    `
-        
-       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
-      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
-      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
-      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
-      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
-      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
-        
-        `,
-    "已上线",
-    dnum,
-    "天",
-    "©2023 By 安知鱼 V1.6.8",
-  ];
-  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>License</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    
 
-  setTimeout(
-    Log.bind(
-      console,
-      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
-      "color:#425AEF",
-      "",
-      "color:#425AEF",
-      "color:#425AEF",
-      "",
-      "color:#425AEF",
-      ""
-    )
-  );
-  setTimeout(
-    Log.bind(
-      console,
-      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
-      "color:white; background-color:#4fd953",
-      "",
-      "",
-      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
-    )
-  );
+</div>
 
-  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">Newer</div><a href="/2024/07/25/imaginaryctf-writeup/">imaginaryctf-writeup</a></div><div class="item" id="next"><div class="note">Older</div><a href="/2024/07/10/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%EF%BC%9ACVE-2023-1773/">代码审计：CVE-2023-1773</a></div></section></div>
 
-  setTimeout(
-    console.warn.bind(
-      console,
-      "%c ⚡ Powered by 安知鱼 %c 你正在访问 Sherlock 的博客.",
-      "color:white; background-color:#f0ad4e",
-      ""
-    )
-  );
 
-  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
 
-  setTimeout(
-    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
-  );
-});</script><script async src="/anzhiyu/random.js"></script><script async="async">(function () {
-  var grt = new Date("10/04/2023 00:00:00"); //设置网站上线时间
-  var now = new Date();
-  var dnum;
-  var hnum;
-  var mnum;
-  var snum;
-  var nowHour;
 
-  // 计算并更新天数、小时数、分钟数和秒数
-  function updateTime() {
-    now = new Date(); // 更新 now 的值
-    nowHour = now.getHours(); // 更新 nowHour 的值
-    var days = (now - grt) / 1000 / 60 / 60 / 24;
-    dnum = Math.floor(days);
-    var hours = (now - grt) / 1000 / 60 / 60 - 24 * dnum;
-    hnum = Math.floor(hours);
-    if (String(hnum).length == 1) {
-      hnum = "0" + hnum;
+
+
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">Sherlock</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">On This Page</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%95%E7%94%A8"><span class="toc-text">引用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85thinphp8-0"><span class="toc-text">安装thinphp8.0</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80"><span class="toc-text">基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-text">目录结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E5%BA%94%E7%94%A8%E6%A8%A1%E5%BC%8F"><span class="toc-text">单应用模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E5%BA%94%E7%94%A8%E6%A8%A1%E5%BC%8F"><span class="toc-text">多应用模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E5%BA%94%E7%94%A8%E6%96%87%E4%BB%B6"><span class="toc-text">默认应用文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE"><span class="toc-text">配置</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84"><span class="toc-text">架构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP%E8%AF%B7%E6%B1%82%E6%B5%81%E7%A8%8B"><span class="toc-text">HTTP请求流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A5%E5%8F%A3%E6%96%87%E4%BB%B6"><span class="toc-text">入口文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%85%A5%E5%8F%A3%E6%96%87%E4%BB%B6"><span class="toc-text">应用入口文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E5%8F%B0%E5%85%A5%E5%8F%A3%E6%96%87%E4%BB%B6"><span class="toc-text">控制台入口文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E5%BA%94%E7%94%A8%E6%A8%A1%E5%BC%8F-1"><span class="toc-text">多应用模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#URL%E8%AE%BF%E9%97%AE"><span class="toc-text">URL访问</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E5%BA%94%E7%94%A8URL"><span class="toc-text">单应用URL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#URL%E9%87%8D%E5%86%99"><span class="toc-text">URL重写</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Apache"><span class="toc-text">[ Apache ]</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Nginx"><span class="toc-text">[ Nginx ]</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="toc-text">控制器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-text">定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E5%92%8C%E7%A9%BA%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="toc-text">基础和空控制器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="toc-text">基础控制器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A9%BA%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="toc-text">空控制器</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8A%E8%A1%A8"><span class="toc-text">创建数据库及表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%E6%9F%A5%E8%AF%A2"><span class="toc-text">连接数据库和查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">连接数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE"><span class="toc-text">PHP获取数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2"><span class="toc-text">数据查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#table%E6%96%B9%E6%B3%95"><span class="toc-text">table方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E5%BC%8F%E6%9F%A5%E8%AF%A2"><span class="toc-text">链式查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%9F%A5%E8%AF%A2"><span class="toc-text">表达式查询</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E7%A4%BA%E4%BE%8B"><span class="toc-text">查询示例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8%E5%89%8D%E7%BC%80%E4%B9%8B%E6%89%A9%E5%B1%95%E6%9F%A5%E8%AF%A2"><span class="toc-text">表前缀之扩展查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E5%89%8D%E7%BC%80"><span class="toc-text">表前缀</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E6%9F%A5%E8%AF%A2"><span class="toc-text">扩展查询</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E6%95%B0%E6%8D%AE"><span class="toc-text">添加数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E6%9D%A1%E6%96%B0%E5%A2%9E"><span class="toc-text">单条新增</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E6%9D%A1%E6%96%B0%E5%A2%9E"><span class="toc-text">多条新增</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%EF%BC%8C%E5%88%A0%E9%99%A4%E4%BB%A5%E5%8F%8Asave%E6%96%B9%E6%B3%95"><span class="toc-text">更新，删除以及save方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E4%BF%AE%E6%94%B9"><span class="toc-text">数据修改</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%88%A0%E9%99%A4"><span class="toc-text">数据删除</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%90%84%E7%A7%8D%E6%9F%A5%E8%AF%A2%E6%96%B9%E5%BC%8F"><span class="toc-text">其他各种查询方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9D%A1%E4%BB%B6"><span class="toc-text">字符串条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#field-%E5%AD%97%E6%AE%B5%E7%AD%9B%E9%80%89"><span class="toc-text">field()字段筛选</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E9%93%BE%E5%BC%8F%E6%96%B9%E6%B3%95"><span class="toc-text">常用链式方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E6%9F%A5%E8%AF%A2"><span class="toc-text">时间查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%81%9A%E5%90%88%E6%9F%A5%E8%AF%A2"><span class="toc-text">聚合查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="toc-text">子查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%94%9F%E6%9F%A5%E8%AF%A2"><span class="toc-text">原生查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E5%AD%97%E6%AE%B5%E5%BF%AB%E6%8D%B7%E6%9F%A5%E8%AF%A2"><span class="toc-text">列字段快捷查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2"><span class="toc-text">条件查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1"><span class="toc-text">事务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%99%A8"><span class="toc-text">获取器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E7%BA%A7%E6%9F%A5%E8%AF%A2"><span class="toc-text">高级查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E5%85%B3%E8%81%94"><span class="toc-text">索引关联</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%BC%E8%A3%85%E6%9F%A5%E8%AF%A2"><span class="toc-text">拼装查询</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B"><span class="toc-text">模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89-1"><span class="toc-text">定义</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9E%8B"><span class="toc-text">定义模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E8%AE%BE%E7%BD%AE"><span class="toc-text">模型设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B0%E5%A2%9E%E5%92%8C%E5%88%A0%E9%99%A4"><span class="toc-text">新增和删除</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%A2%9E%E6%93%8D%E4%BD%9C"><span class="toc-text">新增操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E6%93%8D%E4%BD%9C"><span class="toc-text">删除操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0"><span class="toc-text">更新</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0"><span class="toc-text">数据更新</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2"><span class="toc-text">查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%9F%A5%E8%AF%A2"><span class="toc-text">模型的查询</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AD%97%E6%AE%B5%E8%AE%BE%E7%BD%AE"><span class="toc-text">模型的字段设置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E6%AE%B5%E8%AE%BE%E7%BD%AE"><span class="toc-text">字段设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%9F%E5%BC%83%E5%AD%97%E6%AE%B5"><span class="toc-text">废弃字段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AA%E8%AF%BB%E5%AD%97%E6%AE%B5"><span class="toc-text">只读字段</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%99%A8%E5%92%8C%E4%BF%AE%E6%94%B9%E5%99%A8"><span class="toc-text">获取器和修改器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%99%A8-1"><span class="toc-text">获取器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E5%99%A8"><span class="toc-text">修改器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%90%9C%E7%B4%A2%E5%99%A8%E5%92%8C%E8%87%AA%E5%8A%A8%E6%97%B6%E9%97%B4%E6%88%B3"><span class="toc-text">搜索器和自动时间戳</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%90%9C%E7%B4%A2%E5%99%A8"><span class="toc-text">搜索器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E6%97%B6%E9%97%B4%E6%88%B3"><span class="toc-text">自动时间戳</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AF%E5%88%A0%E9%99%A4%E5%92%8C%E4%BA%8B%E4%BB%B6"><span class="toc-text">软删除和事件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AF%E5%88%A0%E9%99%A4"><span class="toc-text">软删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6"><span class="toc-text">事件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E4%BA%8B%E4%BB%B6%E5%AE%9A%E4%B9%89"><span class="toc-text">模型事件定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E5%85%A5%E4%BA%8B%E4%BB%B6"><span class="toc-text">写入事件</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B3%E8%81%94%E6%A8%A1%E5%9E%8B"><span class="toc-text">关联模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A5%E9%97%A8"><span class="toc-text">入门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E8%81%94%E8%A1%A8"><span class="toc-text">关联表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2"><span class="toc-text">关联查询</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%AF%B9%E4%B8%80%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2"><span class="toc-text">一对一关联查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#hasOne-%E6%A8%A1%E5%BC%8F"><span class="toc-text">hasOne 模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#belongsTo-%E6%A8%A1%E5%BC%8F"><span class="toc-text">belongsTo 模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%AF%B9%E5%A4%9A%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2"><span class="toc-text">一对多关联查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#hasMany-%E6%A8%A1%E5%BC%8F"><span class="toc-text">hasMany 模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E9%A2%84%E8%BD%BD%E5%85%A5%E5%92%8C%E7%BB%9F%E8%AE%A1"><span class="toc-text">模型预载入和统计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%84%E8%BD%BD%E5%85%A5"><span class="toc-text">预载入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E8%81%94%E7%BB%9F%E8%AE%A1"><span class="toc-text">关联统计</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E5%AF%B9%E5%A4%9A%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2"><span class="toc-text">多对多关联查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E4%B8%89%E5%BC%A0%E8%A1%A8"><span class="toc-text">建立三张表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E6%8E%A7%E5%88%B6"><span class="toc-text">权限控制</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1"><span class="toc-text">路由</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89-2"><span class="toc-text">定义</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E5%85%A5%E9%97%A8"><span class="toc-text">路由入门</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%BA%E5%88%B6%E8%B7%AF%E7%94%B1"><span class="toc-text">强制路由</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%8C%E5%85%A8%E5%8C%B9%E9%85%8D"><span class="toc-text">完全匹配</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E9%97%AD%E5%8C%85%E5%92%8C%E5%8F%98%E9%87%8F%E8%A7%84%E5%88%99"><span class="toc-text">路由闭包和变量规则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AD%E5%8C%85"><span class="toc-text">闭包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E8%A7%84%E5%88%99"><span class="toc-text">变量规则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E5%8F%82%E6%95%B0-%E5%9F%9F%E5%90%8D-MISS"><span class="toc-text">路由参数.域名.MISS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E6%95%B0"><span class="toc-text">参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%9F%E5%90%8D"><span class="toc-text">域名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MISS"><span class="toc-text">MISS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E5%88%86%E7%BB%84-URL%E7%94%9F%E6%88%90"><span class="toc-text">路由分组.URL生成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%BB%84"><span class="toc-text">分组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#URL%E7%94%9F%E6%88%90"><span class="toc-text">URL生成</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%84%E6%BA%90%E8%B7%AF%E7%94%B1"><span class="toc-text">资源路由</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E8%B5%84%E6%BA%90"><span class="toc-text">创建资源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80URL"><span class="toc-text">地址URL</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE-%E5%8F%98%E9%87%8F-%E6%B8%B2%E6%9F%93"><span class="toc-text">视图.变量,渲染</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE%E6%93%8D%E4%BD%9C"><span class="toc-text">视图操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8%E5%8D%95%E6%8F%90%E4%BA%A4"><span class="toc-text">表单提交</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E5%AF%B9%E8%B1%A1-%E5%8F%98%E9%87%8F-%E4%BF%A1%E6%81%AF"><span class="toc-text">请求对象.变量.信息</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E5%AF%B9%E8%B1%A1"><span class="toc-text">请求对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E4%BF%A1%E6%81%AF"><span class="toc-text">请求信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E5%8F%98%E9%87%8F"><span class="toc-text">请求变量</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E7%B1%BB%E5%9E%8B-%E8%BE%93%E5%87%BA-%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-text">请求类型.输出.重定向</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E7%B1%BB%E5%9E%8B"><span class="toc-text">请求类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%8D%E5%BA%94%E8%BE%93%E5%87%BA"><span class="toc-text">响应输出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-text">重定向</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="toc-text">中间件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89-3"><span class="toc-text">定义</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="toc-text">定义中间件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E5%90%8E%E7%BD%AE%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="toc-text">前后置中间件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6%E6%93%8D%E4%BD%9C"><span class="toc-text">中间件操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="toc-text">路由中间件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%8E%A7%E5%88%B6%E5%99%A8%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="toc-text">2. 控制器中间件</span></a></li></ol></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>Scroll to Top</span></a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+
+
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `Just`,
+      min: `minutes ago`,
+      hour: `hours ago`,
+      day: `days ago`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
     }
-    var minutes = (now - grt) / 1000 / 60 - 24 * 60 * dnum - 60 * hnum;
-    mnum = Math.floor(minutes);
-    if (String(mnum).length == 1) {
-      mnum = "0" + mnum;
-    }
-    var seconds = (now - grt) / 1000 - 24 * 60 * 60 * dnum - 60 * 60 * hnum - 60 * mnum;
-    snum = Math.round(seconds);
-    if (String(snum).length == 1) {
-      snum = "0" + snum;
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
     }
   }
-
-  // 更新网页中显示的网站运行时间
-  function updateHtml() {
-    const footer = document.getElementById("footer");
-    if (!footer) return
-    let currentTimeHtml = "";
-    if (nowHour < 18 && nowHour >= 9) {
-      // 如果是上班时间，默认就是"安知鱼-上班摸鱼中.svg"图片，不需要更改
-      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
-    } else {
-      // 如果是下班时间，插入"安知鱼-下班啦.svg"图片
-      let img = document.querySelector("#workboard .workSituationImg");
-      img.src = "https://npm.elemecdn.com/anzhiyu-blog@2.0.4/img/badge/安知鱼-下班啦.svg";
-      img.title = "下班了就该开开心心的玩耍，嘿嘿~";
-      img.alt = "下班了就该开开心心的玩耍，嘿嘿~";
-
-      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
-    }
-
-    if (document.getElementById("runtimeTextTip")) {
-      document.getElementById("runtimeTextTip").innerHTML = currentTimeHtml;
-    }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
   }
-
-  setInterval(() => {
-    updateTime();
-    updateHtml();
-  }, 1000);
-})();</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "visitor@anheyu.com";
-</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
-var pjax = new Pjax({
-  elements: 'a:not([target="_blank"])',
-  selectors: pjaxSelectors,
-  cacheBust: false,
-  analytics: false,
-  scrollRestoration: false
-})
-
-document.addEventListener('pjax:send', function () {
-  // removeEventListener scroll 
-  anzhiyu.removeGlobalFnEvent('pjax')
-  anzhiyu.removeGlobalFnEvent('themeChange')
-
-  document.getElementById('rightside').classList.remove('rightside-show')
   
-  if (window.aplayers) {
-    for (let i = 0; i < window.aplayers.length; i++) {
-      if (!window.aplayers[i].options.fixed) {
-        window.aplayers[i].destroy()
+
+</script>
+
+<script type="text/javascript">
+  
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
+    };
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
+        }
+      }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
       }
     }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
   }
 
-  typeof typed === 'object' && typed.destroy()
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
 
-  //reset readmode
-  const $bodyClassList = document.body.classList
-  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
-})
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
 
-document.addEventListener('pjax:complete', function () {
-  window.refreshFn()
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
 
-  document.querySelectorAll('script[data-pjax]').forEach(item => {
-    const newScript = document.createElement('script')
-    const content = item.text || item.textContent || item.innerHTML || ""
-    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
-    newScript.appendChild(document.createTextNode(content))
-    item.parentNode.replaceChild(newScript, item)
-  })
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
 
-  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
 
-  typeof panguInit === 'function' && panguInit()
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
 
-  // google analytics
-  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
 
-  // baidu analytics
-  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
 
-  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
 
-  // prismjs
-  typeof Prism === 'object' && Prism.highlightAll()
-})
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
 
-document.addEventListener('pjax:error', e => {
-  if (e.request.status === 404) {
-    pjax.loadUrl('/404.html')
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
   }
-})</script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `Switched to Light Mode`,
+      dark: `Switched to Dark Mode`,
+      auto: `Switched to Auto Mode`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+
+</div></body></html>

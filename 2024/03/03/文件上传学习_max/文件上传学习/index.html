@@ -1,209 +1,119 @@
-<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>文件上传学习 | Sherlock</title><meta name="keywords" content="智商不够,勤勉来凑;眼神不太好"><meta name="author" content="Sherlock"><meta name="copyright" content="Sherlock"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="文件上传学习"><meta name="application-name" content="文件上传学习"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="文件上传学习"><meta property="og:url" content="http://example.com/2024/03/03/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%AD%A6%E4%B9%A0_max/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%AD%A6%E4%B9%A0/index.html"><meta property="og:site_name" content="Sherlock"><meta property="og:description" content="前端检测主要是通过javascript代码进行检测，非常容易进行绕过。 原理Web应用系统虽然对用户上传的文件进行了校验，但是校验是通过前端javascript代码完成的。由于恶意用户可以对前端javascript进行修改或者是通过抓包软件篡改上传的文件，就会导致基于js的校验很容易被绕过。 如何判"><meta property="og:locale" content="en"><meta property="og:image" content="http://example.com/img/Sherlock.jpg"><meta property="article:author" content="Sherlock"><meta property="article:tag" content="智商不够,勤勉来凑;眼神不太好"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="http://example.com/img/Sherlock.jpg"><meta name="description" content="前端检测主要是通过javascript代码进行检测，非常容易进行绕过。 原理Web应用系统虽然对用户上传的文件进行了校验，但是校验是通过前端javascript代码完成的。由于恶意用户可以对前端javascript进行修改或者是通过抓包软件篡改上传的文件，就会导致基于js的校验很容易被绕过。 如何判"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="http://example.com/2024/03/03/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%AD%A6%E4%B9%A0_max/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%AD%A6%E4%B9%A0/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@5.0.20/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
-  linkPageTop: undefined,
-  peoplecanvas: {"enable":true,"img":"https://upload-bbs.miyoushe.com/upload/2023/09/03/125766904/ee23df8517f3c3e3efc4145658269c06_5714860933110284659.png"},
-  postHeadAiDescription: {"enable":true,"gptName":"AnZhiYu","mode":"local","switchBtn":false,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"xxxx","Referer":"https://xx.xx/"},
-  diytitle: {"enable":true,"leaveTitle":"w(ﾟДﾟ)w 不要走！再看看嘛！","backTitle":"♪(^∇^*)欢迎肥来！"},
-  LA51: undefined,
-  greetingBox: undefined,
-  twikooEnvId: '',
-  commentBarrageConfig:undefined,
-  root: '/',
-  preloader: {"source":3},
-  friends_vue_info: undefined,
-  navMusic: true,
-  mainTone: undefined,
-  authorStatus: {"skills":["🔍 分享与热心帮助","🤝 喜欢团结协作","🏃 脚踏实地行动派","💢 壮汉人狠话不多"]},
-  algolia: undefined,
-  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
-  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
-  noticeOutdate: {"limitDay":365,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
-  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
-  copy: {
-    success: 'Copy successfully',
-    error: 'Copy error',
-    noSupport: 'The browser does not support'
-  },
-  relativeDate: {
-    homepage: true,
-    simplehomepage: false,
-    post: true
-  },
-  runtime: 'days',
-  date_suffix: {
-    just: 'Just',
-    min: 'minutes ago',
-    hour: 'hours ago',
-    day: 'days ago',
-    month: 'months ago'
-  },
-  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"Author: Sherlock","link":"Link: ","source":"Source: Sherlock","info":"Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.","copySuccess":"Copy success, copy and reprint please mark the address of this article"}},
-  lightbox: 'fancybox',
-  Snackbar: {"chs_to_cht":"Traditional Chinese Activated Manually","cht_to_chs":"Simplified Chinese Activated Manually","day_to_night":"Dark Mode Activated Manually","night_to_day":"Light Mode Activated Manually","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
-  source: {
-    justifiedGallery: {
-      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.min.js',
-      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.css'
-    }
-  },
-  isPhotoFigcaption: false,
-  islazyload: true,
-  isAnchor: false,
-  shortcutKey: undefined,
-  autoDarkmode: true
-}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
-  configTitle: 'Sherlock',
-  title: '文件上传学习',
-  postAI: '',
-  pageFillDescription: '前端检测, 原理, 如何判断当前页面使用前端is的验证方式, 绕过方法, CTFHub-web-文件上传-前端验证, 绕过Content-Disposition, 后端检测, MIME检测, 什么是MIME, 常见的MIME类型, 检测方式, MIME绕过的原理, CTFHub-web-文件上传-MIME检测, 00截断, 原理, 条件, 绕过思路, 题目, POST传参保存路径, 文件头检测漏洞, 原理, 常见的文件头, CTFHub 文件上传 - 文件头检测, 内容检测图片马绕过, 漏洞原理, 图片马制作, 解析图片马, 常见漏洞, .htaccess文件解析漏洞, 什么是.htaccess文件, 漏洞利用前提, 原理, 利用方式, .htaccess文件内容, CTFHub 文件上传 - htaccess, .user.ini漏洞, ctfshow-web153, ctfshow-web154amp155, ctfshow-web156, ctfshow-web157amp158, Apache解析漏洞, 解析配置漏洞条件, 解析配置漏洞解决办法, 影响版本, IIS6.0解析漏洞, IIS7.0 | IIS7.5 | Nginx的解析漏洞, 原理, 漏洞形式, 另外两种解析漏洞, 条件竞争漏洞, 二次渲染漏洞, 二次渲染原理, 绕过, 如何判断图片是否进行了二次处理, 利用文件上传实现日志包含从而连接蚁剑, bp实战, Lab：通过 Web Shell 上传远程执行代码, Lab：通过绕过 Content-Type 限制上传 Web shell, Lab：通过路径遍历进行Web shell上传, Lab：通过扩展黑名单绕过上传Web shell, Lab：通过混淆的文件扩展名上传 Web shell, Lab：通过多语言 Web Shell 上传远程执行代码, 借鉴前端检测主要是通过代码进行检测非常容易进行绕过原理应用系统虽然对用户上传的文件进行了校验但是校验是通过前端代码完成的由于恶意用户可以对前端进行修改或者是通过抓包软件篡改上传的文件就会导致基于的校验很容易被绕过如何判断当前页面使用前端的验证方式前端验证通过以后表单成功提交后会通过浏览器发出条网络请求但是如果前端验证不成功则不会发出这项网络请求可以在浏览器的网络元素中查看是否发出了网络请求绕过方法删除或者禁用火狐浏览器使用代理上传文件上传符合要求的文件类型抓包修改文件类型直接删除代码中事件中关于文件上传时验证上传文件的相关代码即可或者可以不加载所有还可以将源码一份到本地然后对相应代码进行修改本地提交即可文件上传前端验证首先查看源码发现发现只允许等几种后缀名文件通过所以先将所要上传的文件后缀名改为形式进行上传中途用抓包如下将改为然后发送发现文件上传成功然后打开蚁剑进行连接获取到文件打开即可看到绕过在常规响应中响应标头是一个标头指示内容是应在浏览器中以内联方式显示即作为网页或网页的一部分还是作为附件在本地下载和保存这操作当然是在文件成功上传后但是你无法通过正常的途径去访问举个例子上述响应的属性表示告诉浏览器将内容作为附件下载另外指定了下载的文件名为为了让我们的文件可以传上去而不是被下载下来我们可以用漏洞来进行绕过即在我们可控的响应头内输入或者是将其编码后的举个例子如果说报头中的可控那么我们在后面键入就可以实现绕过这是由于注入的回车符和换行符导致浏览器将标头解释为正文的一部分因此被忽略为告诉浏览器下载的指令当然使用也可以达到相同的效果下面我们来自己测试一下正常在后面输入去访问的话会直接将文件下载下来在或者里面自己访问的话并不会然后如果我们输入的话页面回显如下第一行的警告其实涉及到了底层的源码如下我们试图往里插入或者会直接抛出异常这一句直接失效这其实是的另一种绕过姿势当我们输入时页面回显如下这第一行的警告里面也涉及到了的底层源码如果是的话会抛出异常如下但是我们输入的话页面回显如下那么为什么我们在处输入明明只是影响到的值却还是把给干掉了呢这是因为第二个异常通过搜索得知抛出第二个异常是因为在执行的时候有任何数据被带到浏览器而在这一数据就是指第一个异常所以第二个并不会执行后端检测检测什么是多用途互联网邮件扩展类型是设定某种扩展名的文件用一种应用程序来打开的方式类型当该扩展名文件被访问的时候浏览器会自动使用指定应用程序来打开常见的类型纯文本文档代码文档图像图像图像动画二进制数据文档检测方式在文件上传过程中服务端会针对我们的上传的文件生成一个数组这个数组其中有一项就是这个文件的类型服务端对文件进行检测时就是通过检测脚本中的黑白名单和这个数组中的进行对比如果符合要求就允许上传这个文件绕过的原理部分应用系统判定文件类型是通过字段黑客可以通过抓包将字段改为常见的图片类型如从而绕过校验文件上传检测首先上传文件弹窗文件类型不正确检查源码发现并没有相关代码所以应该是后端文件上传途中进行抓包将字段改为然后发送请求包上传的文件名后缀不需要改变文件上传成功然后就可以启动蚁剑了蚁剑的密码为里面的内容上传的文件内容如下截断原理虽然应用做了校验但是由于文件上传后的路径用户可以控制攻击者可以利用手动添加字符串标识符的方式来将后面的拼接的内容进行截断导致后面的内容无效而且后面的内容又可以帮助我们绕过黑白名单的检测条件版本要小于及以上已经修复该问题的为状态用户可指定上传路径并且上传路径通过方式传参绕过思路在语言中空字符有一个特殊含义代表字符串的拼接结束这里我们使用的是语言属于高级语言底层靠语言来实现的也就是说空字符的字符串拼接结束功能在中也能实现但是我们在中不能直接使用空这样会造成无法识别我们通过查看对照表发现对照表第一个就空字符它对应的进制是这里我们就可以用进制的来代替空字符让它截断后面的内容使用进行抓包因为这里是通过进行传递的文件上传后存储路径所以需要对进制的进行编码编码的结果就是通过这种方式就可以截断后面的内容让拼接的文件名不再进行生效题目首先查看相关源码首先取到上传文件的扩展名将扩展名与白名单进行匹配为或才能通过第一次过滤扩展名匹配之后为上传的文件构造了一个新的存储路径上传成功上传失败文件类型不匹配是中用于检查一个值是否存在于数组中的函数是要检查的值是要检查的数组如果存在于数组中则该函数返回否则返回这是中用于将上传的文件移动到新位置的函数它接受两个参数源文件路径和目标文件路径这是上传文件在服务器上的临时存储路径在中通过超全局变量可以访问到上传的文件信息其中是表单中控件的属性值表示上传文件的临时存储路径这是目标文件的路径是之前代码中生成的文件路径它是目标位置上传的文件将被移动到这个位置根据上面的代码思路首先我们把文件后缀名改为形式然后用抓个包然后修改传参中的值如下所示上传成功使用蚁剑获取到传参保存路径与传参类似的的是后端对文件路径的处理类似为对文件名的处理操作此时为我们可控的参数但与传参不同的是请求内包含文件时参数不再被自动解码所以传参需要使用使用查看进制的请求详情修改一个十六进制的为步骤一修改路径添加文件名写入需要执行的代码语句步骤二切换为十六进制模式修改所需要替换为的位置由于使用截断所以最后文件保存在名为根据位置访问即进入我们所在的页面可以看到的配置信息截断成功文件头检测漏洞原理在每一个文件包括图片视频或其他的非文件的开头十六进制表示实际上都有一片区域来显示这个文件的实际用法这就是文件头标志我们可以通过进制编辑器打开文件添加服务器允许的文件头以绕过检测另一种方法就是用画图软件画一张简单的图太复杂的话会报错然后抓包在文件末尾添加代码常见的文件头注意下面的文件头的格式是进制的格式在进行文件头绕过时我们可以把上面的文件头添加到我们的一句话木马内容最前面达到绕过文件头检测的目的文件上传文件头检测最开始上传一个后缀的文件提交弹出一个窗口只允许后缀提交然后抓包把改为然后发现还是上传不上去有弹窗发现有文件头检测首先用画图工具做出一个最简单的图太复杂的话会报错然后上传中途抓包修改数据如下报头中的文件后缀名要改回然后发送请求包成功之后利用蚁剑获取到内容检测图片马绕过漏洞原理一般文件内容验证使用函数检测会判断文件是否是一个有效的文件图片如果是则允许上传否则的话不允许上传本实验就是将一句话木马插入到一个合法的图片文件当中然后用管理工具比如蚁剑进行远程连接图片马制作准备一张图片这里为和一个一句话木马通过以下命令合成一个图片马内容命令用在文件所在的目录指定以二进制格式复制合并文件用于图像或者声音类文件指定以格式复制合并文件用于等文本类文件注这条命令的意思是通过命令把图片文件以二进制文件形式添加到文件中以文本文件形式输出为文件解析图片马一般解析图片马需要结合解析漏洞或者文件包含才能解析图片马常见漏洞文件解析漏洞什么是文件文件是服务器中的一个配置文件它负责相关目录下的网页配置通过文件可以帮我们实现网页重定向自定义错误页面改变文件扩展名允许阻止特定的用户或者目录的访问禁止目录列表配置默认文档等功能漏洞利用前提具体应用没有禁止文件的上传同时服务器提供商允许用户上传自定义的文件原理文件或者分布式配置文件全称是超文本入口提供了针对目录改变配置的方法即在一个特定的文档目录中放置一个包含一个或多个指令的文件以作用于此目录及其所有子目录作为用户所能使用的命令受到限制管理员可以通过的指令来设置利用方式一般可以用来留后门和针对黑名单绕过上传覆盖文件重写解析规则将上传的带有脚本木马的图片以脚本方式解析文件内容文件解析规则的增加是可以按照组合的方式去做的不过具体得自己多测试在当前目录下如果匹配到文件则被解析成代码执行在当前目录下如果匹配到文件则被解析成代码执行或者是以下内容这段配置语法用于将指定扩展名的文件类型设置为文件类型这是配置指令用于将文件扩展名关联到指定的类型这是类型的标识符表示文件类型这是要关联的文件扩展名表示文本文件文件上传配置文件文件文件名只能是这个但是在系统中不能够直接这样命名文件名不能为空从网上发现可以通过另一种方法来修改开启切换到文件所在的目录然后通过直接修改漏洞是的一个全局配置文件对整个服务起作用而和一样是目录的配置文件就是用户自定义的一个我们可以利用这个文件来构造后门和隐藏后门但是这种方式其实是有个前提的因为只对他同一目录下的文件起作用也就是说只有他同目录下有文件才可以文件内容文件欺骗头让系统认为上传的是图片上输入网页显示了表示可以用配置文件因为目录下有文件为了利用我们首先上传内容为为我们上传的文件名接着上传一个带木马的图片因为有所以这个就会添加一个就会包含到木马这样就在每个文件上包含了我们的木马文件构造两个文件内容如下内容开始做题先上传文件并抓包修改名称然后放包接着再上传图片马最后就可以用蚁剑连接然后获取到首先按照上题步骤上传文件成功然后上传图片马失败根据题解说是过滤了于是可以试试短标签如下可用使用表达式进行绕过表达式等价于表达式于是图片内容变为上传成功用蚁剑连接一下然后获取到首先按照上题步骤上传文件成功然后上传图片马失败自己测试实在没有发现过滤了什么看了提及人后才明白过滤掉了在中查看数组也可以用所以只要把图片马内容中的全部改成然后再上传就可以了都被过滤了导致不能使用蚁剑来进行连接所以我们直接远程代码执行首先按照上面几题一样先上传文件然后先上传图片马内容为查看到的位置因为也被禁止掉了所以我们可以使用通配符或者来代替内容为再拿去解码后就可以得到了解析漏洞此漏洞实际为人为的错误配置导致的漏洞与本身无关对多后缀文件的识别概括来说为允许文件有多个扩展名并且会将所有后缀名进行识别识别的顺序为从右到左如映射到和允许扩展名映射到元数据包括语言内容类型字符集或编码处理程序如映射到对于相同类型元数据以从右到左第一个出现的为准但对于语言和内容编码可累积的元数据将会叠加如根据此规则映射到根据此规则映射到和由于映射到处理程序和映射媒体类型最后的返回结果不一致一个为经过程序处理一个为返回媒体文件当出现不同扩展名映射到处理程序和媒体类型时映射到处理程序的优先等级高于映射到媒体类型如扩展名映射到处理程序映射到根据上述原则文件会被程序处理使用指令处理一个文件时会应用上述规则指令指的是如等指令其中设置对应后缀名映射到处理程序如由此当用户上传一个文件时的配置文件中包含处理文件且未对上传后的文件进行重命名此时被解析为一个脚本解析漏洞由此而来解析配置漏洞条件文件没有被重命名中配置中含有的设置解析配置漏洞解决办法将上传的文件进行重命名根据官方文档的说明可以使用指令来代替因为仅根据最右端的后缀名来判断映射的处理程序影响版本解析漏洞解析漏洞分两种目录解析以命名的文件夹里的文件都将会被当成文件执行文件解析像这种畸形文件名在后面的直接被忽略也就是说当成文件执行默认的可执行文件除了还包含这三种的解析漏洞原理拿到文件路径更专业的说法是后一看后缀是便认为该文件是文件转交给去处理一看不存在便删去最后的又看存在便把当成要执行的文件了又因为后缀为认为这不是文件于是返回这其中涉及到的一个选项该值默认为表示开启开启这一选项可以对文件路径进行修理举个例子当遇到文件路径时若不存在则会去掉最后的然后判断是否存在若存在则把当做文件若仍不存在则继续去掉以此类推漏洞形式另外两种解析漏洞条件竞争漏洞条件竞争漏洞是一种服务器端的漏洞由于服务器端在处理不同用户的请求时是并发进行的因此如果并发处理不当或相关操作逻辑顺序设计的不合理时将会导致此类问题的发生上传文件源代码里没有校验上传的文件文件直接上传上传成功后才进行判断如果文件格式符合要求则重命名如果文件格式不符合要求将文件删除由于服务器并发处理同时多个请求假如用户上传了木马文件由于代码执行需要时间在此过程中用户访问了用户上传的文件会有以下三种情况访问时间点在上传成功之前没有此文件访问时间点在刚上传成功但还没有进行判断该文件存在访问时间点在判断之后文件被删除没有此文件二次渲染漏洞二次渲染原理在我们上传文件后网站会对图片进行二次处理格式尺寸要求等服务器会把里面的内容进行替换更新处理完成后根据我们原有的图片生成一个新的图片并放到网站对应的标签进行显示绕过配合文件包含漏洞将一句话木马插入到网站二次处理后的图片中也就是把一句话插入图片在二次渲染后会保留的那部分数据里确保不会在二次处理时删除掉这样二次渲染后的图片中就存在了一句话在配合文件包含漏洞获取可以配合条件竞争这里二次渲染的逻辑存在漏洞先将文件上传之后再判断符合就保存不符合删除可利用条件竞争来进行爆破上传如何判断图片是否进行了二次处理对比要上传图片与上传后的图片大小使用进制编辑器打开图片查看上传后保留了哪些数据查看那些数据被改变利用文件上传实现日志包含从而连接蚁剑实战通过上传远程执行代码题目要求请上传一个基本的并使用它来泄露文件的内容使用实验室横幅中提供的按钮提交此机密首先我们先登录账号发现有个头像图片上传功能开启插件先上传一个正常的图片然后到代理模块中的历史记录选中条目发送到重放器中然后更改过滤器配置如下应用发现多了一条目是显示图片的也发送到重放器中第一个文件修改成如下内容然后第二个文件更改一下再发送一遍便得到了所需要的机密通过绕过限制上传和上题不一样的地方就是多了对的检查要求必须是图片类型的才可以其余的操作步骤与上题一致需要注意的是函数里面直接接语句的话要有双引号包括才可以通过路径遍历进行上传要求该实验室包含一个存在漏洞的图像上传功能服务器被配置为阻止执行用户提供的文件但可以通过利用第二个漏洞来绕过此限制要完成该实验请上传一个基本的并使用它来窃取文件的内容使用实验室横幅中提供的按钮提交此机密首先如果我们直接按照前两题的步骤来做该题的话会发现页面会直接回显给我们输入的代码内容并不会执行发现上传图片的模块中的可以随意修改所以我们尝试给该文件换个地方如下发现我们输入的被直接处理掉了再尝试一下进行编码试试如下成功上传该文件于是我们去访问一下该文件结果如下拿到机密题目解决通过扩展黑名单绕过上传正常上传一个文件后我们将其改为后缀的文件再次进行上传发现页面会回显不允许后缀的文件上传于是尝试将后缀名改为成功上传但发现页面会直接回显给我们输入的代码内容并不会执行该代码这时候我想到了可以通过上传文件来进行绕过于是进行尝试但是发现页面还是直接回显输入的代码内容不知道为什么行不通万幸我们还有另一种方法可以通过上传来绕过该文件具体内容如下后缀为的文件都会被当作代码执行于是我们上传然后访问该得到机密解决题目通过混淆的文件扩展名上传最开始是想着按照上题的思路先上传一个文件但是上传失败页面回显只允许后缀名为或者的文件上传但是这题的我们是可以改的所以这题我们可以尝试使用截断来绕过如下然后直接访问得到机密题目解决通过多语言上传远程执行代码题目中提到尽管它会检查文件的内容以验证它是否是真正的图像但仍然可以上传和执行服务器端代码说明后端会检查图片的内容但是我们可以尝试做一个图片马首先上传一张正常的图片然后到的代理模块中的历史记录里面将显示图片的条目发送到重放器里面接着在本机上面将一张图片和一份代码文件合成图片马如下命令用在文件所在的目录指定以二进制格式复制合并文件用于图像或者声音类文件指定以格式复制合并文件用于等文本类文件注这条命令的意思是通过命令把图片文件以二进制文件形式添加到文件中以文本文件形式输出为文件接着将这份文件上传上去并在中进行访问得到我们所需要的机密题目解决借鉴超详细文件上传漏洞总结分析超详细文件上传漏洞总结分析',
-  isPost: true,
-  isHome: false,
-  isHighlightShrink: true,
-  isToc: true,
-  postUpdate: '2024-08-19 16:46:37',
-  postMainColor: '',
-}</script><noscript><style type="text/css">
-  #nav {
-    opacity: 1
-  }
-  .justified-gallery img {
-    opacity: 1
-  }
 
-  #recent-posts time,
-  #post-meta time {
-    display: inline !important
-  }
-</style></noscript><script>(win=>{
-      win.saveToLocal = {
-        set: (key, value, ttl) => {
-          if (ttl === 0) return
-          const now = Date.now()
-          const expiry = now + ttl * 86400000
-          const item = {
-            value,
-            expiry
-          }
-          localStorage.setItem(key, JSON.stringify(item))
-        },
+<!DOCTYPE html><html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
+  
+  
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>文件上传学习 - Sherlock</title>
+
+  
+    <meta name="description" content="前端检测主要是通过javascript代码进行检测，非常容易进行绕过。 原理Web应用系统虽然对用户上传的文件进行了校验，但是校验是通过前端javascript代码完成的。由于恶意用户可以对前端javascript进行修改或者是通过抓包软件篡改上传的文件，就会导致基于js的校验很容易被绕过。 如何判断当前页面使用前端is的验证方式    前端验证通过以后，表单成功提交后会通过浏览器发出─条网络请求">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文件上传学习">
+<meta property="og:url" content="http://example.com/2024/03/03/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%AD%A6%E4%B9%A0_max/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%AD%A6%E4%B9%A0/">
+<meta property="og:site_name" content="Sherlock">
+<meta property="og:description" content="前端检测主要是通过javascript代码进行检测，非常容易进行绕过。 原理Web应用系统虽然对用户上传的文件进行了校验，但是校验是通过前端javascript代码完成的。由于恶意用户可以对前端javascript进行修改或者是通过抓包软件篡改上传的文件，就会导致基于js的校验很容易被绕过。 如何判断当前页面使用前端is的验证方式    前端验证通过以后，表单成功提交后会通过浏览器发出─条网络请求">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/source/imgs/$%7Bfiilname%7D/1-1709452597527-1.jpg">
+<meta property="og:image" content="http://example.com/source/imgs/$%7Bfiilname%7D/2-1709452697511-3.jpg">
+<meta property="og:image" content="http://example.com/source/imgs/$%7Bfiilname%7D/image-20240326194115539.png">
+<meta property="og:image" content="http://example.com/source/imgs/$%7Bfiilname%7D/image-20240326194215608.png">
+<meta property="og:image" content="http://example.com/source/imgs/$%7Bfiilname%7D/image-20240326194537421.png">
+<meta property="og:image" content="http://example.com/source/imgs/$%7Bfiilname%7D/image-20240326194800272.png">
+<meta property="og:image" content="http://example.com/source/imgs/$%7Bfiilname%7D/image-20240326195019619.png">
+<meta property="og:image" content="http://example.com/source/imgs/$%7Bfiilname%7D/3-1709453349059-5.jpg">
+<meta property="og:image" content="http://example.com/source/imgs/$%7Bfiilname%7D/image-20240303162256255.png">
+<meta property="og:image" content="http://example.com/source/imgs/$%7Bfiilname%7D/image-20240303165306831.png">
+<meta property="og:image" content="http://example.com/source/imgs/$%7Bfiilname%7D/image-20240314202817510.png">
+<meta property="og:image" content="http://example.com/source/imgs/$%7Bfiilname%7D/image-20240314202756690.png">
+<meta property="og:image" content="http://example.com/source/imgs/$%7Bfiilname%7D/image-20240314202915444.png">
+<meta property="og:image" content="http://example.com/source/imgs/$%7Bfiilname%7D/image-20240303223906201.png">
+<meta property="og:image" content="http://example.com/source/imgs/$%7Bfiilname%7D/image-20240305232834660.png">
+<meta property="og:image" content="http://example.com/source/imgs/$%7Bfiilname%7D/image-20240331204548123.png">
+<meta property="og:image" content="http://example.com/source/imgs/$%7Bfiilname%7D/image-20240331204720973.png">
+<meta property="og:image" content="http://example.com/source/imgs/$%7Bfiilname%7D/image-20240402192918437.png">
+<meta property="og:image" content="http://example.com/source/imgs/$%7Bfiilname%7D/image-20240402193207300.png">
+<meta property="og:image" content="http://example.com/source/imgs/$%7Bfiilname%7D/image-20240402193255112.png">
+<meta property="og:image" content="http://example.com/source/imgs/$%7Bfiilname%7D/image-20240402202318347.png">
+<meta property="og:image" content="http://example.com/source/imgs/$%7Bfiilname%7D/image-20240402210451176.png">
+<meta property="article:published_time" content="2024-03-03T01:45:17.000Z">
+<meta property="article:modified_time" content="2024-08-19T08:46:37.226Z">
+<meta property="article:author" content="Sherlock">
+<meta property="article:tag" content="智商不够,勤勉来凑;眼神不太好">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/source/imgs/$%7Bfiilname%7D/1-1709452597527-1.jpg">
+  
+  
+  
+  <meta name="keywords" content="智商不够,勤勉来凑;眼神不太好">
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
+
+
+  
+
+  
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sherlock","sameAs":[]},"dateCreated":"2024-03-03T09:45:17+08:00","dateModified":"2024-08-19T16:46:37+08:00","datePublished":"2024-03-03T09:45:17+08:00","description":"","headline":"文件上传学习","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2024/03/03/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%AD%A6%E4%B9%A0_max/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%AD%A6%E4%B9%A0/"},"publisher":{"@type":"Organization","name":"Sherlock","sameAs":[]},"url":"http://example.com/2024/03/03/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%AD%A6%E4%B9%A0_max/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%AD%A6%E4%B9%A0/","image":[]}</script>
+  
+</head>
+<body>
+
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="undefined" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">Sherlock</div><div class="sub cap">言念君子，温其如玉</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="Search"></form><div id="search-result"></div><div class="search-no-result">No Results!</div></div>
+
+
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">Recent Update</span></div><div class="widget-body fs14"><a class="item title" href="/2024/10/24/java%E7%B1%BB%E5%8A%A0%E8%BD%BD/"><span class="title">java类加载</span></a><a class="item title" href="/2025/06/30/xss%E5%9C%A8%E4%BC%81%E4%B8%9Asrc%E4%B8%AD%E7%9A%84%E6%8C%96%E6%8E%98%E5%A7%BF%E5%8A%BF/"><span class="title">xss在企业src中的挖掘姿势</span></a><a class="item title" href="/2025/08/23/CodeQl-%E5%85%A5%E9%97%A8/"><span class="title">CodeQl 入门</span></a><a class="item title" href="/2025/08/15/%E5%8F%8D%E5%BC%B9shell%E5%8D%87%E7%BA%A7%E4%B8%BA%E5%AE%8C%E5%85%A8%E4%BA%A4%E4%BA%92%E5%BC%8Fshell/"><span class="title">反弹shell升级为完全交互式shell</span></a><a class="item title" href="/2025/08/15/linux-webshell%E6%8F%90%E6%9D%83/"><span class="title">linux webshell提权</span></a><a class="item title" href="/2025/08/20/Tomcat-URL%E8%A7%A3%E6%9E%90%E5%B7%AE%E5%BC%82%E6%80%A7%E5%AF%BC%E8%87%B4%E7%9A%84%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/"><span class="title">Tomcat URL解析差异性导致的安全问题</span></a><a class="item title" href="/2025/08/20/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/"><span class="title">春秋云镜-initial</span></a><a class="item title" href="/2025/04/28/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Byso%E4%B8%AD%E7%9A%84spring%E9%93%BE%E5%AD%90%E5%88%86%E6%9E%90/"><span class="title">java反序列化之yso中的spring链子分析</span></a><a class="item title" href="/2025/08/01/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-jshERP-3-5/"><span class="title">代码审计-jshERP-3.5</span></a><a class="item title" href="/2025/07/20/CTF-java%E4%B8%93%E9%A2%98/"><span class="title">CTF-java专题</span></a></div></widget>
+</div>
+
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">Home</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">Blog</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/CTF/">CTF</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">Posted on: <time datetime="2024-03-03T01:45:17.000Z">2024-03-03</time></span><span class="sep updated"></span><span class="text updated">Updated on: <time datetime="2024-08-19T08:46:37.226Z">2024-08-19</time></span></div></div></div>
+    
+    <div class="bottom only-title">
       
-        get: key => {
-          const itemStr = localStorage.getItem(key)
-      
-          if (!itemStr) {
-            return undefined
-          }
-          const item = JSON.parse(itemStr)
-          const now = Date.now()
-      
-          if (now > item.expiry) {
-            localStorage.removeItem(key)
-            return undefined
-          }
-          return item.value
-        }
-      }
-    
-      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
-        const script = document.createElement('script')
-        script.src = url
-        script.async = true
-        script.onerror = reject
-        script.onload = script.onreadystatechange = function() {
-          const loadState = this.readyState
-          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-          script.onload = script.onreadystatechange = null
-          resolve()
-        }
-
-        Object.keys(attr).forEach(key => {
-          script.setAttribute(key, attr[key])
-        })
-
-        document.head.appendChild(script)
-      })
-    
-      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
-        const link = document.createElement('link')
-        link.rel = 'stylesheet'
-        link.href = url
-        if (id) link.id = id
-        link.onerror = reject
-        link.onload = link.onreadystatechange = function() {
-          const loadState = this.readyState
-          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-          link.onload = link.onreadystatechange = null
-          resolve()
-        }
-        document.head.appendChild(link)
-      })
-    
-      win.activateDarkMode = () => {
-        document.documentElement.setAttribute('data-theme', 'dark')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
-        }
-      }
-      win.activateLightMode = () => {
-        document.documentElement.setAttribute('data-theme', 'light')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
-        }
-      }
-      const t = saveToLocal.get('theme')
-    
-          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
-          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
-          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
-          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
-
-          if (t === undefined) {
-            if (isLightMode) activateLightMode()
-            else if (isDarkMode) activateDarkMode()
-            else if (isNotSpecified || hasNoSupport) {
-              const now = new Date()
-              const hour = now.getHours()
-              const isNight = hour <= 6 || hour >= 18
-              isNight ? activateDarkMode() : activateLightMode()
-            }
-            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
-              if (saveToLocal.get('theme') === undefined) {
-                e.matches ? activateDarkMode() : activateLightMode()
-              }
-            })
-          } else if (t === 'light') activateLightMode()
-          else activateDarkMode()
+      <div class="text-area">
+        <h1 class="text title"><span>文件上传学习</span></h1>
         
-      const asideStatus = saveToLocal.get('aside-status')
-      if (asideStatus !== undefined) {
-        if (asideStatus === 'hide') {
-          document.documentElement.classList.add('hide-aside')
-        } else {
-          document.documentElement.classList.remove('hide-aside')
-        }
-      }
+      </div>
+    </div>
     
-      const detectApple = () => {
-        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
-          document.documentElement.classList.add('apple')
-        }
-      }
-      detectApple()
-    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="/img/Sherlock.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
-  endLoading: () => {
-    document.getElementById('loading-box').classList.add("loaded");
-  },
-  initLoading: () => {
-    document.getElementById('loading-box').classList.remove("loaded")
-  }
-}
-window.addEventListener('load',()=> { preloader.endLoading() })
-setTimeout(function(){preloader.endLoading();},10000)
-
-if (true) {
-  document.addEventListener('pjax:send', () => { preloader.initLoading() })
-  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
-}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><a id="site-name" href="/" accesskey="h"><div class="title">Sherlock</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/link/"><span> 友人帐</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/essay/"><span> 闲言碎语</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索🔍" accesskey="s"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span> Search</span></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> Newest Comments</span></div><div class="aside-list"><span>loading...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/cors/" style="font-size: 1.05rem;">cors<sup>1</sup></a><a href="/tags/csrf/" style="font-size: 1.05rem;">csrf<sup>1</sup></a><a href="/tags/php/" style="font-size: 1.05rem;">php<sup>5</sup></a><a href="/tags/python/" style="font-size: 1.05rem;">python<sup>3</sup></a><a href="/tags/sql/" style="font-size: 1.05rem;">sql<sup>3</sup></a><a href="/tags/ssrf/" style="font-size: 1.05rem;">ssrf<sup>1</sup></a><a href="/tags/ssti/" style="font-size: 1.05rem;">ssti<sup>2</sup></a><a href="/tags/web/" style="font-size: 1.05rem;">web<sup>3</sup></a><a href="/tags/xss/" style="font-size: 1.05rem;">xss<sup>1</sup></a><a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 1.05rem;">前端<sup>2</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>Archives</span><a class="card-more-btn" href="/archives/" title="More">
-    <i class="anzhiyufont anzhiyu-icon-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/08/"><span class="card-archive-list-date">August 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">6</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/07/"><span class="card-archive-list-date">July 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">6</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/06/"><span class="card-archive-list-date">June 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/05/"><span class="card-archive-list-date">May 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/04/"><span class="card-archive-list-date">April 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/03/"><span class="card-archive-list-date">March 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">6</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/02/"><span class="card-archive-list-date">February 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/01/"><span class="card-archive-list-date">January 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item on" id="consoleCommentBarrage" onclick="anzhiyu.switchCommentBarrage()" title="热评开关"><a class="commentBarrage"><i class="anzhiyufont anzhiyu-icon-message"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/CTF/" itemprop="url">CTF</a></span><span class="article-meta tags"></span></div></div><h1 class="post-title" itemprop="name headline">文件上传学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2024-03-03T01:45:17.000Z" title="Created 2024-03-03 09:45:17">2024-03-03</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2024-08-19T08:46:37.226Z" title="Updated 2024-08-19 16:46:37">2024-08-19</time></span></div><div class="meta-secondline"><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为福建"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>福建</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src=""></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="http://example.com/2024/03/03/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%AD%A6%E4%B9%A0_max/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%AD%A6%E4%B9%A0/"><header><a class="post-meta-categories" href="/categories/CTF/" itemprop="url">CTF</a><h1 id="CrawlerTitle" itemprop="name headline">文件上传学习</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">Sherlock</span><time itemprop="dateCreated datePublished" datetime="2024-03-03T01:45:17.000Z" title="Created 2024-03-03 09:45:17">2024-03-03</time><time itemprop="dateCreated datePublished" datetime="2024-08-19T08:46:37.226Z" title="Updated 2024-08-19 16:46:37">2024-08-19</time></header><h2 id="前端检测"><a href="#前端检测" class="headerlink" title="前端检测"></a>前端检测</h2><p>主要是通过<code>javascript代码</code>进行检测，非常容易进行绕过。</p>
+  </div>
+  </div><article class="md-text content"><h2 id="前端检测"><a href="#前端检测" class="headerlink" title="前端检测"></a>前端检测</h2><p>主要是通过<code>javascript代码</code>进行检测，非常容易进行绕过。</p>
 <h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>Web应用系统虽然对用户上传的文件进行了校验，但是校验是通过前端javascript代码完成的。由于恶意用户可以对前端javascript进行修改或者是通过抓包软件篡改上传的文件，就会导致基于js的校验很容易被绕过。</p>
 <h3 id="如何判断当前页面使用前端is的验证方式"><a href="#如何判断当前页面使用前端is的验证方式" class="headerlink" title="如何判断当前页面使用前端is的验证方式"></a>如何判断当前页面使用前端is的验证方式</h3><blockquote>
 <p>   前端验证通过以后，表单成功提交后会通过浏览器发出─条网络请求，但是如果前端验证不成功，则不会发出这项网络请求;可以在浏览器的网络元素中查看是否发出了网络请求。</p>
@@ -214,9 +124,9 @@ if (true) {
 <li>直接删除代码中onsubmit事件中关于文件上传时验证上传文件的相关代码即可或者可以不加载所有js，还可以将html源码copy一份到本地，然后对相应代码进行修改，本地提交即可。</li>
 </ul>
 <h3 id="CTFHub-web-文件上传-前端验证"><a href="#CTFHub-web-文件上传-前端验证" class="headerlink" title="CTFHub-web-文件上传-前端验证"></a>CTFHub-web-文件上传-前端验证</h3><p>首先查看源码发现发现只允许jpg等几种后缀名文件通过，所以先将所要上传的文件后缀名改为jpg形式进行上传，中途用bp抓包，如下：</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../../source/imgs/$%7Bfiilname%7D/1-1709452597527-1.jpg"></p>
+<p><img src="/../../source/imgs/$%7Bfiilname%7D/1-1709452597527-1.jpg"></p>
 <p>将filename改为test.php，然后发送：</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../../source/imgs/$%7Bfiilname%7D/2-1709452697511-3.jpg"></p>
+<p><img src="/../../source/imgs/$%7Bfiilname%7D/2-1709452697511-3.jpg"></p>
 <p>发现文件上传成功，然后打开蚁剑进行连接，获取到flag文件，打开即可看到flag</p>
 <h2 id="绕过Content-Disposition"><a href="#绕过Content-Disposition" class="headerlink" title="绕过Content-Disposition"></a>绕过Content-Disposition</h2><p>在常规 HTTP 响应中 <code>Content-Disposition</code> ，响应标头是一个标头，指示内容是应在浏览器中以内联方式显示，即作为网页或网页的一部分，还是作为附件在本地下载和保存（这操作当然是在文件成功上传后，但是你无法通过正常的途径去访问）</p>
 <p>举个例子：<code>Content-Disposition: attachment; filename=&quot;filename.jpg&quot;</code></p>
@@ -224,17 +134,17 @@ if (true) {
 <p>为了让我们的文件可以传上去，而不是被下载下来，我们可以用CRLF漏洞来进行绕过，即在我们<strong>可控的响应头</strong>内输入 <code>\r\n\r\n</code>或者是将其编码后的 <code>%0d%0a%0d%0a</code>，举个例子，如果说报头中的<code>Content-Type</code>可控，那么我们在后面键入<code>text/html\r\n\r\n</code>，就可以实现绕过，这是由于注入的回车符和换行符导致浏览器将 <code>content-disposition</code> 标头解释为 HTTP 正文的一部分，因此被忽略为告诉浏览器下载的指令，当然，使用 <code>%00</code>也可以达到相同的效果，下面我们来自己测试一下：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">//highlight_file(__FILE__)</span></span><br><span class="line"><span class="variable">$filename</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>];</span><br><span class="line"><span class="variable">$fileheader</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;header&#x27;</span>];</span><br><span class="line"><span class="variable">$filetype</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;type&#x27;</span>];</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$filetype</span>)&amp;<span class="keyword">isset</span>(<span class="variable">$fileheader</span>)&amp;<span class="keyword">isset</span>(<span class="variable">$filename</span>))&#123;</span><br><span class="line">    <span class="title function_ invoke__">header</span>(<span class="string">&#x27;Content-Type:&quot;&#x27;</span>.<span class="variable">$filetype</span>.<span class="string">&#x27;&quot;&#x27;</span>);</span><br><span class="line">    <span class="title function_ invoke__">header</span>(<span class="string">&#x27;Content-Disposition:attachment;filename=&quot;&#x27;</span>.<span class="variable">$fileheader</span>.<span class="string">&#x27;&quot;&#x27;</span>);</span><br><span class="line">    <span class="title function_ invoke__">readfile</span>(<span class="variable">$filename</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>正常在url后面输入<code>?file=show.txt&amp;header=show.txt&amp;type=text/plain</code>去访问的话会直接将文件下载下来，在hackbar或者bp里面自己访问的话并不会，然后如果我们输入<code>?file=show.txt&amp;header=show.txt%0d%0a%0d%0a&amp;type=text/plain</code>的话页面回显如下：<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../../source/imgs/$%7Bfiilname%7D/image-20240326194115539.png" alt="image-20240326194115539"></p>
+<p>正常在url后面输入<code>?file=show.txt&amp;header=show.txt&amp;type=text/plain</code>去访问的话会直接将文件下载下来，在hackbar或者bp里面自己访问的话并不会，然后如果我们输入<code>?file=show.txt&amp;header=show.txt%0d%0a%0d%0a&amp;type=text/plain</code>的话页面回显如下：<br><img src="/../../source/imgs/$%7Bfiilname%7D/image-20240326194115539.png" alt="image-20240326194115539"></p>
 <p>第一行的警告其实涉及到了php底层的c源码，如下：</p>
-<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../../source/imgs/${fiilname}/image-20240326194215608.png" alt="image-20240326194215608" style="zoom:80%;" />
+<img src="/../../source/imgs/${fiilname}/image-20240326194215608.png" alt="image-20240326194215608" style="zoom:80%;" />
 
 <p>我们试图往header里插入\r或者\n，会直接抛出异常，这一句直接失效，这其实是CRLF的另一种绕过姿势</p>
 <p>当我们输入<code>?file=show.txt&amp;header=show.txt%00&amp;type=text/plain</code>时，页面回显如下</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../../source/imgs/$%7Bfiilname%7D/image-20240326194537421.png" alt="image-20240326194537421"></p>
+<p><img src="/../../source/imgs/$%7Bfiilname%7D/image-20240326194537421.png" alt="image-20240326194537421"></p>
 <p>这第一行的警告里面也涉及到了php的底层c源码，如果是%00的话会抛出异常，如下</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../../source/imgs/$%7Bfiilname%7D/image-20240326194800272.png" alt="image-20240326194800272"></p>
+<p><img src="/../../source/imgs/$%7Bfiilname%7D/image-20240326194800272.png" alt="image-20240326194800272"></p>
 <p>但是我们输入 <code>?file=show.txt&amp;header=show.txt&amp;type=text/plain%00</code>的话，页面回显如下</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../../source/imgs/$%7Bfiilname%7D/image-20240326195019619.png" alt="image-20240326195019619"></p>
+<p><img src="/../../source/imgs/$%7Bfiilname%7D/image-20240326195019619.png" alt="image-20240326195019619"></p>
 <p>那么为什么我们在type处输入<code>%00</code>，明明只是影响到Content Type的值，却还是把Content disposition给干掉了呢？这是因为第二个异常，通过搜索得知抛出第二个异常是因为header在执行的时候有任何数据被带到浏览器，而在这一数据就是指第一个异常，所以第二个header并不会执行</p>
 <h2 id="后端检测"><a href="#后端检测" class="headerlink" title="后端检测"></a>后端检测</h2><h3 id="MIME检测"><a href="#MIME检测" class="headerlink" title="MIME检测"></a>MIME检测</h3><h4 id="什么是MIME"><a href="#什么是MIME" class="headerlink" title="什么是MIME"></a>什么是MIME</h4><p> <code>MIME(Multipurpose Internet Mail Extensions)</code>多用途互联网邮件扩展类型。是设定某种扩展名的文件用一种应用程序来打开的方式类型，当该扩展名文件被访问的时候，浏览器会自动使用指定应用程序来打开。</p>
 <h4 id="常见的MIME类型"><a href="#常见的MIME类型" class="headerlink" title="常见的MIME类型"></a>常见的MIME类型</h4><p><code>text/plain</code> （纯文本） </p>
@@ -248,11 +158,11 @@ if (true) {
 <p><code>application/octet-stream</code> （二进制数据） </p>
 <p><code>application/pdf</code> （PDF文档）</p>
 <h4 id="检测方式"><a href="#检测方式" class="headerlink" title="检测方式"></a>检测方式</h4><p>在文件上传过程中，服务端会针对我们的上传的文件生成一个数组，这个数组其中有一项就是这个文件的类型<code>file_type</code>；服务端对文件进行检测时，就是通过检测脚本中的黑白名单和这个数组中的<code>file_type</code>进行对比，如果符合要求就允许上传这个文件。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../../source/imgs/$%7Bfiilname%7D/3-1709453349059-5.jpg"></p>
+<p><img src="/../../source/imgs/$%7Bfiilname%7D/3-1709453349059-5.jpg"></p>
 <h4 id="MIME绕过的原理"><a href="#MIME绕过的原理" class="headerlink" title="MIME绕过的原理"></a>MIME绕过的原理</h4><p>部分Web应用系统判定文件类型是通过<code>content-type字段</code>，黑客可以通过抓包，将<code>content-type字段</code>改为常见的<code>图片类型</code>，如<code>image/gif</code>，从而绕过校验。</p>
 <h4 id="CTFHub-web-文件上传-MIME检测"><a href="#CTFHub-web-文件上传-MIME检测" class="headerlink" title="CTFHub-web-文件上传-MIME检测"></a>CTFHub-web-文件上传-MIME检测</h4><p>首先上传php文件弹窗文件类型不正确，检查源码发现并没有相关js代码，所以应该是后端</p>
 <p>文件上传途中进行抓包，将 <code>content-type</code>字段改为 <code>image/gif</code>，然后发送请求包，上传的文件名后缀不需要改变</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../../source/imgs/$%7Bfiilname%7D/image-20240303162256255.png" alt="image-20240303162256255"></p>
+<p><img src="/../../source/imgs/$%7Bfiilname%7D/image-20240303162256255.png" alt="image-20240303162256255"></p>
 <p>文件上传成功，然后就可以启动蚁剑了，蚁剑的密码为<code>$_POST</code>里面的内容，上传的文件内容如下：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="string">&quot;shell&quot;</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -275,17 +185,17 @@ if (true) {
 <li><code>$des</code>: 这是目标文件的路径，是之前代码中生成的文件路径。它是目标位置，上传的文件将被移动到这个位置。</li>
 </ol>
 <p>根据上面的代码思路，首先我们把文件后缀名改为jpg形式，然后用bp抓个包然后修改get传参中的<code>road</code>值，如下所示：</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../../source/imgs/$%7Bfiilname%7D/image-20240303165306831.png"></p>
+<p><img src="/../../source/imgs/$%7Bfiilname%7D/image-20240303165306831.png"></p>
 <p>上传成功，使用蚁剑获取到flag</p>
 <h4 id="POST传参保存路径"><a href="#POST传参保存路径" class="headerlink" title="POST传参保存路径"></a>POST传参保存路径</h4><p>与GET传参类似的的是：后端对文件路径的处理类似为</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PHP</span><br><span class="line">$des = $_POST[&#x27;road&#x27;] . &quot;/对文件名的处理操作......&quot; . $ext;</span><br></pre></td></tr></table></figure>
 
 <p>此时<code>road</code>为我们可控的参数，但与GET传参不同的是，<strong>http请求内包含文件时，POST参数不再被自动解码</strong>，所以POST传参需要使用BP使用查看16进制的请求详情，修改一个十六进制的为<code>00</code></p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../../source/imgs/$%7Bfiilname%7D/image-20240314202817510.png" alt="image-20240314202817510"></p>
+<p><img src="/../../source/imgs/$%7Bfiilname%7D/image-20240314202817510.png" alt="image-20240314202817510"></p>
 <p>步骤一：修改路径添加文件名，写入需要执行的代码语句</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../../source/imgs/$%7Bfiilname%7D/image-20240314202756690.png" alt="image-20240314202756690"></p>
+<p><img src="/../../source/imgs/$%7Bfiilname%7D/image-20240314202756690.png" alt="image-20240314202756690"></p>
 <p>步骤二：切换为十六进制模式，修改所需要替换为<code>00</code>的位置</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../../source/imgs/$%7Bfiilname%7D/image-20240314202915444.png" alt="image-20240314202915444"></p>
+<p><img src="/../../source/imgs/$%7Bfiilname%7D/image-20240314202915444.png" alt="image-20240314202915444"></p>
 <p>由于使用<code>00</code>截断，所以最后文件保存在<code>/var/www/html/upload</code>,名为<code>test.php</code>,根据位置，访问<code>/upload/test.php</code>,即进入我们所在的页面，可以看到PHP的配置信息，<code>00</code>截断成功</p>
 <h3 id="文件头检测漏洞"><a href="#文件头检测漏洞" class="headerlink" title="文件头检测漏洞"></a>文件头检测漏洞</h3><h4 id="原理-2"><a href="#原理-2" class="headerlink" title="原理"></a>原理</h4><p>在每一个文件（包括图片，视频或其他的非ASCII文件）的开头（十六进制表示）实际上都有一片区域来显示这个文件的实际用法，这就是文件头标志。我们可以通过16进制编辑器打开文件，添加服务器允许的文件头以绕过检测。</p>
 <p>另一种方法就是用画图软件画一张简单的图，太复杂的话会报错，然后抓包在文件末尾添加php代码</p>
@@ -293,7 +203,7 @@ if (true) {
 <p> GIF：<code>47 49 46 38 39 61</code> png：<code>89 50 4E 47 0D 0A 1A 0A</code> JPG：<code>FF D8 FF E0 00 10 4A 46 49 46</code></p>
 <p> 在进行<code>文件头绕过</code>时，我们可以把上面的<code>文件头</code>添加到我们的一句话木马内容最前面，达到绕过文件头检测的目的</p>
 <h4 id="CTFHub-文件上传-文件头检测"><a href="#CTFHub-文件上传-文件头检测" class="headerlink" title="CTFHub 文件上传 - 文件头检测"></a>CTFHub 文件上传 - 文件头检测</h4><p>最开始上传一个.php后缀的文件，提交，alert()弹出一个窗口，只允许jpg,png,gif后缀提交，然后burpsuite抓包，把Content-type改为image&#x2F;png，然后发现还是上传不上去，有弹窗，发现有文件头检测</p>
-<p>首先用画图工具做出一个最简单的图，太复杂的话会报错，然后上传，中途抓包修改数据如下：<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../../source/imgs/${fiilname}/image-20240303223906201.png" alt="image-20240303223906201" style="zoom: 67%;" /></p>
+<p>首先用画图工具做出一个最简单的图，太复杂的话会报错，然后上传，中途抓包修改数据如下：<br><img src="/../../source/imgs/${fiilname}/image-20240303223906201.png" alt="image-20240303223906201" style="zoom: 67%;" /></p>
 <p>报头中的文件后缀名要改回 <code>php</code>，然后发送请求包，成功</p>
 <p>之后利用蚁剑获取到flag</p>
 <h3 id="内容检测图片马绕过"><a href="#内容检测图片马绕过" class="headerlink" title="内容检测图片马绕过"></a>内容检测图片马绕过</h3><h4 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h4><p>一般文件内容验证使用<code>getimagesize函数</code>检测,会判断文件是否是一个有效的文件图片,如果是,则允许上传,否则的话不允许上传。  本实验就是将一句话木马插入到一个[合法]的图片文件当中,然后用webshell管理工具（比如蚁剑）进行远程连接。</p>
@@ -333,7 +243,7 @@ if (true) {
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.user.ini.png</span><br><span class="line">内容：  auto_prepend_file=&quot;shell.png&quot;</span><br><span class="line">shell.png </span><br><span class="line">&lt;?php @eval($_POST[&#x27;shell&#x27;]);?&gt;</span><br></pre></td></tr></table></figure>
 
 <p>开始做题：<br>先上传.user.ini.png文件，并抓包，修改名称：.user.ini，然后放包</p>
-<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../../source/imgs/${fiilname}/image-20240305232834660.png" alt="image-20240305232834660" style="zoom: 80%;" />
+<img src="/../../source/imgs/${fiilname}/image-20240305232834660.png" alt="image-20240305232834660" style="zoom: 80%;" />
 
 <p>接着再上传图片马，最后就可以用蚁剑连接 <code>/upload/</code>，然后获取到flag</p>
 <h4 id="ctfshow-web154-155"><a href="#ctfshow-web154-155" class="headerlink" title="ctfshow-web154&amp;155"></a>ctfshow-web154&amp;155</h4><p>首先按照上题步骤上传 <code>.user.ini</code>文件成功，然后上传图片马失败，根据题解说是过滤了php，于是可以试试短标签，如下：</p>
@@ -399,20 +309,20 @@ if (true) {
 <h3 id="如何判断图片是否进行了二次处理"><a href="#如何判断图片是否进行了二次处理" class="headerlink" title="如何判断图片是否进行了二次处理"></a>如何判断图片是否进行了二次处理</h3><p>对比要上传图片与上传后的图片大小，使用<code>16进制编辑器</code>打开图片查看上传后保留了哪些数据，查看那些数据被改变。</p>
 <h2 id="利用文件上传实现日志包含从而连接蚁剑"><a href="#利用文件上传实现日志包含从而连接蚁剑" class="headerlink" title="利用文件上传实现日志包含从而连接蚁剑"></a>利用文件上传实现日志包含从而连接蚁剑</h2><h2 id="bp实战"><a href="#bp实战" class="headerlink" title="bp实战"></a>bp实战</h2><h3 id="Lab：通过-Web-Shell-上传远程执行代码"><a href="#Lab：通过-Web-Shell-上传远程执行代码" class="headerlink" title="Lab：通过 Web Shell 上传远程执行代码"></a>Lab：通过 Web Shell 上传远程执行代码</h3><p>题目要求：请上传一个基本的 PHP Web Shell 并使用它来泄露文件 <code>/home/carlos/secret</code> 的内容。使用实验室横幅中提供的按钮提交此机密</p>
 <p>首先我们先登录账号，发现有个头像图片上传功能，开启proxy插件，先上传一个正常的图片，然后到代理模块中的http历史记录，选中<code>/my-account/avatar</code>条目发送到重放器中，然后更改过滤器配置如下：</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../../source/imgs/$%7Bfiilname%7D/image-20240331204548123.png" alt="image-20240331204548123"></p>
+<p><img src="/../../source/imgs/$%7Bfiilname%7D/image-20240331204548123.png" alt="image-20240331204548123"></p>
 <p>应用发现多了一条目，是显示图片的，也发送到重放器中</p>
 <p>第一个文件修改成如下内容：</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../../source/imgs/$%7Bfiilname%7D/image-20240331204720973.png" alt="image-20240331204720973"></p>
+<p><img src="/../../source/imgs/$%7Bfiilname%7D/image-20240331204720973.png" alt="image-20240331204720973"></p>
 <p>然后第二个文件更改一下filename，再发送一遍，便得到了所需要的机密</p>
 <h3 id="Lab：通过绕过-Content-Type-限制上传-Web-shell"><a href="#Lab：通过绕过-Content-Type-限制上传-Web-shell" class="headerlink" title="Lab：通过绕过 Content-Type 限制上传 Web shell"></a>Lab：通过绕过 Content-Type 限制上传 Web shell</h3><p>和上题不一样的地方就是多了对Conten-Type的检查，要求必须是图片类型的才可以</p>
 <p>其余的操作步骤与上题一致，需要注意的是eval函数里面直接接语句的话要有双引号包括才可以</p>
 <h3 id="Lab：通过路径遍历进行Web-shell上传"><a href="#Lab：通过路径遍历进行Web-shell上传" class="headerlink" title="Lab：通过路径遍历进行Web shell上传"></a>Lab：通过路径遍历进行Web shell上传</h3><p>要求：该实验室包含一个存在漏洞的图像上传功能。服务器被配置为阻止执行用户提供的文件，但可以通过利用第二个漏洞来绕过此限制。要完成该实验，请上传一个基本的 PHP Web shell 并使用它来窃取文件 <code>/home/carlos/secret</code> 的内容。使用实验室横幅中提供的按钮提交此机密</p>
 <p>首先如果我们直接按照前两题的步骤来做该题的话，会发现页面会直接回显给我们输入的代码内容，并不会执行</p>
 <p>发现上传图片的模块中的filename可以随意修改，所以我们尝试给该文件换个地方，如下：</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../../source/imgs/$%7Bfiilname%7D/image-20240402192918437.png" alt="image-20240402192918437"></p>
+<p><img src="/../../source/imgs/$%7Bfiilname%7D/image-20240402192918437.png" alt="image-20240402192918437"></p>
 <p>发现我们输入的被直接处理掉了</p>
-<p>再尝试一下进行url编码试试，如下：<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../../source/imgs/$%7Bfiilname%7D/image-20240402193207300.png" alt="image-20240402193207300"></p>
-<p>成功上传该文件，于是我们去访问一下该文件，结果如下：<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../../source/imgs/$%7Bfiilname%7D/image-20240402193255112.png" alt="image-20240402193255112"></p>
+<p>再尝试一下进行url编码试试，如下：<br><img src="/../../source/imgs/$%7Bfiilname%7D/image-20240402193207300.png" alt="image-20240402193207300"></p>
+<p>成功上传该文件，于是我们去访问一下该文件，结果如下：<br><img src="/../../source/imgs/$%7Bfiilname%7D/image-20240402193255112.png" alt="image-20240402193255112"></p>
 <p>拿到机密，题目解决</p>
 <h3 id="Lab：通过扩展黑名单绕过上传Web-shell"><a href="#Lab：通过扩展黑名单绕过上传Web-shell" class="headerlink" title="Lab：通过扩展黑名单绕过上传Web shell"></a>Lab：通过扩展黑名单绕过上传Web shell</h3><p>正常上传一个文件后，我们将其改为php后缀的文件再次进行上传，发现页面会回显不允许php后缀的文件上传</p>
 <p>于是尝试将后缀名改为<code>.php4</code>，成功上传，但发现页面会直接回显给我们输入的代码内容，并不会执行该代码</p>
@@ -420,11 +330,11 @@ if (true) {
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AddType application/x-httpd-php .txt</span><br></pre></td></tr></table></figure>
 
 <p>后缀为<code>.txt</code>的文件都会被当作php代码执行，于是我们上传</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../../source/imgs/$%7Bfiilname%7D/image-20240402202318347.png" alt="image-20240402202318347"></p>
+<p><img src="/../../source/imgs/$%7Bfiilname%7D/image-20240402202318347.png" alt="image-20240402202318347"></p>
 <p>然后bp访问该url，得到机密，解决题目</p>
 <h3 id="Lab：通过混淆的文件扩展名上传-Web-shell"><a href="#Lab：通过混淆的文件扩展名上传-Web-shell" class="headerlink" title="Lab：通过混淆的文件扩展名上传 Web shell"></a>Lab：通过混淆的文件扩展名上传 Web shell</h3><p>最开始是想着按照上题的思路先上传一个<code>.htaccess</code>文件，但是上传失败，页面回显只允许后缀名为png或者jpg的文件上传</p>
 <p>但是这题的filename我们是可以改的，所以这题我们可以尝试使用00截断来绕过，如下：</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../../source/imgs/$%7Bfiilname%7D/image-20240402210451176.png" alt="image-20240402210451176"></p>
+<p><img src="/../../source/imgs/$%7Bfiilname%7D/image-20240402210451176.png" alt="image-20240402210451176"></p>
 <p>然后直接访问<code>shell.php</code>，得到机密，题目解决</p>
 <h3 id="Lab：通过多语言-Web-Shell-上传远程执行代码"><a href="#Lab：通过多语言-Web-Shell-上传远程执行代码" class="headerlink" title="Lab：通过多语言 Web Shell 上传远程执行代码"></a>Lab：通过多语言 Web Shell 上传远程执行代码</h3><p>题目中提到：尽管它会检查文件的内容以验证它是否是真正的图像，但仍然可以上传和执行服务器端代码。</p>
 <p>说明后端会检查图片的内容，但是我们可以尝试做一个图片马</p>
@@ -438,222 +348,742 @@ if (true) {
 <h2 id="借鉴"><a href="#借鉴" class="headerlink" title="借鉴"></a>借鉴</h2><p>超详细文件上传漏洞总结分析：<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1938541">https://cloud.tencent.com/developer/article/1938541</a></p>
 <p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1938541">超详细文件上传漏洞总结分析</a></p>
 <p><a target="_blank" rel="noopener" href="https://we11s.github.io/posts/154257042/">WELL’s blog</a></p>
-</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/Sherlock.jpg" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/Sherlock.jpg" title="头像" alt="头像"></a><div class="post-copyright__author_name">Sherlock</div><div class="post-copyright__author_desc">言念君子，温其如玉</div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="http://example.com/2024/03/03/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%AD%A6%E4%B9%A0_max/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%AD%A6%E4%B9%A0/">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('http://example.com/2024/03/03/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%AD%A6%E4%B9%A0_max/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%AD%A6%E4%B9%A0/')">文件上传学习</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="http://example.com/2024/03/03/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%AD%A6%E4%B9%A0_max/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%AD%A6%E4%B9%A0/"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=文件上传学习&amp;url=http://example.com/2024/03/03/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%AD%A6%E4%B9%A0_max/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%AD%A6%E4%B9%A0/&amp;pic=" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="rm.copyPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__tag-list"></div></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/03/01/ssti%E5%AD%A6%E4%B9%A0/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">ssti学习</div></div></a></div><div class="next-post pull-right"><a href="/2024/03/12/SSTI%E9%9D%B6%E5%9C%BA%E9%A2%98%E8%A7%A3/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">SSTI靶场题解</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()"></div><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/Sherlock.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-status"><img class="g-status" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/08/24/64e6ce9c507bb.png" ait="status"/></div></div><div class="author-info__description"><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">这里是我<b style="color:#fff">记录学习</b>收获的个人博客，<b style="color:#fff">也希望</b>能和大家一起<b style="color:#fff">进步</b>。</div><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">愿你可以在这里找到对你有<b style="color:#fff">帮助</b>的<b style="color:#fff">文章</b>。</div></div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">Sherlock</h1><div class="author-info__desc">言念君子，温其如玉</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/cina666" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a></div></div></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bullhorn anzhiyu-shake"></i><span>Announcement</span></div><div class="announcement_content">欢迎来看我的博客鸭~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%AB%AF%E6%A3%80%E6%B5%8B"><span class="toc-number">1.</span> <span class="toc-text">前端检测</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E5%BD%93%E5%89%8D%E9%A1%B5%E9%9D%A2%E4%BD%BF%E7%94%A8%E5%89%8D%E7%AB%AFis%E7%9A%84%E9%AA%8C%E8%AF%81%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">如何判断当前页面使用前端is的验证方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%95%E8%BF%87%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">绕过方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CTFHub-web-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0-%E5%89%8D%E7%AB%AF%E9%AA%8C%E8%AF%81"><span class="toc-number">1.4.</span> <span class="toc-text">CTFHub-web-文件上传-前端验证</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%95%E8%BF%87Content-Disposition"><span class="toc-number">2.</span> <span class="toc-text">绕过Content-Disposition</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E7%AB%AF%E6%A3%80%E6%B5%8B"><span class="toc-number">3.</span> <span class="toc-text">后端检测</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MIME%E6%A3%80%E6%B5%8B"><span class="toc-number">3.1.</span> <span class="toc-text">MIME检测</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFMIME"><span class="toc-number">3.1.1.</span> <span class="toc-text">什么是MIME</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84MIME%E7%B1%BB%E5%9E%8B"><span class="toc-number">3.1.2.</span> <span class="toc-text">常见的MIME类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A3%80%E6%B5%8B%E6%96%B9%E5%BC%8F"><span class="toc-number">3.1.3.</span> <span class="toc-text">检测方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MIME%E7%BB%95%E8%BF%87%E7%9A%84%E5%8E%9F%E7%90%86"><span class="toc-number">3.1.4.</span> <span class="toc-text">MIME绕过的原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CTFHub-web-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0-MIME%E6%A3%80%E6%B5%8B"><span class="toc-number">3.1.5.</span> <span class="toc-text">CTFHub-web-文件上传-MIME检测</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#00%E6%88%AA%E6%96%AD"><span class="toc-number">3.2.</span> <span class="toc-text">00截断</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E7%90%86-1"><span class="toc-number">3.2.1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6"><span class="toc-number">3.2.2.</span> <span class="toc-text">条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%95%E8%BF%87%E6%80%9D%E8%B7%AF"><span class="toc-number">3.2.3.</span> <span class="toc-text">绕过思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE"><span class="toc-number">3.2.4.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#POST%E4%BC%A0%E5%8F%82%E4%BF%9D%E5%AD%98%E8%B7%AF%E5%BE%84"><span class="toc-number">3.2.5.</span> <span class="toc-text">POST传参保存路径</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%A4%B4%E6%A3%80%E6%B5%8B%E6%BC%8F%E6%B4%9E"><span class="toc-number">3.3.</span> <span class="toc-text">文件头检测漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E7%90%86-2"><span class="toc-number">3.3.1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E6%96%87%E4%BB%B6%E5%A4%B4"><span class="toc-number">3.3.2.</span> <span class="toc-text">常见的文件头</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CTFHub-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0-%E6%96%87%E4%BB%B6%E5%A4%B4%E6%A3%80%E6%B5%8B"><span class="toc-number">3.3.3.</span> <span class="toc-text">CTFHub 文件上传 - 文件头检测</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AE%B9%E6%A3%80%E6%B5%8B%E5%9B%BE%E7%89%87%E9%A9%AC%E7%BB%95%E8%BF%87"><span class="toc-number">3.4.</span> <span class="toc-text">内容检测图片马绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86"><span class="toc-number">3.4.1.</span> <span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BE%E7%89%87%E9%A9%AC%E5%88%B6%E4%BD%9C"><span class="toc-number">3.4.2.</span> <span class="toc-text">图片马制作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90%E5%9B%BE%E7%89%87%E9%A9%AC"><span class="toc-number">3.4.3.</span> <span class="toc-text">解析图片马</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.</span> <span class="toc-text">常见漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#htaccess%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.1.</span> <span class="toc-text">.htaccess文件解析漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-htaccess%E6%96%87%E4%BB%B6"><span class="toc-number">4.1.1.</span> <span class="toc-text">什么是.htaccess文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E5%89%8D%E6%8F%90"><span class="toc-number">4.1.2.</span> <span class="toc-text">漏洞利用前提</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E7%90%86-3"><span class="toc-number">4.1.3.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="toc-number">4.1.4.</span> <span class="toc-text">利用方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#htaccess%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9"><span class="toc-number">4.1.5.</span> <span class="toc-text">.htaccess文件内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CTFHub-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0-htaccess"><span class="toc-number">4.1.6.</span> <span class="toc-text">CTFHub 文件上传 - htaccess</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#user-ini%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.2.</span> <span class="toc-text">.user.ini漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ctfshow-web153"><span class="toc-number">4.2.1.</span> <span class="toc-text">ctfshow-web153</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ctfshow-web154-155"><span class="toc-number">4.2.2.</span> <span class="toc-text">ctfshow-web154&amp;155</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ctfshow-web156"><span class="toc-number">4.2.3.</span> <span class="toc-text">ctfshow-web156</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ctfshow-web157-158"><span class="toc-number">4.2.4.</span> <span class="toc-text">ctfshow-web157&amp;158</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Apache%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.3.</span> <span class="toc-text">Apache解析漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90%E9%85%8D%E7%BD%AE%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6"><span class="toc-number">4.3.1.</span> <span class="toc-text">解析配置漏洞条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90%E9%85%8D%E7%BD%AE%E6%BC%8F%E6%B4%9E%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95"><span class="toc-number">4.3.2.</span> <span class="toc-text">解析配置漏洞解决办法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BD%B1%E5%93%8D%E7%89%88%E6%9C%AC"><span class="toc-number">4.3.3.</span> <span class="toc-text">影响版本</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IIS6-0%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.4.</span> <span class="toc-text">IIS6.0解析漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IIS7-0-IIS7-5-Nginx%E7%9A%84%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.5.</span> <span class="toc-text">IIS7.0 | IIS7.5 | Nginx的解析漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E7%90%86-4"><span class="toc-number">4.5.1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%BD%A2%E5%BC%8F"><span class="toc-number">4.5.2.</span> <span class="toc-text">漏洞形式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%A6%E5%A4%96%E4%B8%A4%E7%A7%8D%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.5.3.</span> <span class="toc-text">另外两种解析漏洞</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89%E6%BC%8F%E6%B4%9E"><span class="toc-number">5.</span> <span class="toc-text">条件竞争漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E6%AC%A1%E6%B8%B2%E6%9F%93%E6%BC%8F%E6%B4%9E"><span class="toc-number">6.</span> <span class="toc-text">二次渲染漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E6%AC%A1%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86"><span class="toc-number">6.1.</span> <span class="toc-text">二次渲染原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%95%E8%BF%87"><span class="toc-number">6.2.</span> <span class="toc-text">绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E5%9B%BE%E7%89%87%E6%98%AF%E5%90%A6%E8%BF%9B%E8%A1%8C%E4%BA%86%E4%BA%8C%E6%AC%A1%E5%A4%84%E7%90%86"><span class="toc-number">6.3.</span> <span class="toc-text">如何判断图片是否进行了二次处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%AE%9E%E7%8E%B0%E6%97%A5%E5%BF%97%E5%8C%85%E5%90%AB%E4%BB%8E%E8%80%8C%E8%BF%9E%E6%8E%A5%E8%9A%81%E5%89%91"><span class="toc-number">7.</span> <span class="toc-text">利用文件上传实现日志包含从而连接蚁剑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bp%E5%AE%9E%E6%88%98"><span class="toc-number">8.</span> <span class="toc-text">bp实战</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Lab%EF%BC%9A%E9%80%9A%E8%BF%87-Web-Shell-%E4%B8%8A%E4%BC%A0%E8%BF%9C%E7%A8%8B%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81"><span class="toc-number">8.1.</span> <span class="toc-text">Lab：通过 Web Shell 上传远程执行代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lab%EF%BC%9A%E9%80%9A%E8%BF%87%E7%BB%95%E8%BF%87-Content-Type-%E9%99%90%E5%88%B6%E4%B8%8A%E4%BC%A0-Web-shell"><span class="toc-number">8.2.</span> <span class="toc-text">Lab：通过绕过 Content-Type 限制上传 Web shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lab%EF%BC%9A%E9%80%9A%E8%BF%87%E8%B7%AF%E5%BE%84%E9%81%8D%E5%8E%86%E8%BF%9B%E8%A1%8CWeb-shell%E4%B8%8A%E4%BC%A0"><span class="toc-number">8.3.</span> <span class="toc-text">Lab：通过路径遍历进行Web shell上传</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lab%EF%BC%9A%E9%80%9A%E8%BF%87%E6%89%A9%E5%B1%95%E9%BB%91%E5%90%8D%E5%8D%95%E7%BB%95%E8%BF%87%E4%B8%8A%E4%BC%A0Web-shell"><span class="toc-number">8.4.</span> <span class="toc-text">Lab：通过扩展黑名单绕过上传Web shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lab%EF%BC%9A%E9%80%9A%E8%BF%87%E6%B7%B7%E6%B7%86%E7%9A%84%E6%96%87%E4%BB%B6%E6%89%A9%E5%B1%95%E5%90%8D%E4%B8%8A%E4%BC%A0-Web-shell"><span class="toc-number">8.5.</span> <span class="toc-text">Lab：通过混淆的文件扩展名上传 Web shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lab%EF%BC%9A%E9%80%9A%E8%BF%87%E5%A4%9A%E8%AF%AD%E8%A8%80-Web-Shell-%E4%B8%8A%E4%BC%A0%E8%BF%9C%E7%A8%8B%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81"><span class="toc-number">8.6.</span> <span class="toc-text">Lab：通过多语言 Web Shell 上传远程执行代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%80%9F%E9%89%B4"><span class="toc-number">9.</span> <span class="toc-text">借鉴</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/23/CodeQl-%E5%85%A5%E9%97%A8/" title="CodeQl 入门">CodeQl 入门</a><time datetime="2025-08-23T07:43:42.000Z" title="Created 2025-08-23 15:43:42">2025-08-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/20/Tomcat-URL%E8%A7%A3%E6%9E%90%E5%B7%AE%E5%BC%82%E6%80%A7%E5%AF%BC%E8%87%B4%E7%9A%84%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/" title="Tomcat URL解析差异性导致的安全问题">Tomcat URL解析差异性导致的安全问题</a><time datetime="2025-08-20T12:52:03.000Z" title="Created 2025-08-20 20:52:03">2025-08-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/20/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/" title="春秋云镜-initial">春秋云镜-initial</a><time datetime="2025-08-20T08:11:22.000Z" title="Created 2025-08-20 16:11:22">2025-08-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/15/linux-webshell%E6%8F%90%E6%9D%83/" title="linux webshell提权">linux webshell提权</a><time datetime="2025-08-15T08:12:42.000Z" title="Created 2025-08-15 16:12:42">2025-08-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/15/%E5%8F%8D%E5%BC%B9shell%E5%8D%87%E7%BA%A7%E4%B8%BA%E5%AE%8C%E5%85%A8%E4%BA%A4%E4%BA%92%E5%BC%8Fshell/" title="反弹shell升级为完全交互式shell">反弹shell升级为完全交互式shell</a><time datetime="2025-08-15T02:58:47.000Z" title="Created 2025-08-15 10:58:47">2025-08-15</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="workboard"><img class="workSituationImg boardsign" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.0.4/img/badge/安知鱼-上班摸鱼中.svg" alt="距离月入25k也就还差一个大佬带我~" title="距离月入25k也就还差一个大佬带我~"/><div id="runtimeTextTip"></div></div></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2023 - 2025 By <a class="footer-bar-link" href="/" title="Sherlock" target="_blank">Sherlock</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">Articles</div><div class="length-num">81</div></a><a href="/tags/" title="tag"><div class="headline">Tags</div><div class="length-num">10</div></a><a href="/categories/" title="category"><div class="headline">Categories</div><div class="length-num">10</div></a></div><span class="sidebar-menu-item-title">Function</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="Display Mode"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>Display Mode</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blog.anheyu.com/" title="博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://image.anheyu.com/" title="安知鱼图床"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://image.anheyu.com/favicon.ico" alt="安知鱼图床"/><span class="back-menu-item-text">安知鱼图床</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/link/"><span> 友人帐</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/essay/"><span> 闲言碎语</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/cors/" style="font-size: 0.88rem;">cors<sup>1</sup></a><a href="/tags/csrf/" style="font-size: 0.88rem;">csrf<sup>1</sup></a><a href="/tags/php/" style="font-size: 0.88rem;">php<sup>5</sup></a><a href="/tags/python/" style="font-size: 0.88rem;">python<sup>3</sup></a><a href="/tags/sql/" style="font-size: 0.88rem;">sql<sup>3</sup></a><a href="/tags/ssrf/" style="font-size: 0.88rem;">ssrf<sup>1</sup></a><a href="/tags/ssti/" style="font-size: 0.88rem;">ssti<sup>2</sup></a><a href="/tags/web/" style="font-size: 0.88rem;">web<sup>3</sup></a><a href="/tags/xss/" style="font-size: 0.88rem;">xss<sup>1</sup></a><a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 0.88rem;">前端<sup>2</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="Switch Between Traditional Chinese And Simplified Chinese">繁</button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="8152976493" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random"></meting-js></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="anzhiyufont anzhiyu-icon-xmark"></i></button></nav><div class="is-center" id="loading-database"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-pulse-icon"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div id="he-plugin-simple"></div><script>var WIDGET = {
-  "CONFIG": {
-    "modules": "0124",
-    "background": "2",
-    "tmpColor": "FFFFFF",
-    "tmpSize": "16",
-    "cityColor": "FFFFFF",
-    "citySize": "16",
-    "aqiColor": "E8D87B",
-    "aqiSize": "16",
-    "weatherIconSize": "24",
-    "alertIconSize": "18",
-    "padding": "10px 10px 10px 10px",
-    "shadow": "0",
-    "language": "auto",
-    "borderRadius": "20",
-    "fixed": "true",
-    "vertical": "top",
-    "horizontal": "left",
-    "left": "20",
-    "top": "7.1",
-    "key": "df245676fb434a0691ead1c63341cd94"
-  }
-}
-</script><link rel="stylesheet" href="https://widget.qweather.net/simple/static/css/he-simple.css?v=1.4.0"/><script src="https://widget.qweather.net/simple/static/js/he-simple.js?v=1.4.0"></script><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@5.0.20/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@17.8.4/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
-var HoldLog = console.log;
-console.log = function () {};
-let now1 = new Date();
-queueMicrotask(() => {
-  const Log = function () {
-    HoldLog.apply(console, arguments);
-  }; //在恢复前输出日志
-  const grt = new Date("10/04/2023 00:00:00"); //此处修改你的建站时间或者网站上线时间
-  now1.setTime(now1.getTime() + 250);
-  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
-  const dnum = Math.floor(days);
-  const ascll = [
-    `欢迎使用安知鱼!`,
-    `生活明朗, 万物可爱`,
-    `
-        
-       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
-      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
-      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
-      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
-      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
-      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
-        
-        `,
-    "已上线",
-    dnum,
-    "天",
-    "©2023 By 安知鱼 V1.6.8",
-  ];
-  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>License</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    
 
-  setTimeout(
-    Log.bind(
-      console,
-      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
-      "color:#425AEF",
-      "",
-      "color:#425AEF",
-      "color:#425AEF",
-      "",
-      "color:#425AEF",
-      ""
-    )
-  );
-  setTimeout(
-    Log.bind(
-      console,
-      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
-      "color:white; background-color:#4fd953",
-      "",
-      "",
-      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
-    )
-  );
+</div>
 
-  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">Newer</div><a href="/2024/03/12/SSTI%E9%9D%B6%E5%9C%BA%E9%A2%98%E8%A7%A3/">SSTI靶场题解</a></div><div class="item" id="next"><div class="note">Older</div><a href="/2024/03/01/ssti%E5%AD%A6%E4%B9%A0/">ssti学习</a></div></section></div>
 
-  setTimeout(
-    console.warn.bind(
-      console,
-      "%c ⚡ Powered by 安知鱼 %c 你正在访问 Sherlock 的博客.",
-      "color:white; background-color:#f0ad4e",
-      ""
-    )
-  );
 
-  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
 
-  setTimeout(
-    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
-  );
-});</script><script async src="/anzhiyu/random.js"></script><script async="async">(function () {
-  var grt = new Date("10/04/2023 00:00:00"); //设置网站上线时间
-  var now = new Date();
-  var dnum;
-  var hnum;
-  var mnum;
-  var snum;
-  var nowHour;
 
-  // 计算并更新天数、小时数、分钟数和秒数
-  function updateTime() {
-    now = new Date(); // 更新 now 的值
-    nowHour = now.getHours(); // 更新 nowHour 的值
-    var days = (now - grt) / 1000 / 60 / 60 / 24;
-    dnum = Math.floor(days);
-    var hours = (now - grt) / 1000 / 60 / 60 - 24 * dnum;
-    hnum = Math.floor(hours);
-    if (String(hnum).length == 1) {
-      hnum = "0" + hnum;
+
+
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">Sherlock</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">On This Page</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%AB%AF%E6%A3%80%E6%B5%8B"><span class="toc-text">前端检测</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-text">原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E5%BD%93%E5%89%8D%E9%A1%B5%E9%9D%A2%E4%BD%BF%E7%94%A8%E5%89%8D%E7%AB%AFis%E7%9A%84%E9%AA%8C%E8%AF%81%E6%96%B9%E5%BC%8F"><span class="toc-text">如何判断当前页面使用前端is的验证方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%95%E8%BF%87%E6%96%B9%E6%B3%95"><span class="toc-text">绕过方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CTFHub-web-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0-%E5%89%8D%E7%AB%AF%E9%AA%8C%E8%AF%81"><span class="toc-text">CTFHub-web-文件上传-前端验证</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%95%E8%BF%87Content-Disposition"><span class="toc-text">绕过Content-Disposition</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E7%AB%AF%E6%A3%80%E6%B5%8B"><span class="toc-text">后端检测</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MIME%E6%A3%80%E6%B5%8B"><span class="toc-text">MIME检测</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFMIME"><span class="toc-text">什么是MIME</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84MIME%E7%B1%BB%E5%9E%8B"><span class="toc-text">常见的MIME类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A3%80%E6%B5%8B%E6%96%B9%E5%BC%8F"><span class="toc-text">检测方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MIME%E7%BB%95%E8%BF%87%E7%9A%84%E5%8E%9F%E7%90%86"><span class="toc-text">MIME绕过的原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CTFHub-web-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0-MIME%E6%A3%80%E6%B5%8B"><span class="toc-text">CTFHub-web-文件上传-MIME检测</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#00%E6%88%AA%E6%96%AD"><span class="toc-text">00截断</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E7%90%86-1"><span class="toc-text">原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6"><span class="toc-text">条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%95%E8%BF%87%E6%80%9D%E8%B7%AF"><span class="toc-text">绕过思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE"><span class="toc-text">题目</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#POST%E4%BC%A0%E5%8F%82%E4%BF%9D%E5%AD%98%E8%B7%AF%E5%BE%84"><span class="toc-text">POST传参保存路径</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%A4%B4%E6%A3%80%E6%B5%8B%E6%BC%8F%E6%B4%9E"><span class="toc-text">文件头检测漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E7%90%86-2"><span class="toc-text">原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E6%96%87%E4%BB%B6%E5%A4%B4"><span class="toc-text">常见的文件头</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CTFHub-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0-%E6%96%87%E4%BB%B6%E5%A4%B4%E6%A3%80%E6%B5%8B"><span class="toc-text">CTFHub 文件上传 - 文件头检测</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AE%B9%E6%A3%80%E6%B5%8B%E5%9B%BE%E7%89%87%E9%A9%AC%E7%BB%95%E8%BF%87"><span class="toc-text">内容检测图片马绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86"><span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BE%E7%89%87%E9%A9%AC%E5%88%B6%E4%BD%9C"><span class="toc-text">图片马制作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90%E5%9B%BE%E7%89%87%E9%A9%AC"><span class="toc-text">解析图片马</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E6%BC%8F%E6%B4%9E"><span class="toc-text">常见漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#htaccess%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E"><span class="toc-text">.htaccess文件解析漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-htaccess%E6%96%87%E4%BB%B6"><span class="toc-text">什么是.htaccess文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E5%89%8D%E6%8F%90"><span class="toc-text">漏洞利用前提</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E7%90%86-3"><span class="toc-text">原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="toc-text">利用方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#htaccess%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9"><span class="toc-text">.htaccess文件内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CTFHub-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0-htaccess"><span class="toc-text">CTFHub 文件上传 - htaccess</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#user-ini%E6%BC%8F%E6%B4%9E"><span class="toc-text">.user.ini漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ctfshow-web153"><span class="toc-text">ctfshow-web153</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ctfshow-web154-155"><span class="toc-text">ctfshow-web154&amp;155</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ctfshow-web156"><span class="toc-text">ctfshow-web156</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ctfshow-web157-158"><span class="toc-text">ctfshow-web157&amp;158</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Apache%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E"><span class="toc-text">Apache解析漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90%E9%85%8D%E7%BD%AE%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6"><span class="toc-text">解析配置漏洞条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90%E9%85%8D%E7%BD%AE%E6%BC%8F%E6%B4%9E%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95"><span class="toc-text">解析配置漏洞解决办法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BD%B1%E5%93%8D%E7%89%88%E6%9C%AC"><span class="toc-text">影响版本</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IIS6-0%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E"><span class="toc-text">IIS6.0解析漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IIS7-0-IIS7-5-Nginx%E7%9A%84%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E"><span class="toc-text">IIS7.0 | IIS7.5 | Nginx的解析漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E7%90%86-4"><span class="toc-text">原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%BD%A2%E5%BC%8F"><span class="toc-text">漏洞形式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%A6%E5%A4%96%E4%B8%A4%E7%A7%8D%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E"><span class="toc-text">另外两种解析漏洞</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89%E6%BC%8F%E6%B4%9E"><span class="toc-text">条件竞争漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E6%AC%A1%E6%B8%B2%E6%9F%93%E6%BC%8F%E6%B4%9E"><span class="toc-text">二次渲染漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E6%AC%A1%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86"><span class="toc-text">二次渲染原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%95%E8%BF%87"><span class="toc-text">绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E5%9B%BE%E7%89%87%E6%98%AF%E5%90%A6%E8%BF%9B%E8%A1%8C%E4%BA%86%E4%BA%8C%E6%AC%A1%E5%A4%84%E7%90%86"><span class="toc-text">如何判断图片是否进行了二次处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%AE%9E%E7%8E%B0%E6%97%A5%E5%BF%97%E5%8C%85%E5%90%AB%E4%BB%8E%E8%80%8C%E8%BF%9E%E6%8E%A5%E8%9A%81%E5%89%91"><span class="toc-text">利用文件上传实现日志包含从而连接蚁剑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bp%E5%AE%9E%E6%88%98"><span class="toc-text">bp实战</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Lab%EF%BC%9A%E9%80%9A%E8%BF%87-Web-Shell-%E4%B8%8A%E4%BC%A0%E8%BF%9C%E7%A8%8B%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81"><span class="toc-text">Lab：通过 Web Shell 上传远程执行代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lab%EF%BC%9A%E9%80%9A%E8%BF%87%E7%BB%95%E8%BF%87-Content-Type-%E9%99%90%E5%88%B6%E4%B8%8A%E4%BC%A0-Web-shell"><span class="toc-text">Lab：通过绕过 Content-Type 限制上传 Web shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lab%EF%BC%9A%E9%80%9A%E8%BF%87%E8%B7%AF%E5%BE%84%E9%81%8D%E5%8E%86%E8%BF%9B%E8%A1%8CWeb-shell%E4%B8%8A%E4%BC%A0"><span class="toc-text">Lab：通过路径遍历进行Web shell上传</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lab%EF%BC%9A%E9%80%9A%E8%BF%87%E6%89%A9%E5%B1%95%E9%BB%91%E5%90%8D%E5%8D%95%E7%BB%95%E8%BF%87%E4%B8%8A%E4%BC%A0Web-shell"><span class="toc-text">Lab：通过扩展黑名单绕过上传Web shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lab%EF%BC%9A%E9%80%9A%E8%BF%87%E6%B7%B7%E6%B7%86%E7%9A%84%E6%96%87%E4%BB%B6%E6%89%A9%E5%B1%95%E5%90%8D%E4%B8%8A%E4%BC%A0-Web-shell"><span class="toc-text">Lab：通过混淆的文件扩展名上传 Web shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lab%EF%BC%9A%E9%80%9A%E8%BF%87%E5%A4%9A%E8%AF%AD%E8%A8%80-Web-Shell-%E4%B8%8A%E4%BC%A0%E8%BF%9C%E7%A8%8B%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81"><span class="toc-text">Lab：通过多语言 Web Shell 上传远程执行代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%80%9F%E9%89%B4"><span class="toc-text">借鉴</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>Scroll to Top</span></a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+
+
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `Just`,
+      min: `minutes ago`,
+      hour: `hours ago`,
+      day: `days ago`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
     }
-    var minutes = (now - grt) / 1000 / 60 - 24 * 60 * dnum - 60 * hnum;
-    mnum = Math.floor(minutes);
-    if (String(mnum).length == 1) {
-      mnum = "0" + mnum;
-    }
-    var seconds = (now - grt) / 1000 - 24 * 60 * 60 * dnum - 60 * 60 * hnum - 60 * mnum;
-    snum = Math.round(seconds);
-    if (String(snum).length == 1) {
-      snum = "0" + snum;
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
     }
   }
-
-  // 更新网页中显示的网站运行时间
-  function updateHtml() {
-    const footer = document.getElementById("footer");
-    if (!footer) return
-    let currentTimeHtml = "";
-    if (nowHour < 18 && nowHour >= 9) {
-      // 如果是上班时间，默认就是"安知鱼-上班摸鱼中.svg"图片，不需要更改
-      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
-    } else {
-      // 如果是下班时间，插入"安知鱼-下班啦.svg"图片
-      let img = document.querySelector("#workboard .workSituationImg");
-      img.src = "https://npm.elemecdn.com/anzhiyu-blog@2.0.4/img/badge/安知鱼-下班啦.svg";
-      img.title = "下班了就该开开心心的玩耍，嘿嘿~";
-      img.alt = "下班了就该开开心心的玩耍，嘿嘿~";
-
-      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
-    }
-
-    if (document.getElementById("runtimeTextTip")) {
-      document.getElementById("runtimeTextTip").innerHTML = currentTimeHtml;
-    }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
   }
-
-  setInterval(() => {
-    updateTime();
-    updateHtml();
-  }, 1000);
-})();</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "visitor@anheyu.com";
-</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
-var pjax = new Pjax({
-  elements: 'a:not([target="_blank"])',
-  selectors: pjaxSelectors,
-  cacheBust: false,
-  analytics: false,
-  scrollRestoration: false
-})
-
-document.addEventListener('pjax:send', function () {
-  // removeEventListener scroll 
-  anzhiyu.removeGlobalFnEvent('pjax')
-  anzhiyu.removeGlobalFnEvent('themeChange')
-
-  document.getElementById('rightside').classList.remove('rightside-show')
   
-  if (window.aplayers) {
-    for (let i = 0; i < window.aplayers.length; i++) {
-      if (!window.aplayers[i].options.fixed) {
-        window.aplayers[i].destroy()
+
+</script>
+
+<script type="text/javascript">
+  
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
+    };
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
+        }
+      }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
       }
     }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
   }
 
-  typeof typed === 'object' && typed.destroy()
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
 
-  //reset readmode
-  const $bodyClassList = document.body.classList
-  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
-})
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
 
-document.addEventListener('pjax:complete', function () {
-  window.refreshFn()
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
 
-  document.querySelectorAll('script[data-pjax]').forEach(item => {
-    const newScript = document.createElement('script')
-    const content = item.text || item.textContent || item.innerHTML || ""
-    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
-    newScript.appendChild(document.createTextNode(content))
-    item.parentNode.replaceChild(newScript, item)
-  })
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
 
-  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
 
-  typeof panguInit === 'function' && panguInit()
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
 
-  // google analytics
-  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
 
-  // baidu analytics
-  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
 
-  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
 
-  // prismjs
-  typeof Prism === 'object' && Prism.highlightAll()
-})
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
 
-document.addEventListener('pjax:error', e => {
-  if (e.request.status === 404) {
-    pjax.loadUrl('/404.html')
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
   }
-})</script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `Switched to Light Mode`,
+      dark: `Switched to Dark Mode`,
+      auto: `Switched to Auto Mode`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+
+</div></body></html>
