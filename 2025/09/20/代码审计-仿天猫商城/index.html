@@ -1,0 +1,924 @@
+
+<!DOCTYPE html><html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
+  
+  
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>代码审计-仿天猫商城 - Sherlock</title>
+
+  
+    <meta name="description" content="前言Springboot项目仿天猫商城 ：前台jsp页面（前后端在一起），mysql数据库，jdk1.8 项目地址：https:&#x2F;&#x2F;gitee.com&#x2F;HaiTao87&#x2F;TmallDemo 环境搭建按照项目里面说的部署方式进行部署就完事了，下面我只要分享几点我自己搭建环境过程中所遇到的报错的解决方案 12345678910111220:28:33.382 [restartedMain] ERROR">
+<meta property="og:type" content="article">
+<meta property="og:title" content="代码审计-仿天猫商城">
+<meta property="og:url" content="http://example.com/2025/09/20/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E4%BB%BF%E5%A4%A9%E7%8C%AB%E5%95%86%E5%9F%8E/">
+<meta property="og:site_name" content="Sherlock">
+<meta property="og:description" content="前言Springboot项目仿天猫商城 ：前台jsp页面（前后端在一起），mysql数据库，jdk1.8 项目地址：https:&#x2F;&#x2F;gitee.com&#x2F;HaiTao87&#x2F;TmallDemo 环境搭建按照项目里面说的部署方式进行部署就完事了，下面我只要分享几点我自己搭建环境过程中所遇到的报错的解决方案 12345678910111220:28:33.382 [restartedMain] ERROR">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/themes/hexo-theme-stellar/1.jpg">
+<meta property="article:published_time" content="2025-09-20T03:16:21.000Z">
+<meta property="article:modified_time" content="2025-09-22T09:16:22.805Z">
+<meta property="article:author" content="Sherlock">
+<meta property="article:tag" content="智商不够,勤勉来凑;眼神不太好">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/themes/hexo-theme-stellar/1.jpg">
+  
+  
+  
+  <meta name="keywords" content="智商不够,勤勉来凑;眼神不太好">
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
+
+
+  
+
+  
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sherlock","sameAs":[],"image":"/themes/hexo-theme-stellar/1.jpg"},"dateCreated":"2025-09-20T11:16:21+08:00","dateModified":"2025-09-22T17:16:22+08:00","datePublished":"2025-09-20T11:16:21+08:00","description":"","headline":"代码审计-仿天猫商城","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2025/09/20/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E4%BB%BF%E5%A4%A9%E7%8C%AB%E5%95%86%E5%9F%8E/"},"publisher":{"@type":"Organization","name":"Sherlock","sameAs":[],"image":"/themes/hexo-theme-stellar/1.jpg","logo":{"@type":"ImageObject","url":"/themes/hexo-theme-stellar/1.jpg"}},"url":"http://example.com/2025/09/20/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E4%BB%BF%E5%A4%A9%E7%8C%AB%E5%95%86%E5%9F%8E/","image":[]}</script>
+  
+</head>
+<body>
+
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/themes/hexo-theme-stellar/1.jpg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">Sherlock</div><div class="sub cap">言念君子，温其如玉</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"><a class="nav-item active" title="博客" href="/" style="color:#1BCDFC"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M5.879 2.879C5 3.757 5 5.172 5 8v8c0 2.828 0 4.243.879 5.121C6.757 22 8.172 22 11 22h2c2.828 0 4.243 0 5.121-.879C19 20.243 19 18.828 19 16V8c0-2.828 0-4.243-.879-5.121C17.243 2 15.828 2 13 2h-2c-2.828 0-4.243 0-5.121.879M8.25 17a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75M9 12.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zM8.25 9A.75.75 0 0 1 9 8.25h6a.75.75 0 0 1 0 1.5H9A.75.75 0 0 1 8.25 9" clip-rule="evenodd"/><path fill="currentColor" d="M5.235 4.058C5 4.941 5 6.177 5 8v8c0 1.823 0 3.058.235 3.942L5 19.924c-.975-.096-1.631-.313-2.121-.803C2 18.243 2 16.828 2 14v-4c0-2.829 0-4.243.879-5.121c.49-.49 1.146-.707 2.121-.803zm13.53 15.884C19 19.058 19 17.822 19 16V8c0-1.823 0-3.059-.235-3.942l.235.018c.975.096 1.631.313 2.121.803C22 5.757 22 7.17 22 9.999v4c0 2.83 0 4.243-.879 5.122c-.49.49-1.146.707-2.121.803z" opacity=".5"/></svg></a><a class="nav-item" title="社交" href="/friends/" style="color:#F44336"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="m13.629 20.472l-.542.916c-.483.816-1.69.816-2.174 0l-.542-.916c-.42-.71-.63-1.066-.968-1.262c-.338-.197-.763-.204-1.613-.219c-1.256-.021-2.043-.098-2.703-.372a5 5 0 0 1-2.706-2.706C2 14.995 2 13.83 2 11.5v-1c0-3.273 0-4.91.737-6.112a5 5 0 0 1 1.65-1.651C5.59 2 7.228 2 10.5 2h3c3.273 0 4.91 0 6.113.737a5 5 0 0 1 1.65 1.65C22 5.59 22 7.228 22 10.5v1c0 2.33 0 3.495-.38 4.413a5 5 0 0 1-2.707 2.706c-.66.274-1.447.35-2.703.372c-.85.015-1.275.022-1.613.219c-.338.196-.548.551-.968 1.262" opacity=".5"/><path fill="currentColor" d="M10.99 14.308c-1.327-.978-3.49-2.84-3.49-4.593c0-2.677 2.475-3.677 4.5-1.609c2.025-2.068 4.5-1.068 4.5 1.609c0 1.752-2.163 3.615-3.49 4.593c-.454.335-.681.502-1.01.502c-.329 0-.556-.167-1.01-.502"/></svg></a></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="Search"></form><div id="search-result"></div><div class="search-no-result">No Results!</div></div>
+
+
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">Recent Update</span></div><div class="widget-body fs14"><a class="item title" href="/2025/02/13/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Bfastjson/"><span class="title">java反序列化之fastjson</span></a><a class="item title" href="/2025/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%B0%8F%E6%80%BB%E7%BB%93/"><span class="title">java反序列化小总结</span></a><a class="item title" href="/2025/08/20/Tomcat-URL%E8%A7%A3%E6%9E%90%E5%B7%AE%E5%BC%82%E6%80%A7%E5%AF%BC%E8%87%B4%E7%9A%84%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/"><span class="title">Tomcat URL解析差异性导致的安全问题</span></a><a class="item title" href="/2025/09/20/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E4%BB%BF%E5%A4%A9%E7%8C%AB%E5%95%86%E5%9F%8E/"><span class="title">代码审计-仿天猫商城</span></a><a class="item title" href="/2025/08/20/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/"><span class="title">春秋云镜-initial</span></a><a class="item title" href="/2025/08/15/%E5%8F%8D%E5%BC%B9shell%E5%8D%87%E7%BA%A7%E4%B8%BA%E5%AE%8C%E5%85%A8%E4%BA%A4%E4%BA%92%E5%BC%8Fshell/"><span class="title">反弹shell升级为完全交互式shell</span></a><a class="item title" href="/2024/10/24/java%E7%B1%BB%E5%8A%A0%E8%BD%BD/"><span class="title">java类加载</span></a><a class="item title" href="/2025/06/30/xss%E5%9C%A8%E4%BC%81%E4%B8%9Asrc%E4%B8%AD%E7%9A%84%E6%8C%96%E6%8E%98%E5%A7%BF%E5%8A%BF/"><span class="title">xss在企业src中的挖掘姿势</span></a><a class="item title" href="/2025/08/23/CodeQl-%E5%85%A5%E9%97%A8/"><span class="title">CodeQl 入门</span></a><a class="item title" href="/2025/08/15/linux-webshell%E6%8F%90%E6%9D%83/"><span class="title">linux webshell提权</span></a></div></widget>
+</div>
+
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">Home</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">Blog</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">代码审计</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">Posted on: <time datetime="2025-09-20T03:16:21.000Z">2025-09-20</time></span><span class="sep updated"></span><span class="text updated">Updated on: <time datetime="2025-09-22T09:16:22.805Z">2025-09-22</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>代码审计-仿天猫商城</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Springboot项目仿天猫商城 ：前台jsp页面（前后端在一起），mysql数据库，jdk1.8</p>
+<p>项目地址：<a target="_blank" rel="noopener" href="https://gitee.com/HaiTao87/TmallDemo">https://gitee.com/HaiTao87/TmallDemo</a></p>
+<h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h1><p>按照项目里面说的部署方式进行部署就完事了，下面我只要分享几点我自己搭建环境过程中所遇到的报错的解决方案</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">20:28:33.382 [restartedMain] ERROR org.springframework.boot.SpringApplication - Application run failed</span><br><span class="line">java.lang.IllegalStateException: Failed to load property source from location &#x27;classpath:/application.yml&#x27;</span><br><span class="line">	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.load(ConfigFileApplicationListener.java:524)</span><br><span class="line">.......</span><br><span class="line">Caused by: java.nio.charset.MalformedInputException: Input length = 1</span><br><span class="line">	at java.nio.charset.CoderResult.throwException(CoderResult.java:281)</span><br><span class="line">	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:339)</span><br><span class="line">	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:178)</span><br><span class="line">	at java.io.InputStreamReader.read(InputStreamReader.java:184)</span><br><span class="line">	at org.yaml.snakeyaml.reader.UnicodeReader.read(UnicodeReader.java:125)</span><br><span class="line">	at org.yaml.snakeyaml.reader.StreamReader.update(StreamReader.java:183)</span><br><span class="line">	... 46 common frames omitted</span><br></pre></td></tr></table></figure>
+
+<p>这主要是说明了 <code>application.yml</code>文件可能是在某些编辑器（如 Windows 记事本）中以 <strong>GBK</strong> 或其它非 UTF-8 编码保存的，而 Spring Boot 默认使用 <strong>UTF-8</strong> 编码来读取配置文件</p>
+<p>所以我验证的方式是用HxD这个软件来打开 <code>application.yml</code>文件，看到了中文全部都是以乱码的形式显示，解决的办法最简单的就是直接将 <code>application.yml</code>和<code>application-dev.yml</code>中的所有中文注释都删掉就可以了</p>
+<p>在启动项目的时候还会遇到一个报错如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">E:\safety\CodeAudit\TmallDemo-master\src\test\java\com\example\tmall\TmallApplicationTests.java:3:29</span><br><span class="line">java: 无法访问org.junit.jupiter.api.Test</span><br><span class="line">  错误的类文件: /C:/Users/BD/.m2/repository/org/junit/jupiter/junit-jupiter-api/6.0.0-M2/junit-jupiter-api-6.0.0-M2.jar!/org/junit/jupiter/api/Test.class</span><br><span class="line">    类文件具有错误的版本 61.0, 应为 52.0</span><br><span class="line">    请删除该文件或确保该文件位于正确的类路径子目录中。</span><br></pre></td></tr></table></figure>
+
+<p>这是java版本不兼容的问题，项目里面该库用的是java17的版本，但目前编译和运行该项目的是java8</p>
+<p>我的解决方法是更改pom.xml里面依赖的版本</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.junit.jupiter<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit-jupiter-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.9.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>后面登录管理后台的时候也会报错如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Whitelabel Error Page</span><br><span class="line">This application has no explicit mapping for /error, so you are seeing this as a fallback.</span><br><span class="line"></span><br><span class="line">Thu Sep 18 21:04:32 CST 2025</span><br><span class="line">There was an unexpected error (type=Internal Server Error, status=500).</span><br><span class="line">### Error querying database. Cause: java.sql.SQLSyntaxErrorException: Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column &#x27;tmalldemodb.productOrder.productorder_pay_date&#x27; which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by ### The error may exist in file [E:\safety\CodeAudit\TmallDemo-master\target\classes\mapper\ProductOrderMapper.xml] ### The error may involve defaultParameterMap ### The error occurred while setting parameters ### SQL: SELECT productOrder_pay_date,count(productOrder_id) as productOrder_count ,productOrder_status from productOrder WHERE productOrder_pay_date BETWEEN ? AND ? GROUP BY DATE_FORMAT(productOrder_pay_date,&#x27;%Y-%m-%d&#x27;),productOrder_status ### Cause: java.sql.SQLSyntaxErrorException: Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column &#x27;tmalldemodb.productOrder.productorder_pay_date&#x27; which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by ; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column &#x27;tmalldemodb.productOrder.productorder_pay_date&#x27; which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by</span><br><span class="line">org.springframework.jdbc.BadSqlGrammarException: </span><br><span class="line">### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column &#x27;tmalldemodb.productOrder.productorder_pay_date&#x27; which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by</span><br><span class="line">### The error may exist in file [E:\safety\CodeAudit\TmallDemo-master\target\classes\mapper\ProductOrderMapper.xml]</span><br><span class="line">........</span><br></pre></td></tr></table></figure>
+
+<p>不知道这个报错是不是和我上面改了一个依赖的版本有关。。。。</p>
+<p>该报错的核心在于你的 <strong>SQL 查询语句的写法</strong> 与你使用的 <strong>MySQL 版本默认的严格模式</strong> 不兼容</p>
+<p>下面是我的解决方案</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id=&quot;getTotalByDate&quot; resultType=&quot;com.xq.tmall.entity.OrderGroup&quot;&gt;</span><br><span class="line">    SELECT</span><br><span class="line">    MIN(productOrder_pay_date) AS productOrder_pay_date, </span><br><span class="line">    count(productOrder_id) as productOrder_count, </span><br><span class="line">    productOrder_status </span><br><span class="line">    FROM productOrder</span><br><span class="line">    &lt;where&gt;</span><br><span class="line">        productOrder_pay_date BETWEEN #&#123;beginDate&#125; AND #&#123;endDate&#125;</span><br><span class="line">    &lt;/where&gt;</span><br><span class="line">    GROUP BY DATE_FORMAT(productOrder_pay_date,&#x27;%Y-%m-%d&#x27;), productOrder_status</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这么改了之后是可以进入管理后台了，但代价就是近7天要是有购买数据的话后台就直接崩掉了。。。（幸好我们只是拿来测试，可以直接在数据库删完数据后再进入后台就可以了，不知道师傅们有没有更好的解决方案</p>
+<h1 id="审计"><a href="#审计" class="headerlink" title="审计"></a>审计</h1><p>由于该项目的代码体量不多，这次我基本是直接看着源码查漏洞的</p>
+<h2 id="sql注入"><a href="#sql注入" class="headerlink" title="sql注入"></a>sql注入</h2><p>是mybatis数据库，全局搜索关键词${ || +</p>
+<p>这里选的是ProductMapper.xml中的一个搜索语句，位于 <code>ORDER BY</code>关键字后面</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20250922154222155.png" alt="image-20250922154222155"></p>
+<p>然后我们一路向上查找用法，走到ProductServiceImpl.java的getList方法处，继续查找用法，这次要注意的是查找到的要是我们可以控的orderUtil参数的相关方法，而不是已经默认为null的</p>
+<p>再加上有前台和后台之分，我们尽量找前台，而不是需要管理员权限的后台相关代码</p>
+<p>走到了ForeProductListController.java的searchProduct方法中</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20250922154548941.png" alt="image-20250922154548941"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@RequestMapping(value = &quot;product/&#123;index&#125;/&#123;count&#125;&quot;, method = RequestMethod.GET)</span><br><span class="line">public String searchProduct(HttpSession session, Map&lt;String, Object&gt; map,</span><br><span class="line">                            @PathVariable(&quot;index&quot;) Integer index/* 页数 */,</span><br><span class="line">                            @PathVariable(&quot;count&quot;) Integer count/* 行数*/,</span><br><span class="line">                            @RequestParam(value = &quot;category_id&quot;, required = false) Integer category_id/* 分类ID */,</span><br><span class="line">                            @RequestParam(value = &quot;product_name&quot;, required = false) String product_name/* 产品名称 */,</span><br><span class="line">                            @RequestParam(required = false) String orderBy/* 排序字段 */,</span><br><span class="line">                            @RequestParam(required = false, defaultValue = &quot;true&quot;) Boolean isDesc/* 是否倒序 */) throws UnsupportedEncodingException</span><br></pre></td></tr></table></figure>
+
+<p>除了index和count参数是必需外，剩下的参数都是可加可不加的，所以我们可以直接进行测试</p>
+<p>这里用的是时间盲测的手法</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20250922155243202.png" alt="image-20250922155243202"></p>
+<p>该篇就只讲这一处的sql漏洞，剩下几处就不多讲了</p>
+<h2 id="前台文件上传"><a href="#前台文件上传" class="headerlink" title="前台文件上传"></a>前台文件上传</h2><p>全局搜索关键词：upload || 上传 ||  write || new File</p>
+<p>这里找到前台的ForeUserController.java的uploadUserHeadImage方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(value = &quot;user/uploadUserHeadImage&quot;, method = RequestMethod.POST, produces = &quot;application/json;charset=utf-8&quot;)</span></span><br><span class="line"><span class="keyword">public</span>  String <span class="title function_">uploadUserHeadImage</span><span class="params">(<span class="meta">@RequestParam</span> MultipartFile file, HttpSession session</span></span><br><span class="line"><span class="params">)</span>&#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">originalFileName</span> <span class="operator">=</span> file.getOriginalFilename();</span><br><span class="line">    logger.info(<span class="string">&quot;获取图片原始文件名：&#123;&#125;&quot;</span>, originalFileName);</span><br><span class="line">    <span class="type">String</span> <span class="variable">extension</span> <span class="operator">=</span> originalFileName.substring(originalFileName.lastIndexOf(<span class="string">&#x27;.&#x27;</span>));</span><br><span class="line">    <span class="type">String</span> <span class="variable">fileName</span> <span class="operator">=</span> UUID.randomUUID() + extension;</span><br><span class="line">    <span class="type">String</span> <span class="variable">filePath</span> <span class="operator">=</span> session.getServletContext().getRealPath(<span class="string">&quot;/&quot;</span>) + <span class="string">&quot;res/images/item/userProfilePicture/&quot;</span> + fileName;</span><br><span class="line">    logger.info(<span class="string">&quot;文件上传路径：&#123;&#125;&quot;</span>, filePath);</span><br><span class="line">    <span class="type">JSONObject</span> <span class="variable">jsonObject</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JSONObject</span>();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        logger.info(<span class="string">&quot;文件上传中...&quot;</span>);</span><br><span class="line">        file.transferTo(<span class="keyword">new</span> <span class="title class_">File</span>(filePath));</span><br><span class="line">        logger.info(<span class="string">&quot;文件上传成功！&quot;</span>);</span><br><span class="line">        jsonObject.put(<span class="string">&quot;success&quot;</span>, <span class="literal">true</span>);</span><br><span class="line">        jsonObject.put(<span class="string">&quot;fileName&quot;</span>, fileName);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        logger.warn(<span class="string">&quot;文件上传失败！&quot;</span>);</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">        jsonObject.put(<span class="string">&quot;success&quot;</span>, <span class="literal">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> jsonObject.toJSONString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以发现对上传上来的文件没有做任何的校验，再加上该项目中是可以解析jsp文件的，所以我们可以上传Jsp马</p>
+<p>前端做了一定的校验，只允许上传图片</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//图片上传</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">uploadImage</span>(<span class="params">fileDom</span>) &#123;</span><br><span class="line">    <span class="comment">//获取文件</span></span><br><span class="line">    <span class="keyword">var</span> file = fileDom.<span class="property">files</span>[<span class="number">0</span>];</span><br><span class="line">    <span class="comment">//判断类型</span></span><br><span class="line">    <span class="keyword">var</span> imageType = <span class="regexp">/^image\//</span>;</span><br><span class="line">    <span class="keyword">if</span> (file === <span class="literal">undefined</span> || !imageType.<span class="title function_">test</span>(file.<span class="property">type</span>)) &#123;</span><br><span class="line">        <span class="title function_">alert</span>(<span class="string">&quot;请选择图片！&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//判断大小</span></span><br><span class="line">    <span class="keyword">if</span> (file.<span class="property">size</span> &gt; <span class="number">512000</span>) &#123;</span><br><span class="line">        <span class="title function_">alert</span>(<span class="string">&quot;图片大小不能超过500K！&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//清空值</span></span><br><span class="line">    $(fileDom).<span class="title function_">val</span>(<span class="string">&#x27;&#x27;</span>);</span><br><span class="line">    <span class="keyword">var</span> formData = <span class="keyword">new</span> <span class="title class_">FormData</span>();</span><br><span class="line">    formData.<span class="title function_">append</span>(<span class="string">&quot;file&quot;</span>, file);</span><br><span class="line">    <span class="comment">//上传图片</span></span><br><span class="line">    $.<span class="title function_">ajax</span>(&#123;</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&quot;/tmall/user/uploadUserHeadImage&quot;</span>,</span><br><span class="line">        <span class="attr">type</span>: <span class="string">&quot;post&quot;</span>,</span><br><span class="line">        <span class="attr">data</span>: formData,</span><br><span class="line">        <span class="attr">contentType</span>: <span class="literal">false</span>,</span><br><span class="line">        <span class="attr">processData</span>: <span class="literal">false</span>,</span><br><span class="line">        <span class="attr">dataType</span>: <span class="string">&quot;json&quot;</span>,</span><br><span class="line">        <span class="attr">mimeType</span>: <span class="string">&quot;multipart/form-data&quot;</span>,</span><br><span class="line">        <span class="attr">success</span>: <span class="keyword">function</span> (<span class="params">data</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (data.<span class="property">success</span>) &#123;</span><br><span class="line">                $(fileDom).<span class="title function_">prev</span>(<span class="string">&quot;img&quot;</span>).<span class="title function_">attr</span>(<span class="string">&quot;src&quot;</span>,<span class="string">&quot;/tmall/res/images/item/userProfilePicture/&quot;</span>+data.<span class="property">fileName</span>);</span><br><span class="line">                $(<span class="string">&quot;#user_profile_picture_src_value&quot;</span>).<span class="title function_">val</span>(data.<span class="property">fileName</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="title function_">alert</span>(<span class="string">&quot;图片上传异常！&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">beforeSend</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">error</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过bp抓包即可绕过</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20250922160427748.png" alt="image-20250922160427748"></p>
+<p>上传成功，用蚁剑进行连接测试</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20250922160506567.png" alt="image-20250922160506567"></p>
+<h2 id="后台文件上传"><a href="#后台文件上传" class="headerlink" title="后台文件上传"></a>后台文件上传</h2><p>该漏洞需要管理员权限才可以成功利用</p>
+<p>首先是ProductController.java的uploadProductImage方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &quot;admin/uploadProductImage&quot;, method = RequestMethod.POST, produces = &quot;application/json;charset=utf-8&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">uploadProductImage</span><span class="params">(<span class="meta">@RequestParam</span> MultipartFile file, <span class="meta">@RequestParam</span> String imageType, HttpSession session)</span> &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">originalFileName</span> <span class="operator">=</span> file.getOriginalFilename();</span><br><span class="line">    logger.info(<span class="string">&quot;获取图片原始文件名：&#123;&#125;&quot;</span>, originalFileName);</span><br><span class="line">    <span class="type">String</span> <span class="variable">extension</span> <span class="operator">=</span> originalFileName.substring(originalFileName.lastIndexOf(<span class="string">&#x27;.&#x27;</span>));</span><br><span class="line">    String filePath;</span><br><span class="line">    <span class="type">String</span> <span class="variable">fileName</span> <span class="operator">=</span> UUID.randomUUID() + extension;</span><br><span class="line">    <span class="keyword">if</span> (<span class="string">&quot;single&quot;</span>.equals(imageType)) &#123;</span><br><span class="line">        filePath = session.getServletContext().getRealPath(<span class="string">&quot;/&quot;</span>) + <span class="string">&quot;res/images/item/productSinglePicture/&quot;</span> + fileName;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        filePath = session.getServletContext().getRealPath(<span class="string">&quot;/&quot;</span>) + <span class="string">&quot;res/images/item/productDetailsPicture/&quot;</span> + fileName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    logger.info(<span class="string">&quot;文件上传路径：&#123;&#125;&quot;</span>, filePath);</span><br><span class="line">    <span class="type">JSONObject</span> <span class="variable">object</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JSONObject</span>();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        logger.info(<span class="string">&quot;文件上传中...&quot;</span>);</span><br><span class="line">        file.transferTo(<span class="keyword">new</span> <span class="title class_">File</span>(filePath));</span><br><span class="line">        logger.info(<span class="string">&quot;文件上传完成&quot;</span>);</span><br><span class="line">        object.put(<span class="string">&quot;success&quot;</span>, <span class="literal">true</span>);</span><br><span class="line">        object.put(<span class="string">&quot;fileName&quot;</span>, fileName);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        logger.warn(<span class="string">&quot;文件上传失败！&quot;</span>);</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">        object.put(<span class="string">&quot;success&quot;</span>, <span class="literal">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> object.toJSONString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一样也是没有进行任何的校验，查看了前端代码只有前端做了限制只允许上传图片</p>
+<p>跟前台文件上传一样的手法就可以了</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20250922161006329.png" alt="image-20250922161006329"></p>
+<p>用蚁剑成功连上</p>
+<p>除了该处漏洞外后台还有其他几处文件上传漏洞</p>
+<p>src&#x2F;main&#x2F;java&#x2F;com&#x2F;xq&#x2F;tmall&#x2F;controller&#x2F;admin&#x2F;CategoryController.java的uploadCategoryImage方法</p>
+<p>src&#x2F;main&#x2F;java&#x2F;com&#x2F;xq&#x2F;tmall&#x2F;controller&#x2F;admin&#x2F;AccountController.java的uploadAdminHeadImage方法</p>
+<h2 id="越权"><a href="#越权" class="headerlink" title="越权"></a>越权</h2><p>俗话说的好，好饭不怕晚，越权的洞当然是压轴的了</p>
+<p>这里用的是其他类继承一个基础类BaseController来实现鉴权</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.xq.tmall.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.logging.log4j.LogManager;</span><br><span class="line"><span class="keyword">import</span> org.apache.logging.log4j.Logger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpSession;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 基控制器</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">BaseController</span> &#123;</span><br><span class="line">    <span class="comment">//log4j</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="type">Logger</span> <span class="variable">logger</span> <span class="operator">=</span> LogManager.getLogger(LogManager.ROOT_LOGGER_NAME);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//检查管理员权限</span></span><br><span class="line">    <span class="keyword">protected</span> Object <span class="title function_">checkAdmin</span><span class="params">(HttpSession session)</span>&#123;</span><br><span class="line">        <span class="type">Object</span> <span class="variable">o</span> <span class="operator">=</span> session.getAttribute(<span class="string">&quot;adminId&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span>(o==<span class="literal">null</span>)&#123;</span><br><span class="line">            logger.info(<span class="string">&quot;无管理权限，返回管理员登陆页&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        logger.info(<span class="string">&quot;权限验证成功，管理员ID：&#123;&#125;&quot;</span>,o);</span><br><span class="line">        <span class="keyword">return</span> o;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//检查用户是否登录</span></span><br><span class="line">    <span class="keyword">protected</span> Object <span class="title function_">checkUser</span><span class="params">(HttpSession session)</span>&#123;</span><br><span class="line">        <span class="type">Object</span> <span class="variable">o</span> <span class="operator">=</span> session.getAttribute(<span class="string">&quot;userId&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span>(o==<span class="literal">null</span>)&#123;</span><br><span class="line">            logger.info(<span class="string">&quot;用户未登录&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        logger.info(<span class="string">&quot;用户已登录，用户ID：&#123;&#125;&quot;</span>, o);</span><br><span class="line">        <span class="keyword">return</span> o;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从代码里面可以发现是没有任何的逻辑漏洞等等的，也就是说只要用好checkAdmin和checkUser这两个方法那么就完全绕过不了了</p>
+<p>但是有时候代码无错不代表一定安全，因为开发人员也会出现错误</p>
+<p>这里我翻代码的时候找到了ProductController.java的deleteProductImageById方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &quot;admin/productImage/&#123;productImage_id&#125;&quot;,method = RequestMethod.DELETE,produces = &quot;application/json;charset=utf-8&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">deleteProductImageById</span><span class="params">(<span class="meta">@PathVariable</span> Integer productImage_id<span class="comment">/* 产品图片ID */</span>)</span>&#123;</span><br><span class="line">    <span class="type">JSONObject</span> <span class="variable">object</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JSONObject</span>();</span><br><span class="line">    logger.info(<span class="string">&quot;获取productImage_id为&#123;&#125;的产品图片信息&quot;</span>,productImage_id);</span><br><span class="line">    <span class="type">ProductImage</span> <span class="variable">productImage</span> <span class="operator">=</span> productImageService.get(productImage_id);</span><br><span class="line"></span><br><span class="line">    logger.info(<span class="string">&quot;删除产品图片&quot;</span>);</span><br><span class="line">    <span class="type">Boolean</span> <span class="variable">yn</span> <span class="operator">=</span> productImageService.deleteList(<span class="keyword">new</span> <span class="title class_">Integer</span>[]&#123;productImage_id&#125;);</span><br><span class="line">    <span class="keyword">if</span> (yn) &#123;</span><br><span class="line">        logger.info(<span class="string">&quot;删除图片成功！&quot;</span>);</span><br><span class="line">        object.put(<span class="string">&quot;success&quot;</span>, <span class="literal">true</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        logger.warn(<span class="string">&quot;删除图片失败！事务回滚&quot;</span>);</span><br><span class="line">        object.put(<span class="string">&quot;success&quot;</span>, <span class="literal">false</span>);</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> object.toJSONString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该类中就这么一个方法没有用上checkAdmin方法，于是我们就实现了垂直越权操作</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20250922162724210.png" alt="image-20250922162724210"></p>
+<p>去后台查看发现确实是少了一张图片了</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20250922162803543.png" alt="image-20250922162803543"></p>
+<p>在写这篇文章的时候我看了看这个方法的代码，发现它所需的参数中并没有session或者是cookie，那么是不是代表我们可以实现未登录的情况下任意删除图片，进行测试</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20250922163128551.png" alt="image-20250922163128551"></p>
+<p>确实如此，意外之喜呐</p>
+<p>还有一个方法是CategoryController.java的updateCategory方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &quot;admin/category/&#123;category_id&#125;&quot;, method = RequestMethod.PUT, produces = &quot;application/json;charset=utf-8&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">updateCategory</span><span class="params">(<span class="meta">@RequestParam</span> String category_name<span class="comment">/* 分类名称 */</span>,</span></span><br><span class="line"><span class="params">                             <span class="meta">@RequestParam</span> String category_image_src<span class="comment">/* 分类图片路径 */</span>,</span></span><br><span class="line"><span class="params">                             <span class="meta">@PathVariable(&quot;category_id&quot;)</span> Integer category_id<span class="comment">/* 分类ID */</span>)</span> &#123;</span><br><span class="line">    <span class="type">JSONObject</span> <span class="variable">jsonObject</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JSONObject</span>();</span><br><span class="line">    logger.info(<span class="string">&quot;整合分类信息&quot;</span>);</span><br><span class="line">    <span class="type">Category</span> <span class="variable">category</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Category</span>()</span><br><span class="line">            .setCategory_id(category_id)</span><br><span class="line">            .setCategory_name(category_name)</span><br><span class="line">            .setCategory_image_src(category_image_src.substring(category_image_src.lastIndexOf(<span class="string">&quot;/&quot;</span>) + <span class="number">1</span>));</span><br><span class="line">    logger.info(<span class="string">&quot;更新分类信息，分类ID值为：&#123;&#125;&quot;</span>, category_id);</span><br><span class="line">    <span class="type">boolean</span> <span class="variable">yn</span> <span class="operator">=</span> categoryService.update(category);</span><br><span class="line">    <span class="keyword">if</span> (yn) &#123;</span><br><span class="line">        logger.info(<span class="string">&quot;更新成功！&quot;</span>);</span><br><span class="line">        jsonObject.put(<span class="string">&quot;success&quot;</span>, <span class="literal">true</span>);</span><br><span class="line">        jsonObject.put(<span class="string">&quot;category_id&quot;</span>, category_id);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        jsonObject.put(<span class="string">&quot;success&quot;</span>, <span class="literal">false</span>);</span><br><span class="line">        logger.info(<span class="string">&quot;更新失败！事务回滚&quot;</span>);</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> jsonObject.toJSONString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该方法同样是没有进行鉴权的操作</p>
+<p>上述的两个方法虽然说都可以实现垂直越权，但是在真实环境中可以说是危害不大，直到我发现了下面这个</p>
+<p>位于UserController.java的getUserBySearch方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">    <span class="meta">@ResponseBody</span></span><br><span class="line">    <span class="meta">@RequestMapping(value = &quot;admin/user/&#123;index&#125;/&#123;count&#125;&quot;, method = RequestMethod.GET, produces = &quot;application/json;charset=UTF-8&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getUserBySearch</span><span class="params">(<span class="meta">@RequestParam(required = false)</span> String user_name<span class="comment">/* 用户名称 */</span>,</span></span><br><span class="line"><span class="params">                                  <span class="meta">@RequestParam(required = false)</span> Byte[] user_gender_array<span class="comment">/* 用户性别数组 */</span>,</span></span><br><span class="line"><span class="params">                                  <span class="meta">@RequestParam(required = false)</span> String orderBy<span class="comment">/* 排序字段 */</span>,</span></span><br><span class="line"><span class="params">                                  <span class="meta">@RequestParam(required = false, defaultValue = &quot;true&quot;)</span> Boolean isDesc<span class="comment">/* 是否倒序 */</span>,</span></span><br><span class="line"><span class="params">                                  <span class="meta">@PathVariable</span> Integer index<span class="comment">/* 页数 */</span>,</span></span><br><span class="line"><span class="params">                                  <span class="meta">@PathVariable</span> Integer count<span class="comment">/* 行数 */</span>)</span> <span class="keyword">throws</span> UnsupportedEncodingException &#123;</span><br><span class="line">        <span class="comment">//移除不必要条件</span></span><br><span class="line">        <span class="type">Byte</span> <span class="variable">gender</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (user_gender_array != <span class="literal">null</span> &amp;&amp; user_gender_array.length == <span class="number">1</span>) &#123;</span><br><span class="line">            gender = user_gender_array[<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (user_name != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="comment">//如果为非空字符串则解决中文乱码：URLDecoder.decode(String,&quot;UTF-8&quot;);</span></span><br><span class="line">            user_name = <span class="string">&quot;&quot;</span>.equals(user_name) ? <span class="literal">null</span> : URLDecoder.decode(user_name, <span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (orderBy != <span class="literal">null</span> &amp;&amp; <span class="string">&quot;&quot;</span>.equals(orderBy)) &#123;</span><br><span class="line">            orderBy = <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">..........</span><br></pre></td></tr></table></figure>
+
+<p>可以发现该方法没有用到checkAdmin方法进行鉴权，直接测试垂直越权</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20250922164741435.png" alt="image-20250922164741435"></p>
+<p>获取前十个管理员的所有信息，实现了任意管理员账户接管</p>
+<p>我们也可以加上条件来查询一个特定管理员的信息</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20250922164941694.png" alt="image-20250922164941694"></p>
+<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>该项目审计起来难度不大，就是自己测试的时候环境搭建麻烦了点。。。。</p>
+<p>还有其他思路的欢迎师傅与我进行交流</p>
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>License</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    
+
+</div>
+
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">Newer</div><a href="/2025/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%B0%8F%E6%80%BB%E7%BB%93/">java反序列化小总结</a></div><div class="item" id="next"><div class="note">Older</div><a href="/2025/08/23/CodeQl-%E5%85%A5%E9%97%A8/">CodeQl 入门</a></div></section></div>
+
+
+
+
+
+
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">Sherlock</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">On This Page</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%A1%E8%AE%A1"><span class="toc-text">审计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#sql%E6%B3%A8%E5%85%A5"><span class="toc-text">sql注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E5%8F%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0"><span class="toc-text">前台文件上传</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E5%8F%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0"><span class="toc-text">后台文件上传</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B6%8A%E6%9D%83"><span class="toc-text">越权</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E8%AF%AD"><span class="toc-text">结语</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>Scroll to Top</span></a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+
+
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `Just`,
+      min: `minutes ago`,
+      hour: `hours ago`,
+      day: `days ago`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
+    }
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
+</script>
+
+<script type="text/javascript">
+  
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
+    };
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
+        }
+      }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `Switched to Light Mode`,
+      dark: `Switched to Dark Mode`,
+      auto: `Switched to Auto Mode`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+
+</div></body></html>
