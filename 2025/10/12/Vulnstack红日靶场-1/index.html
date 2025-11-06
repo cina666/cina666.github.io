@@ -1,0 +1,988 @@
+
+<!DOCTYPE html><html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
+  
+  
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>Vulnstack红日靶场(1) - Sherlock</title>
+
+  
+    <meta name="description" content="Vmware导入主机 攻击机kali linux Web服务器Windows7 域控Windows2008 域成员Windows2003  环境搭建网络配置win7作为web服务器，需要外部能够访问，因此网卡需要走NAT，同样攻击机kali也要能够被外部(主要是反弹shell)访问以及访问win7，因此kali也走NAT。域控、域成员不接触外网，因此需要设置其网卡为仅主机模式(网段需与NAT的不同">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vulnstack红日靶场(1)">
+<meta property="og:url" content="http://example.com/2025/10/12/Vulnstack%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA-1/">
+<meta property="og:site_name" content="Sherlock">
+<meta property="og:description" content="Vmware导入主机 攻击机kali linux Web服务器Windows7 域控Windows2008 域成员Windows2003  环境搭建网络配置win7作为web服务器，需要外部能够访问，因此网卡需要走NAT，同样攻击机kali也要能够被外部(主要是反弹shell)访问以及访问win7，因此kali也走NAT。域控、域成员不接触外网，因此需要设置其网卡为仅主机模式(网段需与NAT的不同">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/themes/hexo-theme-stellar/1.jpg">
+<meta property="article:published_time" content="2025-10-12T06:54:52.000Z">
+<meta property="article:modified_time" content="2025-10-26T12:20:42.094Z">
+<meta property="article:author" content="Sherlock">
+<meta property="article:tag" content="智商不够,勤勉来凑;眼神不太好">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/themes/hexo-theme-stellar/1.jpg">
+  
+  
+  
+  <meta name="keywords" content="智商不够,勤勉来凑;眼神不太好">
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
+
+
+  
+
+  
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sherlock","sameAs":[],"image":"/themes/hexo-theme-stellar/1.jpg"},"dateCreated":"2025-10-12T14:54:52+08:00","dateModified":"2025-10-26T20:20:42+08:00","datePublished":"2025-10-12T14:54:52+08:00","description":"","headline":"Vulnstack红日靶场(1)","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2025/10/12/Vulnstack%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA-1/"},"publisher":{"@type":"Organization","name":"Sherlock","sameAs":[],"image":"/themes/hexo-theme-stellar/1.jpg","logo":{"@type":"ImageObject","url":"/themes/hexo-theme-stellar/1.jpg"}},"url":"http://example.com/2025/10/12/Vulnstack%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA-1/","image":[]}</script>
+  
+</head>
+<body>
+
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/themes/hexo-theme-stellar/1.jpg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">Sherlock</div><div class="sub cap">言念君子，温其如玉</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"><a class="nav-item active" title="博客" href="/" style="color:#1BCDFC"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M5.879 2.879C5 3.757 5 5.172 5 8v8c0 2.828 0 4.243.879 5.121C6.757 22 8.172 22 11 22h2c2.828 0 4.243 0 5.121-.879C19 20.243 19 18.828 19 16V8c0-2.828 0-4.243-.879-5.121C17.243 2 15.828 2 13 2h-2c-2.828 0-4.243 0-5.121.879M8.25 17a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75M9 12.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zM8.25 9A.75.75 0 0 1 9 8.25h6a.75.75 0 0 1 0 1.5H9A.75.75 0 0 1 8.25 9" clip-rule="evenodd"/><path fill="currentColor" d="M5.235 4.058C5 4.941 5 6.177 5 8v8c0 1.823 0 3.058.235 3.942L5 19.924c-.975-.096-1.631-.313-2.121-.803C2 18.243 2 16.828 2 14v-4c0-2.829 0-4.243.879-5.121c.49-.49 1.146-.707 2.121-.803zm13.53 15.884C19 19.058 19 17.822 19 16V8c0-1.823 0-3.059-.235-3.942l.235.018c.975.096 1.631.313 2.121.803C22 5.757 22 7.17 22 9.999v4c0 2.83 0 4.243-.879 5.122c-.49.49-1.146.707-2.121.803z" opacity=".5"/></svg></a><a class="nav-item" title="社交" href="/friends/" style="color:#F44336"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="m13.629 20.472l-.542.916c-.483.816-1.69.816-2.174 0l-.542-.916c-.42-.71-.63-1.066-.968-1.262c-.338-.197-.763-.204-1.613-.219c-1.256-.021-2.043-.098-2.703-.372a5 5 0 0 1-2.706-2.706C2 14.995 2 13.83 2 11.5v-1c0-3.273 0-4.91.737-6.112a5 5 0 0 1 1.65-1.651C5.59 2 7.228 2 10.5 2h3c3.273 0 4.91 0 6.113.737a5 5 0 0 1 1.65 1.65C22 5.59 22 7.228 22 10.5v1c0 2.33 0 3.495-.38 4.413a5 5 0 0 1-2.707 2.706c-.66.274-1.447.35-2.703.372c-.85.015-1.275.022-1.613.219c-.338.196-.548.551-.968 1.262" opacity=".5"/><path fill="currentColor" d="M10.99 14.308c-1.327-.978-3.49-2.84-3.49-4.593c0-2.677 2.475-3.677 4.5-1.609c2.025-2.068 4.5-1.068 4.5 1.609c0 1.752-2.163 3.615-3.49 4.593c-.454.335-.681.502-1.01.502c-.329 0-.556-.167-1.01-.502"/></svg></a></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="Search"></form><div id="search-result"></div><div class="search-no-result">No Results!</div></div>
+
+
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">Recent Update</span></div><div class="widget-body fs14"><a class="item title" href="/2025/10/30/java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%8A%80%E5%B7%A7/"><span class="title">java代码审计的一些小技巧</span></a><a class="item title" href="/2025/10/12/Vulnstack%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA-1/"><span class="title">Vulnstack红日靶场(1)</span></a><a class="item title" href="/2025/05/21/java%E5%86%85%E5%AD%98%E9%A9%AC%E4%B9%8Bjava-agent/"><span class="title">java内存马之java-agent</span></a><a class="item title" href="/2025/10/22/%E9%9D%A2%E8%AF%95%E5%B0%8F%E7%BB%93/"><span class="title">面试小结</span></a><a class="item title" href="/2025/02/13/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Bfastjson/"><span class="title">java反序列化之fastjson</span></a><a class="item title" href="/2023/11/19/sql%E6%B3%A8%E5%85%A5%E5%BF%83%E5%BE%97_max/sql%E6%B3%A8%E5%85%A5%E5%BF%83%E5%BE%97/"><span class="title">sql注入心得</span></a><a class="item title" href="/2025/10/10/java-agent%E4%B8%8ERASP/"><span class="title">java-agent与RASP</span></a><a class="item title" href="/2025/02/01/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Bjndi/"><span class="title">java反序列化之jndi</span></a><a class="item title" href="/2025/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%B0%8F%E6%80%BB%E7%BB%93/"><span class="title">java反序列化小总结</span></a><a class="item title" href="/2025/03/19/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8BHessian/"><span class="title">java反序列化之Hessian</span></a></div></widget>
+</div>
+
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">Home</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">Blog</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/Write-Up/">Write-Up</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">Posted on: <time datetime="2025-10-12T06:54:52.000Z">2025-10-12</time></span><span class="sep updated"></span><span class="text updated">Updated on: <time datetime="2025-10-26T12:20:42.094Z">2025-10-26</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>Vulnstack红日靶场(1)</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><h1 id="Vmware导入主机"><a href="#Vmware导入主机" class="headerlink" title="Vmware导入主机"></a>Vmware导入主机</h1><ul>
+<li>攻击机kali linux</li>
+<li>Web服务器Windows7</li>
+<li>域控Windows2008</li>
+<li>域成员Windows2003</li>
+</ul>
+<h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h1><h2 id="网络配置"><a href="#网络配置" class="headerlink" title="网络配置"></a>网络配置</h2><p>win7作为web服务器，需要外部能够访问，因此网卡需要走NAT，同样攻击机kali也要能够被外部(主要是反弹shell)访问以及访问win7，因此kali也走NAT。域控、域成员不接触外网，因此需要设置其网卡为仅主机模式(网段需与NAT的不同)，同时win7需要能够访问内网，因此win7也得配置一张仅主机模式的网卡</p>
+<p>首先配置一下网络编辑器，三台主机一开始都被分配了固定的ip网段<code>192.168.52.0/24</code>了，因此需要添加一张仅主机模式、子网地址为<code>192.168.52.0</code>的网卡</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023154209837.png" alt="image-20251023154209837"></p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023154523921.png" alt="image-20251023154523921"></p>
+<p>接下来是为四台主机配置网卡：</p>
+<p>Win7两张，一张内网一张外部访问：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这里有本人踩过的坑，必须是网络适配器1是主机模式，适配器2是NAT。建议把预装的NAT改为自定义的，再添加一张新的设置为NAT，总之就是很玄学。。。更改设置的时候都处于关机状态，然后重开机</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023154645470.png" alt="image-20251023154645470"></p>
+<p>域控(Windows2008)一张，用于内网：</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023154712950.png" alt="image-20251023154712950"></p>
+<p>域成员(Windows2003)一张，用于内网：</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023154757574.png" alt="image-20251023154757574"></p>
+<p>win7、win8再把所有防火墙都关一下</p>
+<p>最终的结果：</p>
+<ul>
+<li>win7能够ping通外部以及攻击机kali以及内网其他2台主机</li>
+<li>Windows2008能够ping通内网其他两台主机但是无法ping通外部以及kali</li>
+<li>Windows2003同上</li>
+<li>kali能够与外界访问，能够ping通win7的NAT的ip，无法Ping通所有52网段内网ip</li>
+</ul>
+<h2 id="各主机的ip"><a href="#各主机的ip" class="headerlink" title="各主机的ip"></a>各主机的ip</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kali : 192.168.227.137(NAT) 192.168.52.129</span><br><span class="line">win7 : 192.168.227.139(NAT) 192.168.52.143</span><br><span class="line">win08 : 192.168.52.138</span><br><span class="line">win03 : 192.168.52.141</span><br></pre></td></tr></table></figure>
+
+<h2 id="启动web服务"><a href="#启动web服务" class="headerlink" title="启动web服务"></a>启动web服务</h2><p>win7的C盘下找到phpstudy并启动web服务，能够杯外部访问：<br><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023155051095.png" alt="image-20251023155051095"></p>
+<p>当时我直接启动是不成功的，会一直报错，后面网上找解决方案的时候告诉我需要升级win7虚拟机，当我将其升级到16.x，也就是我自己VMware的版本的时候重新启动虚拟机，就可以成功启动web服务了</p>
+<h1 id="外点getshell"><a href="#外点getshell" class="headerlink" title="外点getshell"></a>外点getshell</h1><p>探针的页面下，MySQL弱口令存在root&#x2F;root，但是似乎是内网存在，外部无法连接上</p>
+<p>用dirsearch扫一下，发现有phpMyAdmin后台以及phpinfo</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023155618611.png" alt="image-20251023155618611"></p>
+<p>在这里有sql执行的地方，自然就想到了通过sql来getshell的操作</p>
+<p>并且还是在windows系统下，所以用写日志的方式来进行getshell</p>
+<p>具体操作可查看：<a target="_blank" rel="noopener" href="https://www.sqlsec.com/2020/11/mysql.html#%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E5%86%99-shell">https://www.sqlsec.com/2020/11/mysql.html#%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E5%86%99-shell</a></p>
+<p>从虚拟机中也可以看到成功写进了</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023161657311.png" alt="image-20251023161657311"></p>
+<p>然后就可以用蚁剑成功连上了</p>
+<h1 id="后渗透阶段"><a href="#后渗透阶段" class="headerlink" title="后渗透阶段"></a>后渗透阶段</h1><h2 id="上线cs"><a href="#上线cs" class="headerlink" title="上线cs"></a>上线cs</h2><p>在kali中启动teamserver，配置好ip和密码（ip是kali本身的ip</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023162351394.png" alt="image-20251023162351394"></p>
+<p>然后起一个beacon http的监听器</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023162532423.png" alt="image-20251023162532423"></p>
+<p>生成windows端后门文件</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023164311463.png" alt="image-20251023164311463"></p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023164640750.png" alt="image-20251023164640750"></p>
+<p>然后再将该exe通过蚁剑上传到win7机子上，执行cs.exe成功上线</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023202754351.png" alt="image-20251023202754351"></p>
+<p> <img src="/../source/imgs/$%7Bfiilname%7D/image-20251023203040001.png" alt="image-20251023203040001"></p>
+<p>为了方便后续操作把会话派生到msf，先在msf配置好模块和payload，lhost以及端口等信息，开个反向连接</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023204318135.png" alt="image-20251023204318135"></p>
+<p>在CS创建一个新的监听器，payload选<code>foreign http</code>，host填msf的服务ip，端口填msf的监听端口</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023204406287.png" alt="image-20251023204406287"></p>
+<p>在cs会话中选中新建会话</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023204606473.png" alt="image-20251023204606473"></p>
+<p>拿到meterpreter</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023204653331.png" alt="image-20251023204653331"></p>
+<p>检查是否为虚拟机，一般是用于检测蜜罐的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">run post/windows/gather/checkvm</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023204741507.png" alt="image-20251023204741507"></p>
+<p>随手关杀软(靶场是没有的，但是实战中拿到shell第一件事就是关杀软)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">run post/windows/manage/killav</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023204820729.png" alt="image-20251023204820729"></p>
+<p>扫了下机子，发现还是有非常多能利用的漏洞的</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023204856502.png" alt="image-20251023204856502"></p>
+<p>目前是管理员权限</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023205115122.png" alt="image-20251023205115122"></p>
+<p>但我们还可以提权到system级别的权限，在meterpreter中通过getsystem命令进行提权</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023205414226.png" alt="image-20251023205414226"></p>
+<p>在CS使用logonpasswords获取用户名密码，可在CS中开启RDP后远程桌面连接（亲手测试后表示超卡</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023205649153.png" alt="image-20251023205649153"></p>
+<h2 id="内网信息收集"><a href="#内网信息收集" class="headerlink" title="内网信息收集"></a>内网信息收集</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">ipconfig /all				#查询当前网络情况(DNS，域等)</span><br><span class="line">systeminfo				#查系统信息</span><br><span class="line">net view                 # 查看局域网内其他主机名</span><br><span class="line">net view /domain         # 查看有几个域</span><br><span class="line">net user         # 查看本机用户名</span><br><span class="line">net user /domain         # 查看域用户</span><br><span class="line">net config Workstation   # 查看计算机名、全名、用户名、系统版本、工作站、域、登录域</span><br><span class="line">net user                 # 查看本机用户列表</span><br><span class="line">net localgroup administrators # 查看本地管理员组（通常会有域用户）</span><br><span class="line">net user 用户名 /domain   # 获取指定域用户的信息</span><br><span class="line">net group /domain        # 查看域里面的工作组，查看把用户分了多少组</span><br><span class="line">net group 组名 /domain    # 查看域中某工作组</span><br><span class="line">net group &quot;domain admins&quot; /domain  # 查看域管理员的名字</span><br><span class="line">net group &quot;domain computers&quot; /domain  # 查看域中的其他主机名</span><br><span class="line">net group &quot;domain controllers&quot; /domain  # 查看域控制器主机名（可能有多台）</span><br></pre></td></tr></table></figure>
+
+<p>先执行<code>whoami</code>查看身份，发现是god域下的administrator权限，也来一手提权到system，要不然后面有点的命令权限不太够</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023210001746.png" alt="image-20251023210001746"></p>
+<p>更好的建议是通过cs内置的模块进行提权到system</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023210340924.png" alt="image-20251023210340924"></p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023210407233.png" alt="image-20251023210407233"></p>
+<p>最后会生成一个新listener会话，user是system级别的</p>
+<p>执行<code>net config workstation</code>，发现存在域god</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023210233434.png" alt="image-20251023210233434"></p>
+<p>可能存在多个域，因此，接下来执行<code>net view /domain</code>，发现只有一个域GOD</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023210635604.png" alt="image-20251023210635604"></p>
+<p><code>net view</code>查看一下域内一共有三台主机</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023211613500.png" alt="image-20251023211613500"></p>
+<p>查看域下的分组</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023212030432.png" alt="image-20251023212030432"></p>
+<p>直接<code>net group &quot;domain controllers&quot; /domain</code>查看域管理员</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023213730052.png" alt="image-20251023213730052"></p>
+<p>至此域内关键信息所收集的差不多了，梳理一下</p>
+<p>存在一个域GOD，GOD域下有三台主机，<strong>域控是OWA主机</strong>，即<code>192.168.52.138</code>，win7主机内网ip为<code>192.168.52.129</code>，接下来就是要扫描内网主机了</p>
+<h2 id="msf拿下域控"><a href="#msf拿下域控" class="headerlink" title="msf拿下域控"></a>msf拿下域控</h2><p>先进行端口扫描，这里使用CS的portscan或者msf的<code>auxiliary/scanner/portscan/tcp</code> 模块</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023214040296.png" alt="image-20251023214040296"></p>
+<p>发现OWA主机开放了445、636、593等端口</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023214119435.png" alt="image-20251023214119435"></p>
+<p>先用nmap粗略扫一下域控主机开放端口的可能存在漏洞</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap --script=vuln -p636,593,464,389,135,139,88,80,53,445 192.168.52.138</span><br></pre></td></tr></table></figure>
+
+<h2 id="哈希传递攻击"><a href="#哈希传递攻击" class="headerlink" title="哈希传递攻击"></a>哈希传递攻击</h2><p>前面端口扫描过的目标主机都会在Targets中显示：</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023214730318.png" alt="image-20251023214730318"></p>
+<p>我们可以创建SMB监听隧道，首先我们新增一个SMB监听器，如下所示：<br><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023215206894.png" alt="image-20251023215206894"></p>
+<p>在beacon执行<code>logonpasswords</code>来获取明文密码以及哈希凭据</p>
+<p>然后在Targets中选中目标主机右键，进行Jump，方式选<code>psexec</code>攻击</p>
+<p>监听器选择我们刚刚新建的SMB</p>
+<p>这里我们选择system权限的session进行哈希传递，其他的可能权限不够</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023215938931.png" alt="image-20251023215938931"></p>
+<p>成功横移到域控主机上</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251023220435791.png" alt="image-20251023220435791"></p>
+<p>接着我们要做的是关闭域控的防火墙（这是一个好习惯</p>
+<h2 id="黄金票据维持权限"><a href="#黄金票据维持权限" class="headerlink" title="黄金票据维持权限"></a>黄金票据维持权限</h2><blockquote>
+<p>在内网渗透中，黄金票据（Golden Ticket）是一种权限维持技术，允许攻击者在获取域控权限后，伪造有效的Kerberos票据授予票据（TGT），从而长期、隐蔽地重新获得域内访问权限</p>
+</blockquote>
+<p>要理解黄金票据，需先了解Kerberos认证流程。当用户登录域时，域控制器（作为密钥分发中心KDC）的身份认证服务（AS）会验证用户凭证。若成功，AS会向用户签发一个TGT。该TGT由KDC的一个特殊账户——<code>krbtgt</code>账户的NTLM哈希进行加密签名</p>
+<p>用户后续申请访问其他服务的票据（Service Ticket）时，只需出示此TGT，而无需再次输入密码。</p>
+<p>黄金票据攻击的核心在于，<strong>一旦攻击者获取了<code>krbtgt</code>账户的密码哈希（NTLM Hash），就可以离线伪造任意用户（包括域管理员）的TGT</strong>。因为KDC在验证TGT时，使用其持有的<code>krbtgt</code>哈希进行解密验证，只要攻击者使用正确的<code>krbtgt</code>哈希加密伪造的TGT，该票据就会被KDC认为是合法的。更关键的是，<strong>即使域管理员后期更改了密码，只要<code>krbtgt</code>账户的哈希未变，之前伪造的黄金票据依然有效</strong>，这使得它成为一种非常危险的持久化后门</p>
+<p>成功制作黄金票据需要满足以下几个关键条件</p>
+<ol>
+<li><p><strong>已获得域管理员级别权限</strong>：这是前提中的前提，因为你需要借此去获取下一步的关键信息。</p>
+</li>
+<li><p><strong>获取域的标识信息</strong>：</p>
+<ul>
+<li><strong>域名</strong>：目标Active Directory域的完整域名。</li>
+<li><strong>域SID</strong>：域的安全标识符，可以通过命令如 <code>whoami /user</code>或 <code>wmic useraccount get name,sid</code>获取，使用时需要去掉末尾表示用户的RID部分。</li>
+</ul>
+</li>
+<li><p><strong>获取krbtgt账户的NTLM哈希</strong>：这是最核心的要素。在已控制域控制器的情况下，常用工具和技术获取：</p>
+<ul>
+<li><p><strong>使用Mimikatz的DCSync功能</strong>：此功能可模拟域控制器，向真实的域控制器请求数据同步，从而获取指定账户的哈希，无需登录域控制器</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mimikatz # lsadump::dcsync /domain:&lt;域名&gt; /user:krbtgt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>在域控制器上直接转储</strong>：若已直接在域控制器上执行代码，可使用Mimikatz从LSASS进程转储哈希。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mimikatz # privilege::debug</span><br><span class="line">mimikatz # lsadump::lsa /inject /name:krbtgt</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<p>下面是利用cs来创建黄金票据</p>
+<p>首先拿到krbtgt账户的哈希</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251026195751839.png" alt="image-20251026195751839"></p>
+<p>再通过<code>logonpasswords</code>拿到明文密码</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251026200157083.png" alt="image-20251026200157083"></p>
+<p>然后利用cs中内置的黄金票据模块来进行创建，user名可以自己创</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251026200717697.png" alt="image-20251026200717697"></p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251026200732595.png" alt="image-20251026200732595"></p>
+<p>这样子我们就成功创建了属于我们自己的黄金票据了</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20251026201210882.png" alt="image-20251026201210882"></p>
+<h2 id="痕迹清理"><a href="#痕迹清理" class="headerlink" title="痕迹清理"></a>痕迹清理</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">shell wevtutil cl security    //清理安全日志</span><br><span class="line">shell wevtutil cl system        //清理系统日志</span><br><span class="line">shell wevtutil cl application        //清理应用程序日志</span><br><span class="line">shell wevtutil cl &quot;windows powershell&quot;    //清除power shell日志</span><br><span class="line">shell wevtutil cl Setup     //清除（cl）事件日志中的 &quot;Setup&quot; 事件。</span><br></pre></td></tr></table></figure>
+
+<p>msf</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clearev  #清除事件日志</span><br></pre></td></tr></table></figure>
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://blog.potatowo.top/2024/04/13/Vulnstack%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA(1)">Vulnstack红日靶场(1)💕</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/jnszstmei/article/details/143832390">红日靶场-1详细解析（适合小白版）</a></p>
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>License</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    
+
+</div>
+
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">Newer</div><a href="/2025/10/22/%E9%9D%A2%E8%AF%95%E5%B0%8F%E7%BB%93/">面试小结</a></div><div class="item" id="next"><div class="note">Older</div><a href="/2025/10/10/java-agent%E4%B8%8ERASP/">java-agent与RASP</a></div></section></div>
+
+
+
+
+
+
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">Sherlock</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">On This Page</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Vmware%E5%AF%BC%E5%85%A5%E4%B8%BB%E6%9C%BA"><span class="toc-text">Vmware导入主机</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-text">环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE"><span class="toc-text">网络配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%84%E4%B8%BB%E6%9C%BA%E7%9A%84ip"><span class="toc-text">各主机的ip</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8web%E6%9C%8D%E5%8A%A1"><span class="toc-text">启动web服务</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%96%E7%82%B9getshell"><span class="toc-text">外点getshell</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5"><span class="toc-text">后渗透阶段</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E7%BA%BFcs"><span class="toc-text">上线cs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="toc-text">内网信息收集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#msf%E6%8B%BF%E4%B8%8B%E5%9F%9F%E6%8E%A7"><span class="toc-text">msf拿下域控</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E4%BC%A0%E9%80%92%E6%94%BB%E5%87%BB"><span class="toc-text">哈希传递攻击</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%BB%84%E9%87%91%E7%A5%A8%E6%8D%AE%E7%BB%B4%E6%8C%81%E6%9D%83%E9%99%90"><span class="toc-text">黄金票据维持权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%97%95%E8%BF%B9%E6%B8%85%E7%90%86"><span class="toc-text">痕迹清理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>Scroll to Top</span></a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+
+
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `Just`,
+      min: `minutes ago`,
+      hour: `hours ago`,
+      day: `days ago`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
+    }
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
+</script>
+
+<script type="text/javascript">
+  
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
+    };
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
+        }
+      }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `Switched to Light Mode`,
+      dark: `Switched to Dark Mode`,
+      auto: `Switched to Auto Mode`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+
+</div></body></html>
